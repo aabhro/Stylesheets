@@ -54,15 +54,6 @@ A practical guide for building minimal, monochrome interfaces with clear hierarc
 
 These documents are design references, not component libraries. Adapt them to the project's existing architecture and requirements.
 
-## Repository structure
-
-```text
-Stylesheets/
-├── README.md
-└── Styles/
-    └── Modernimal Stylesheet.md
-```
-
 ## Adding a style
 
 - Place each stylesheet in `Styles/`.
