@@ -60,6 +60,8 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 
 ### Palette hierarchy and restraint
 
+**NON-NEGOTIABLE OVERLAY RULE: ALL FLOATING MENUS MUST USE `#0a0a0a` AS THEIR ACTUAL PANEL BACKGROUND.** This includes dropdowns, context menus, popovers, command palettes, autocomplete lists, select menus, tooltips with panels, nested menus, and modal/dialog surfaces. Set `background: #0a0a0a` or use `var(--surface-overlay)`, whose value MUST remain `#0a0a0a`. Do not substitute `#171717`, `#262626`, gray, translucently tinted surfaces, or component-specific background colors. This rule takes priority over general surface variation. The backdrop behind the panel is separate and may use translucent near-black.
+
 - Dark mode is the default. `#0a0a0a` is the dominant page background and overlay-backdrop color. Keep the overall canvas close to black.
 - Use lighter shades rarely and with intent. Most of the interface should remain `#0a0a0a`, with `#171717` used for slight surface separation when needed.
 - Use `#262626` sparingly for small hover states, selected states, or subtle borders. Do not use it as a large default panel background.
@@ -82,6 +84,8 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
   --text-secondary: #d4d4d4;
   --text-muted: #a3a3a3;
   --surface-overlay: #0a0a0a;
+  --overlay-text: #f5f5f5;
+  --overlay-text-secondary: #d4d4d4;
   --overlay: rgba(10, 10, 10, 0.76);
   --overlay-edge: rgba(38, 38, 38, 0.55);
   --overlay-shadow: 0 16px 48px rgba(10, 10, 10, 0.38);
@@ -108,7 +112,9 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
   --text: #0a0a0a;
   --text-secondary: #404040;
   --text-muted: #737373;
-  --surface-overlay: #fafafa;
+  --surface-overlay: #0a0a0a;
+  --overlay-text: #f5f5f5;
+  --overlay-text-secondary: #d4d4d4;
   --overlay: rgba(10, 10, 10, 0.42);
   --overlay-edge: rgba(10, 10, 10, 0.08);
   --overlay-shadow: 0 16px 48px rgba(10, 10, 10, 0.12);
@@ -127,7 +133,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 - Use accent colors only when the feature needs them, such as media artwork, status, or data visualization.
 - Do not use gradients by default. Use them only when the current request explicitly asks for them or the existing project depends on a deliberate gradient effect.
 - Avoid colorful glows, neon borders, excessive blur, and decorative color washes.
-- Keep floating surfaces neutral and very dark. `#0a0a0a` remains the primary background and overlay color. Use `#171717` only when a menu or panel needs slight separation; reserve `#262626` for small hover states or subtle edges, not large panel fills. Never use teal or blue-tinted colors.
+- **Every floating menu or overlay panel uses `#0a0a0a` as its actual background. Do not use `#171717` or `#262626` as the panel fill, even as an alternate.** This applies to dropdowns, context menus, popovers, command palettes, autocomplete, select menus, and dialogs. Keep the panel opaque near-black; keep backdrop dimming separate. Never use teal or blue-tinted colors.
 - Keep scrollbars barely visible at rest. Use a thin, low-opacity thumb on a transparent track, with only a small visibility increase on hover. Scrollbars should not become prominent UI elements.
 - Theme changes must update every component, including menus, dialogs, tooltips, inputs, editor controls, and popovers. Do not leave components permanently dark or light by accident.
 - Logos and icons should adapt to the active theme unless their original artwork requires another treatment.
@@ -165,7 +171,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 - Use thin, low-contrast borders sparingly. A border should clarify a boundary, not decorate every object.
 - Use rounded corners with restraint. Pills work well for search fields, compact actions, toggles, status controls, and grouped buttons. Larger panels should use a moderate radius when a panel is genuinely needed.
 - Shadows should be soft and subtle. Use stronger shadows mainly for overlays that need separation from the page.
-- Floating surfaces such as menus, popovers, context menus, command palettes, and dialogs should remain close to black. Prefer `#0a0a0a`; use `#171717` only when separation is needed, and avoid large `#262626` fills. Keep surfaces neutral, never teal or blue. Avoid sharp, high-contrast borders. Use a barely visible neutral edge or a soft drop shadow; restrained backdrop blur is optional for translucent surfaces.
+- **MANDATORY: the actual surface of every floating menu, popover, context menu, dropdown, command palette, autocomplete list, select menu, and overlay panel must be `#0a0a0a`. No alternatives. Do not use `#171717`, `#262626`, generic gray, a gradient, or a translucent tint as the panel background.** Separate the opaque `#0a0a0a` panel from the translucent near-black backdrop. Preserve the low-contrast aesthetic with a barely visible dark edge or a soft drop shadow, never a sharp, bright border.
 - Keep scrollbars nearly invisible until needed. Prefer a transparent track and a narrow, low-opacity thumb that becomes only slightly more visible on hover. Do not use bright or thick default-looking scrollbars.
 - **Keep content directly on the main background by default.** Do not put ordinary content inside generic gray tabs, gray tab strips, or raised gray panels just to create separation.
 - Tabs, section selectors, and navigation should sit directly on the page canvas. Show the active state with brighter text or icons, a small underline, or another restrained marker instead of a solid gray tab background.
@@ -225,7 +231,7 @@ Use semantic HTML and accessible underlying controls where practical, but style 
 
 ## 9. Dialogs, popovers, and overlays
 
-- Keep the backdrop near-black, using `#0a0a0a` or its translucent equivalent. Keep the floating surface close to black too, with `#171717` used only for subtle separation where needed. Avoid large lighter-gray panels, teal tints, and high-contrast borders.
+- **The menu/dialog panel itself must be `#0a0a0a`.** Apply this exact background to dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and floating overlay surfaces. Do not use `#171717` or `#262626` for these panels. The backdrop behind the panel is a separate layer and should use translucent near-black.
 - Keep the backdrop dark and restrained. It should dim the page without creating a flat gray haze.
 - Never give overlays, menus, popovers, or command palettes a sharp, high-contrast outline. Prefer a subtle dark edge and soft drop shadow. A light backdrop blur is suitable for translucent surfaces when it improves separation, but avoid stacking heavy border, blur, and shadow effects.
 - Keep overlay text readable, with a clear action hierarchy and enough contrast against the surface.
@@ -485,7 +491,9 @@ Use similarly restrained styling for floating surfaces and scrollbars:
 
 ```css
 .floating-surface {
-  background: var(--surface-overlay);
+  /* Required panel color. Do not override with a lighter surface token. */
+  background: #0a0a0a;
+  color: var(--overlay-text);
   border: 1px solid var(--overlay-edge);
   border-radius: var(--radius-md);
   box-shadow: var(--overlay-shadow);
@@ -528,7 +536,7 @@ Before changing code:
 3. Apply this guide only where it fits the project's actual purpose and current requirements.
 4. Prefer targeted patches when the project already works. Rewrite only when requested or when the current structure prevents a proper fix.
 5. Check desktop and mobile layouts, supported themes, and relevant empty, loading, and error states.
-6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected.
+6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected. Verify the computed background of every floating menu and overlay panel is exactly `#0a0a0a`, with no component-level override.
 7. Verify the output exists and is complete before sharing it. Do not link to an unverified path.
 8. State what changed and mention known limitations honestly. Do not claim tests were run if they were not.
 9. For a React or other multi-component UI page, first write a compact `<design_plan>` preflight describing the intended layout, visual hierarchy, palette, interaction patterns, and risks to verify. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
@@ -539,7 +547,7 @@ Read `ui-design-style-guide.md` before designing or modifying the project. Treat
 
 Treat motion as a first-class part of the UI. Make components feel smooth, responsive, and connected with brief, purposeful transitions for hover, focus, press, selection, menus, popovers, dialogs, tabs, expanding sections, and result changes. Use consistent easing, short durations, subtle fades, and small translations or scale changes. Keep interactions immediate and avoid bouncy, slow, or decorative animation. Use native smooth scrolling for anchor and programmatic navigation where appropriate, but never hijack wheel, touch, trackpad, or keyboard scrolling. Prefer `transform` and `opacity` for animated movement, keep the experience performant on low-end hardware, and respect `prefers-reduced-motion`.
 
-Keep overlays near-black with subtle dark edges or soft shadows instead of sharp, contrasting borders. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
+**Mandatory overlay color: every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and dialogs, MUST use `#0a0a0a` as its actual background. Do not use `#171717`, `#262626`, gray, gradients, or tinted/translucent colors as the panel fill. Keep the dimming backdrop separate from the panel.** Use subtle dark edges or soft shadows instead of sharp, contrasting borders. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
 
 ## One-line summary
 
