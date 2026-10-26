@@ -169,6 +169,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 
 - Prefer a flat near-black canvas with only subtle surface differences where they serve a clear purpose.
 - Use thin, low-contrast borders sparingly. A border should clarify a boundary, not decorate every object.
+- **Never put a border, outlined box, or bordered background container around a standalone icon.** Keep lone icons visually light and place them directly on the surrounding surface. Use icon brightness, a subtle hover change, or a restrained tooltip for affordance instead of a permanent outline.
 - Use rounded corners with restraint. Pills work well for search fields, compact actions, toggles, status controls, and grouped buttons. Larger panels should use a moderate radius when a panel is genuinely needed.
 - Shadows should be soft and subtle. Use stronger shadows mainly for overlays that need separation from the page.
 - **MANDATORY: the actual surface of every floating menu, popover, context menu, dropdown, command palette, autocomplete list, select menu, and overlay panel must be `#0a0a0a`. No alternatives. Do not use `#171717`, `#262626`, generic gray, a gradient, or a translucent tint as the panel background.** Separate the opaque `#0a0a0a` panel from the translucent near-black backdrop. Preserve the low-contrast aesthetic with a barely visible dark edge or a soft drop shadow, never a sharp, bright border.
@@ -203,6 +204,8 @@ Use semantic HTML and accessible underlying controls where practical, but style 
 - Make the primary action obvious through contrast. Keep secondary actions quiet but discoverable.
 - Use consistent control heights, padding, icon sizing, and corner treatment within each group.
 - Icon-only buttons need a clear purpose, a useful custom tooltip, and an accessible name.
+- **Standalone icon buttons must not have their own visible border, outline, ring, boxed background, or individual card-like container by default.** Keep the icon directly on the page or toolbar surface. On hover or press, use a subtle icon-color change or a very light background change only when needed. Preserve accessible focus visibility with a restrained `:focus-visible` indicator, not a permanent decorative border.
+- If multiple icon actions belong to one toolbar or action group, the group may have a shared container or pill treatment, but do not draw a separate border around each icon.
 - Tooltips should be compact, readable, correctly positioned, and visually consistent. Avoid browser-default tooltips when a custom tooltip is practical.
 - Keep hover and pressed states subtle. Do not make controls jump or change dimensions during interaction.
 - Avoid a row of visually identical high-emphasis buttons.
@@ -376,6 +379,8 @@ Avoid these unless explicitly requested:
 
 - Gradients, neon accents, or colorful glows.
 - Bright borders around every component.
+- Borders, outlined boxes, or individual containers around standalone icons or icon-only buttons.
+- Giving every icon button its own circular or square background when the icon can sit directly on the interface.
 - Excessive cards nested inside cards.
 - Oversized hero sections and quick-picks panels on index pages.
 - Generic logos, taglines, and decorative status labels.
@@ -536,7 +541,7 @@ Before changing code:
 3. Apply this guide only where it fits the project's actual purpose and current requirements.
 4. Prefer targeted patches when the project already works. Rewrite only when requested or when the current structure prevents a proper fix.
 5. Check desktop and mobile layouts, supported themes, and relevant empty, loading, and error states.
-6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected. Verify the computed background of every floating menu and overlay panel is exactly `#0a0a0a`, with no component-level override.
+6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected. Verify the computed background of every floating menu and overlay panel is exactly `#0a0a0a`, with no component-level override. Check that standalone icons have no permanent border or boxed container, while preserving a clear keyboard focus indicator.
 7. Verify the output exists and is complete before sharing it. Do not link to an unverified path.
 8. State what changed and mention known limitations honestly. Do not claim tests were run if they were not.
 9. For a React or other multi-component UI page, first write a compact `<design_plan>` preflight describing the intended layout, visual hierarchy, palette, interaction patterns, and risks to verify. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
@@ -547,7 +552,7 @@ Read `ui-design-style-guide.md` before designing or modifying the project. Treat
 
 Treat motion as a first-class part of the UI. Make components feel smooth, responsive, and connected with brief, purposeful transitions for hover, focus, press, selection, menus, popovers, dialogs, tabs, expanding sections, and result changes. Use consistent easing, short durations, subtle fades, and small translations or scale changes. Keep interactions immediate and avoid bouncy, slow, or decorative animation. Use native smooth scrolling for anchor and programmatic navigation where appropriate, but never hijack wheel, touch, trackpad, or keyboard scrolling. Prefer `transform` and `opacity` for animated movement, keep the experience performant on low-end hardware, and respect `prefers-reduced-motion`.
 
-**Mandatory overlay color: every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and dialogs, MUST use `#0a0a0a` as its actual background. Do not use `#171717`, `#262626`, gray, gradients, or tinted/translucent colors as the panel fill. Keep the dimming backdrop separate from the panel.** Use subtle dark edges or soft shadows instead of sharp, contrasting borders. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
+**Mandatory overlay color: every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and dialogs, MUST use `#0a0a0a` as its actual background. Do not use `#171717`, `#262626`, gray, gradients, or tinted/translucent colors as the panel fill. Keep the dimming backdrop separate from the panel.** Use subtle dark edges or soft shadows instead of sharp, contrasting borders. **Never put a visible border, outline, ring, or boxed background around a standalone icon or icon-only button.** Keep lone icons directly on the surrounding surface; use subtle brightness changes for hover and selection. Group related icon actions into a cohesive pill if needed, using one shared treatment rather than an individual border around each icon. Preserve a restrained keyboard focus indicator for accessibility. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
 
 ## One-line summary
 
