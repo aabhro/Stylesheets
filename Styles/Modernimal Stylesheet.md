@@ -56,7 +56,17 @@ Use this exact neutral monochrome palette as the default UI color system. These 
 - `#f5f5f5`
 - `#fafafa`
 
-Do not introduce teal, blue, green, purple, or other tinted colors into UI surfaces, overlays, borders, or shadows. Do not interpret a dark overlay as teal or blue. Build depth from approved neutral grays, transparency, subtle edges, and shadows. Use another accent color only when the feature itself clearly requires it or the user explicitly requests it.
+Do not introduce teal, blue, green, purple, or other tinted colors into UI surfaces, overlays, borders, or shadows. Build depth from approved neutral grays, transparency, subtle edges, and shadows. Use another accent color only when the feature itself clearly requires it or the user explicitly requests it.
+
+### Palette hierarchy and restraint
+
+- Dark mode is the default. `#0a0a0a` is the dominant page background and overlay-backdrop color. Keep the overall canvas close to black.
+- Use lighter shades rarely and with intent. Most of the interface should remain `#0a0a0a`, with `#171717` used for slight surface separation when needed.
+- Use `#262626` sparingly for small hover states, selected states, or subtle borders. Do not use it as a large default panel background.
+- Do not use `#404040`, `#525252`, `#737373`, or `#a3a3a3` as large background fills. These are mainly for restrained borders, muted details, and secondary text where contrast remains readable.
+- In dark mode, `#d4d4d4` and `#f5f5f5` are text colors, not default panel fills. Reserve `#e5e5e5` and `#fafafa` primarily for the light theme or specific text needs.
+- The dimming layer behind a dialog, menu, or popover should stay neutral and near-black, using `rgba(10, 10, 10, 0.76)` or a similar opacity. Never add a teal or blue color cast.
+- Avoid multiple bright surface levels stacked together. Create hierarchy with spacing, typography, and motion before introducing a lighter surface.
 
 ### Dark theme
 
@@ -65,13 +75,13 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
   color-scheme: dark;
   --bg: #0a0a0a;
   --surface: #171717;
-  --surface-raised: #262626;
+  --surface-raised: #171717;
   --surface-hover: #262626;
   --border: #262626;
   --text: #f5f5f5;
   --text-secondary: #d4d4d4;
   --text-muted: #a3a3a3;
-  --surface-overlay: #171717;
+  --surface-overlay: #0a0a0a;
   --overlay: rgba(10, 10, 10, 0.76);
   --overlay-edge: rgba(38, 38, 38, 0.55);
   --overlay-shadow: 0 16px 48px rgba(10, 10, 10, 0.38);
@@ -117,7 +127,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 - Use accent colors only when the feature needs them, such as media artwork, status, or data visualization.
 - Do not use gradients by default. Use them only when the current request explicitly asks for them or the existing project depends on a deliberate gradient effect.
 - Avoid colorful glows, neon borders, excessive blur, and decorative color washes.
-- Avoid ugly, high-contrast gray panels, but keep floating surfaces strictly neutral. In the dark theme, use `#171717` or `#262626` for menus, dialogs, popovers, and command palettes, with the dimming backdrop handled separately through `--overlay`. Never use teal or blue-tinted colors.
+- Keep floating surfaces neutral and very dark. `#0a0a0a` remains the primary background and overlay color. Use `#171717` only when a menu or panel needs slight separation; reserve `#262626` for small hover states or subtle edges, not large panel fills. Never use teal or blue-tinted colors.
 - Keep scrollbars barely visible at rest. Use a thin, low-opacity thumb on a transparent track, with only a small visibility increase on hover. Scrollbars should not become prominent UI elements.
 - Theme changes must update every component, including menus, dialogs, tooltips, inputs, editor controls, and popovers. Do not leave components permanently dark or light by accident.
 - Logos and icons should adapt to the active theme unless their original artwork requires another treatment.
@@ -155,7 +165,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 - Use thin, low-contrast borders sparingly. A border should clarify a boundary, not decorate every object.
 - Use rounded corners with restraint. Pills work well for search fields, compact actions, toggles, status controls, and grouped buttons. Larger panels should use a moderate radius when a panel is genuinely needed.
 - Shadows should be soft and subtle. Use stronger shadows mainly for overlays that need separation from the page.
-- Floating surfaces such as menus, popovers, context menus, command palettes, and dialogs should use a deliberate neutral surface such as `#171717` or `#262626` in dark mode. Avoid ugly flat gray blocks, teal or blue tints, and sharp, high-contrast borders. Use a barely visible neutral edge or a soft drop shadow; restrained backdrop blur is optional for translucent surfaces.
+- Floating surfaces such as menus, popovers, context menus, command palettes, and dialogs should remain close to black. Prefer `#0a0a0a`; use `#171717` only when separation is needed, and avoid large `#262626` fills. Keep surfaces neutral, never teal or blue. Avoid sharp, high-contrast borders. Use a barely visible neutral edge or a soft drop shadow; restrained backdrop blur is optional for translucent surfaces.
 - Keep scrollbars nearly invisible until needed. Prefer a transparent track and a narrow, low-opacity thumb that becomes only slightly more visible on hover. Do not use bright or thick default-looking scrollbars.
 - **Keep content directly on the main background by default.** Do not put ordinary content inside generic gray tabs, gray tab strips, or raised gray panels just to create separation.
 - Tabs, section selectors, and navigation should sit directly on the page canvas. Show the active state with brighter text or icons, a small underline, or another restrained marker instead of a solid gray tab background.
@@ -215,7 +225,7 @@ Use semantic HTML and accessible underlying controls where practical, but style 
 
 ## 9. Dialogs, popovers, and overlays
 
-- Separate the backdrop from the floating surface. Use a neutral dark surface such as `#171717` or `#262626` for dark-theme menus and dialogs, rather than teal-tinted colors or ugly, high-contrast gray panels. Use the backdrop token for the dimming layer, not as the menu's surface color.
+- Keep the backdrop near-black, using `#0a0a0a` or its translucent equivalent. Keep the floating surface close to black too, with `#171717` used only for subtle separation where needed. Avoid large lighter-gray panels, teal tints, and high-contrast borders.
 - Keep the backdrop dark and restrained. It should dim the page without creating a flat gray haze.
 - Never give overlays, menus, popovers, or command palettes a sharp, high-contrast outline. Prefer a subtle dark edge and soft drop shadow. A light backdrop blur is suitable for translucent surfaces when it improves separation, but avoid stacking heavy border, blur, and shadow effects.
 - Keep overlay text readable, with a clear action hierarchy and enough contrast against the surface.
@@ -265,16 +275,50 @@ For music players, mixers, and streaming-style interfaces:
 - Do not reintroduce previously removed content, visual experiments, or unrelated UI without a clear reason.
 - Include link previews or project previews only when requested.
 
-## 13. Motion and interaction
+## 13. Motion, scrolling, and interaction feel
 
-- Motion should be smooth, brief, and purposeful. Use it to show state changes, hierarchy, entry, or continuity.
-- Prefer restrained fades, small translations, and subtle scale changes. Avoid bouncy, overshooting, or constantly moving UI by default.
-- Preserve layout stability. Interactions should not shift neighboring content unexpectedly.
-- Use animation only when it improves understanding or creates a requested effect.
-- Respect `prefers-reduced-motion` and provide a usable nonanimated path.
-- Keep interactive effects performant. Avoid per-frame React state updates for visual effects when a canvas or direct animation loop is more appropriate.
-- Do not run decorative animations indefinitely when they consume meaningful CPU or GPU resources without adding value.
-- Avoid flashing, flicker, shader artifacts, barely visible cursor trails, and effects that interfere with reading or clicking.
+Motion is a core part of the design system. Interfaces should feel smooth, responsive, and deliberately connected. Use motion to explain state changes and make components feel polished, not to decorate every pixel.
+
+### Motion principles
+
+- Give interactive components a considered transition for hover, focus, pressed, selected, opening, closing, loading, and completion states whenever movement improves clarity.
+- Keep feedback immediate. Never delay a click, typing, selection, navigation, or other action while waiting for an animation to finish.
+- Use short, consistent durations rather than slow, theatrical transitions. As starting points, use 100–160 ms for micro-interactions, 140–200 ms for control-state changes, 160–220 ms for menus and popovers, and 180–280 ms for larger view changes. Most everyday UI transitions should finish quickly. Avoid transitions over 300 ms unless the movement genuinely needs more time.
+- Use a consistent easing system. Prefer a smooth ease-out curve for elements entering and a quicker exit curve for elements leaving. Exits are usually a little faster than entrances. Avoid default linear movement, bounce, elastic overshoot, or exaggerated spring effects unless the feature explicitly calls for them.
+- Use small movement distances. A subtle 4–8 px translation or a very slight scale change is usually enough for menus and panels. Avoid large slides, zooms, or components flying across the screen for ordinary actions.
+- Preserve visual continuity. When a panel, menu, tab, list, or view changes, make it clear what appeared, disappeared, expanded, collapsed, or became selected.
+- Keep layout stable during animation. Do not make neighboring elements jump or cause layout shifts to create a motion effect.
+- Avoid animating everything. Use stronger motion for meaningful transitions and nearly invisible feedback for frequently used controls. Never add animation only to make a page feel busy.
+- Use staggered entrances sparingly and only for short, meaningful groups. Do not delay long lists item-by-item or make repeated everyday actions feel slow.
+- Use CSS transitions and keyframes for straightforward effects. Add a motion library only if the experience truly needs complex sequencing or choreography.
+
+### Smooth scrolling
+
+- Enable native smooth scrolling for anchor navigation and deliberate programmatic scrolls when it improves orientation. Use `scroll-behavior: smooth` as a simple default for suitable page layouts, and provide a reduced-motion override.
+- Keep ordinary wheel, trackpad, keyboard, and touch scrolling native and predictable. Never hijack the scroll wheel, apply artificial inertia, or install a heavy smooth-scroll library just to make normal scrolling appear animated.
+- Give anchor targets an appropriate `scroll-margin-top` when sticky headers might cover them.
+- Use scroll-linked effects only when they communicate meaningful progress or hierarchy. Prefer CSS scroll-driven animations as progressive enhancement where supported; the page must remain usable without them.
+- Avoid excessive parallax, scroll-jacking, long scroll-reveal delays, or hiding important content until a JavaScript animation fires.
+
+### Component motion patterns
+
+- Buttons: transition color, background, border, and opacity smoothly. Optional pressed feedback should be tiny and must not change layout dimensions. Do not make buttons bounce or jump.
+- Inputs and search: transition focus, border, placeholder, and result states cleanly without shifting the input or losing caret responsiveness.
+- Menus, dropdowns, tooltips, and popovers: use a short opacity transition plus a small translate or subtle scale. Keep the origin aligned with the control that opened them. Close promptly and avoid leaving invisible overlays intercepting clicks.
+- Dialogs: fade the backdrop separately from the dialog. The dialog may enter with a subtle translate and scale. Keep dismissal as responsive as opening and preserve focus behavior.
+- Tabs and segmented controls: animate a restrained active indicator or background transition. Keep labels in place and avoid full-width sliding effects unless they improve orientation.
+- Accordions and expandable sections: animate height or clipping carefully without jarring jumps. Respect content size changes and avoid hard-coded heights that clip text.
+- Lists and search results: make selection, filtering, insertion, and removal transitions subtle. Keep natural order and avoid gratuitous movement of unaffected rows.
+- Loading and success states: use restrained progress or feedback motion only when it communicates real system activity. Do not fake progress or add perpetual decorative spinners.
+
+### Performance and accessibility
+
+- Prefer animating `transform` and `opacity` for movement and entrance effects. Use color transitions for small state changes. Avoid repeatedly animating layout-triggering properties such as `top`, `left`, width, or height when transforms or another technique can achieve the same result.
+- Avoid expensive blur, large shadows, filters, and full-screen animated effects on frequently changing elements. Use `will-change` only after profiling shows it is needed, not as a global default.
+- Aim for smooth, stable animation and 60 FPS where practical, especially on lower-end devices. Test with real interaction, not only a static screenshot.
+- Respect `prefers-reduced-motion: reduce`. Remove nonessential movement, disable smooth scrolling, and replace long transitions with immediate or brief state changes. Never rely on motion alone to communicate information.
+- Every transition must preserve keyboard navigation, focus visibility, readable content, and the ability to interact before the transition completes.
+- Avoid flashing, flicker, shader artifacts, constantly moving decoration, cursor trails that interfere with precision, and any animation that harms reading or clicking.
 
 ## 14. Accessibility and usability
 
@@ -338,6 +382,9 @@ Avoid these unless explicitly requested:
 - Light-theme or dark-theme components that fail to switch with the rest of the UI.
 - Unrequested previews, unrelated experiments, decorative backgrounds, or added features.
 - Animations that flicker, clip, reduce readability, or waste resources.
+- Overusing lighter gray backgrounds, or using medium gray as the dominant surface in dark mode.
+- Slow, bouncy, excessive, or purely decorative transitions on routine UI actions.
+- Hijacking native scrolling, forced inertia, excessive parallax, or scroll effects that delay access to content.
 - Rewriting the entire project when a focused fix would solve the problem.
 - Declaring an issue fixed without checking the relevant layout and interaction states.
 
@@ -356,7 +403,11 @@ These values are starting points, not hard requirements. Match the existing app 
   --border-width: 1px;
   --motion-fast: 120ms;
   --motion-standard: 180ms;
+  --motion-enter: 220ms;
+  --motion-exit: 150ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 }
 
 .control {
@@ -380,6 +431,55 @@ These values are starting points, not hard requirements. Match the existing app 
   outline-offset: 3px;
 }
 ```
+
+Use these motion and scrolling defaults as a starting point. Tune them to the component, not by applying every effect everywhere:
+
+```css
+html {
+  scroll-behavior: smooth;
+}
+
+.motion-control {
+  transition:
+    color var(--motion-standard) var(--ease-standard),
+    background-color var(--motion-standard) var(--ease-standard),
+    border-color var(--motion-standard) var(--ease-standard),
+    opacity var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.motion-enter {
+  animation: motion-enter var(--motion-enter) var(--ease-enter) both;
+}
+
+@keyframes motion-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+Use the entry animation only for components that benefit from it, such as a menu or popover. Do not apply it to every list row or every page element.
 
 Use similarly restrained styling for floating surfaces and scrollbars:
 
@@ -428,14 +528,18 @@ Before changing code:
 3. Apply this guide only where it fits the project's actual purpose and current requirements.
 4. Prefer targeted patches when the project already works. Rewrite only when requested or when the current structure prevents a proper fix.
 5. Check desktop and mobile layouts, supported themes, and relevant empty, loading, and error states.
-6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, and focus states when affected.
+6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected.
 7. Verify the output exists and is complete before sharing it. Do not link to an unverified path.
 8. State what changed and mention known limitations honestly. Do not claim tests were run if they were not.
 9. For a React or other multi-component UI page, first write a compact `<design_plan>` preflight describing the intended layout, visual hierarchy, palette, interaction patterns, and risks to verify. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
 
 ## 20. Reusable prompt for another AI
 
-Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep decoration low contrast while keeping content clear and accessible. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Use the exact monochrome palette in this guide: `#0a0a0a`, `#171717`, `#262626`, `#404040`, `#525252`, `#737373`, `#a3a3a3`, `#d4d4d4`, `#e5e5e5`, `#f5f5f5`, and `#fafafa`. Do not introduce teal or blue tints. Style menus, dialogs, popovers, and command palettes with neutral dark surfaces such as `#171717` or `#262626`, not medium-gray blocks. Avoid sharp, high-contrast borders; use a subtle dark edge or soft shadow, with restrained blur only when useful. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, context menus, and other interactive elements rather than exposing browser-default widgets. Add right-click actions when they are useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect layout, theme consistency, keyboard behavior, context menus, overlays, mobile overflow, and performance before calling the work complete.
+Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep `#0a0a0a` as the dominant background and overlay-backdrop color. Use lighter shades rarely: `#171717` only for slight surface separation, and `#262626` mainly for small hover states and subtle edges. Do not use lighter grays as large background fills. Use only this palette unless the feature or current request clearly requires otherwise: `#0a0a0a`, `#171717`, `#262626`, `#404040`, `#525252`, `#737373`, `#a3a3a3`, `#d4d4d4`, `#e5e5e5`, `#f5f5f5`, and `#fafafa`. Never introduce teal or blue tints. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful.
+
+Treat motion as a first-class part of the UI. Make components feel smooth, responsive, and connected with brief, purposeful transitions for hover, focus, press, selection, menus, popovers, dialogs, tabs, expanding sections, and result changes. Use consistent easing, short durations, subtle fades, and small translations or scale changes. Keep interactions immediate and avoid bouncy, slow, or decorative animation. Use native smooth scrolling for anchor and programmatic navigation where appropriate, but never hijack wheel, touch, trackpad, or keyboard scrolling. Prefer `transform` and `opacity` for animated movement, keep the experience performant on low-end hardware, and respect `prefers-reduced-motion`.
+
+Keep overlays near-black with subtle dark edges or soft shadows instead of sharp, contrasting borders. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
 
 ## One-line summary
 
