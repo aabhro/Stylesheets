@@ -42,7 +42,21 @@ Keep decoration quiet. Use one clear focal point at a time. Do not make every el
 
 ## 3. Color system
 
-Use this palette as the default starting point. Adapt it only when the project requires another palette or the user explicitly asks for one.
+Use this exact neutral monochrome palette as the default UI color system. These are the approved colors:
+
+- `#0a0a0a`
+- `#171717`
+- `#262626`
+- `#404040`
+- `#525252`
+- `#737373`
+- `#a3a3a3`
+- `#d4d4d4`
+- `#e5e5e5`
+- `#f5f5f5`
+- `#fafafa`
+
+Do not introduce teal, blue, green, purple, or other tinted colors into UI surfaces, overlays, borders, or shadows. Do not interpret a dark overlay as teal or blue. Build depth from approved neutral grays, transparency, subtle edges, and shadows. Use another accent color only when the feature itself clearly requires it or the user explicitly requests it.
 
 ### Dark theme
 
@@ -50,20 +64,20 @@ Use this palette as the default starting point. Adapt it only when the project r
 :root {
   color-scheme: dark;
   --bg: #0a0a0a;
-  --surface: #101010;
-  --surface-raised: #151515;
-  --surface-hover: #1b1b1b;
+  --surface: #171717;
+  --surface-raised: #262626;
+  --surface-hover: #262626;
   --border: #262626;
   --text: #f5f5f5;
   --text-secondary: #d4d4d4;
   --text-muted: #a3a3a3;
-  --surface-overlay: #001219;
-  --overlay: rgba(0, 18, 25, 0.76);
+  --surface-overlay: #171717;
+  --overlay: rgba(10, 10, 10, 0.76);
   --overlay-edge: rgba(38, 38, 38, 0.55);
-  --overlay-shadow: 0 16px 48px rgba(0, 0, 0, 0.38);
+  --overlay-shadow: 0 16px 48px rgba(10, 10, 10, 0.38);
   --scrollbar-thumb: rgba(245, 245, 245, 0.10);
   --scrollbar-thumb-hover: rgba(245, 245, 245, 0.18);
-  --shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  --shadow: 0 12px 36px rgba(10, 10, 10, 0.28);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -77,20 +91,20 @@ Use this palette as the default starting point. Adapt it only when the project r
 [data-theme="light"] {
   color-scheme: light;
   --bg: #fafafa;
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --surface-hover: #f2f2f2;
+  --surface: #fafafa;
+  --surface-raised: #fafafa;
+  --surface-hover: #e5e5e5;
   --border: #e5e5e5;
   --text: #0a0a0a;
-  --text-secondary: #262626;
-  --text-muted: #525252;
-  --surface-overlay: #ffffff;
-  --overlay: rgba(0, 18, 25, 0.42);
+  --text-secondary: #404040;
+  --text-muted: #737373;
+  --surface-overlay: #fafafa;
+  --overlay: rgba(10, 10, 10, 0.42);
   --overlay-edge: rgba(10, 10, 10, 0.08);
-  --overlay-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --overlay-shadow: 0 16px 48px rgba(10, 10, 10, 0.12);
   --scrollbar-thumb: rgba(10, 10, 10, 0.10);
   --scrollbar-thumb-hover: rgba(10, 10, 10, 0.18);
-  --shadow: 0 12px 36px rgba(0, 0, 0, 0.10);
+  --shadow: 0 12px 36px rgba(10, 10, 10, 0.10);
 }
 ```
 
@@ -103,7 +117,7 @@ Use this palette as the default starting point. Adapt it only when the project r
 - Use accent colors only when the feature needs them, such as media artwork, status, or data visualization.
 - Do not use gradients by default. Use them only when the current request explicitly asks for them or the existing project depends on a deliberate gradient effect.
 - Avoid colorful glows, neon borders, excessive blur, and decorative color washes.
-- Do not use generic medium-gray surfaces for menus, dialogs, popovers, command palettes, or other floating UI. In the dark theme, use a deep blue-black such as `#001219` for the floating surface, with the backdrop handled separately through `--overlay`.
+- Avoid ugly, high-contrast gray panels, but keep floating surfaces strictly neutral. In the dark theme, use `#171717` or `#262626` for menus, dialogs, popovers, and command palettes, with the dimming backdrop handled separately through `--overlay`. Never use teal or blue-tinted colors.
 - Keep scrollbars barely visible at rest. Use a thin, low-opacity thumb on a transparent track, with only a small visibility increase on hover. Scrollbars should not become prominent UI elements.
 - Theme changes must update every component, including menus, dialogs, tooltips, inputs, editor controls, and popovers. Do not leave components permanently dark or light by accident.
 - Logos and icons should adapt to the active theme unless their original artwork requires another treatment.
@@ -141,7 +155,7 @@ Use this palette as the default starting point. Adapt it only when the project r
 - Use thin, low-contrast borders sparingly. A border should clarify a boundary, not decorate every object.
 - Use rounded corners with restraint. Pills work well for search fields, compact actions, toggles, status controls, and grouped buttons. Larger panels should use a moderate radius when a panel is genuinely needed.
 - Shadows should be soft and subtle. Use stronger shadows mainly for overlays that need separation from the page.
-- Floating surfaces such as menus, popovers, context menus, command palettes, and dialogs should use a deliberate, very dark tinted surface such as `#001219` in dark mode, never an ugly medium gray. Avoid sharp, high-contrast borders. Use a barely visible dark edge or a soft drop shadow; a restrained backdrop blur is optional for translucent surfaces.
+- Floating surfaces such as menus, popovers, context menus, command palettes, and dialogs should use a deliberate neutral surface such as `#171717` or `#262626` in dark mode. Avoid ugly flat gray blocks, teal or blue tints, and sharp, high-contrast borders. Use a barely visible neutral edge or a soft drop shadow; restrained backdrop blur is optional for translucent surfaces.
 - Keep scrollbars nearly invisible until needed. Prefer a transparent track and a narrow, low-opacity thumb that becomes only slightly more visible on hover. Do not use bright or thick default-looking scrollbars.
 - **Keep content directly on the main background by default.** Do not put ordinary content inside generic gray tabs, gray tab strips, or raised gray panels just to create separation.
 - Tabs, section selectors, and navigation should sit directly on the page canvas. Show the active state with brighter text or icons, a small underline, or another restrained marker instead of a solid gray tab background.
@@ -201,7 +215,7 @@ Use semantic HTML and accessible underlying controls where practical, but style 
 
 ## 9. Dialogs, popovers, and overlays
 
-- Separate the backdrop from the floating surface. Use a deep blue-black tint such as `#001219` for dark-theme menus and dialogs, rather than a flat medium-gray panel. Use the backdrop token for the dimming layer, not as the menu's surface color.
+- Separate the backdrop from the floating surface. Use a neutral dark surface such as `#171717` or `#262626` for dark-theme menus and dialogs, rather than teal-tinted colors or ugly, high-contrast gray panels. Use the backdrop token for the dimming layer, not as the menu's surface color.
 - Keep the backdrop dark and restrained. It should dim the page without creating a flat gray haze.
 - Never give overlays, menus, popovers, or command palettes a sharp, high-contrast outline. Prefer a subtle dark edge and soft drop shadow. A light backdrop blur is suitable for translucent surfaces when it improves separation, but avoid stacking heavy border, blur, and shadow effects.
 - Keep overlay text readable, with a clear action hierarchy and enough contrast against the surface.
@@ -421,7 +435,7 @@ Before changing code:
 
 ## 20. Reusable prompt for another AI
 
-Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep decoration low contrast while keeping content clear and accessible. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Style menus, dialogs, popovers, and command palettes with a deep blue-black surface such as `#001219` in dark mode, not medium gray. Avoid sharp, high-contrast borders; use a subtle dark edge or soft shadow, with restrained blur only when useful. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, context menus, and other interactive elements rather than exposing browser-default widgets. Add right-click actions when they are useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect layout, theme consistency, keyboard behavior, context menus, overlays, mobile overflow, and performance before calling the work complete.
+Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep decoration low contrast while keeping content clear and accessible. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Use the exact monochrome palette in this guide: `#0a0a0a`, `#171717`, `#262626`, `#404040`, `#525252`, `#737373`, `#a3a3a3`, `#d4d4d4`, `#e5e5e5`, `#f5f5f5`, and `#fafafa`. Do not introduce teal or blue tints. Style menus, dialogs, popovers, and command palettes with neutral dark surfaces such as `#171717` or `#262626`, not medium-gray blocks. Avoid sharp, high-contrast borders; use a subtle dark edge or soft shadow, with restrained blur only when useful. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, context menus, and other interactive elements rather than exposing browser-default widgets. Add right-click actions when they are useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect layout, theme consistency, keyboard behavior, context menus, overlays, mobile overflow, and performance before calling the work complete.
 
 ## One-line summary
 
