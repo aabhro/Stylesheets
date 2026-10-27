@@ -480,6 +480,50 @@ hr{border-top-color:#303030}
   background:rgba(0,0,0,.44)!important;
 }
 
+
+/* Zoom the actual embedded Tenor frame so its internal letterboxing is cropped away. */
+#wallpaper{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  overflow:hidden!important;
+  clip-path:inset(0)!important;
+  background:#000!important;
+}
+#wallpaper .tenor-gif-embed{
+  position:absolute!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  min-width:100vw!important;
+  min-height:100vh!important;
+  max-width:none!important;
+  max-height:none!important;
+  padding:0!important;
+  margin:0!important;
+  aspect-ratio:auto!important;
+  transform:none!important;
+  overflow:hidden!important;
+}
+#wallpaper iframe{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:100vw!important;
+  height:100vh!important;
+  min-width:100vw!important;
+  min-height:100vh!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  border:0!important;
+  transform:translate(-50%,-50%) scale(1.65)!important;
+  transform-origin:center center!important;
+}
+
 </style>
 </head>
 <body>
