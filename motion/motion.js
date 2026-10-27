@@ -214,6 +214,27 @@
     });
 
     root.addEventListener("keydown", function (event) {
+      var activeDialog = event.target.closest && event.target.closest('.m-dialog[data-state="open"]');
+      if (activeDialog && event.key === "Tab") {
+        var focusables = Array.prototype.slice.call(activeDialog.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(function (node) {
+          return !node.hidden && node.getAttribute("aria-hidden") !== "true";
+        });
+        if (!focusables.length) {
+          event.preventDefault();
+          var dialogPanel = activeDialog.querySelector(".m-dialog__panel");
+          if (dialogPanel) {
+            dialogPanel.setAttribute("tabindex", "-1");
+            dialogPanel.focus();
+          }
+        } else if (event.shiftKey && document.activeElement === focusables[0]) {
+          event.preventDefault();
+          focusables[focusables.length - 1].focus();
+        } else if (!event.shiftKey && document.activeElement === focusables[focusables.length - 1]) {
+          event.preventDefault();
+          focusables[0].focus();
+        }
+      }
+
       if (event.key === "Escape") {
         var dialog = document.querySelector('.m-dialog[data-state="open"]');
         if (dialog) {
