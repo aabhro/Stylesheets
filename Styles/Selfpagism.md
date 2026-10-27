@@ -17,9 +17,9 @@ The site is for self-expression, not professional customers. It does not need to
 
 ## Mandatory shared motion standard
 
-Follow the repository's [Motion Standard](Motion.md) for every interface interaction. It applies to Selfpagism and all other styles, including sites with very different aesthetics. Use the official [transitions.dev motion skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev) as the primary reference for component-specific transitions, state handling, and shared motion tokens.
+Follow the repository's [Motion Standard](Motion.md) for every interface interaction. It applies to Selfpagism and all other styles, including sites with very different aesthetics. Use the local [motion skill](../motion/SKILL.md) and [pattern catalog](../motion/catalog.md) as the primary implementation reference, supported by [shared tokens](../motion/tokens.css), [CSS patterns](../motion/patterns.css), and [JS helpers](../motion/motion.js).
 
-The common implementation requirements are mandatory: choose a transition for the component's real behavior, handle opening and closing states, keep the official reduced-motion safeguards, preserve keyboard access, and verify the actual interaction. Do not copy the transitions.dev recipe library into this repository.
+The common implementation requirements are mandatory: choose a transition for the component's real behavior, handle opening and closing states, keep the official reduced-motion safeguards, preserve keyboard access, and verify the actual interaction. The transitions.dev repository remains an optional external reference for specialized transitions, not the default implementation source.
 
 **The visual expression remains Selfpagism's.** Motion may feel playful, odd, rough, theatrical, nostalgic, or deliberately imperfect when the user's chosen theme calls for it. The shared standard is not a demand to make personal websites look like polished product interfaces. Keep GIFs and decorative movement coherent, avoid competing effects, and respect reduced-motion preferences.
 
