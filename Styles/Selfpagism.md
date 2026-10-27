@@ -148,6 +148,17 @@ Backgrounds and decorations should be selected with the user, not guessed as a g
 
 - Ask whether they want a tiled pattern, illustrated background, photograph, texture, flat color, layered wallpaper, or another treatment.
 - Repeating GIF or image tiles are encouraged when they fit the early-web style. Use small patterns at a scale that feels intentional instead of stretching a tiny tile until it becomes blurry.
+
+### Full-screen animated wallpaper must actually cover the viewport
+
+When the user supplies a background GIF, use that exact asset. Do not replace it with a vaguely similar image or make the GIF merely a small gallery item. Unless the user asks for a tiled wallpaper, make it cover the entire viewport behind the floating site window.
+
+- **Prefer a direct GIF/image URL or a local asset first.** For a direct image used as a CSS background, use `background-size: cover`, `background-position: center`, and a viewport-sized fixed layer. For an `img` element, use `width: 100%`, `height: 100%`, and `object-fit: cover`. Preserve the aspect ratio and crop edges rather than stretching the image out of proportion.
+- **Do not assume an embedded GIF provider respects CSS sizing.** Tenor and similar embed widgets often insert their own player, wrapper, aspect-ratio rules, or iframe. Setting the outer element to `100vw × 100vh` or adding `object-fit: cover` to the iframe does not necessarily resize the actual media inside it. Provider-created letterboxing can remain visible.
+- **If an embed leaves gray/black bands, scale the actual iframe/player up and crop it.** Put it inside a fixed `inset: 0` viewport wrapper with `overflow: hidden`; center the media with `left: 50%`, `top: 50%`, and `transform: translate(-50%, -50%) scale(1.4)` (or another scale large enough to cover the viewport). Start around `1.4` to `1.7` when needed, then visually tune it for the specific embed. Keep the wrapper at `width: 100vw`, `height: 100vh`, and clip every overflow edge. Target the iframe/player itself, not only its parent.
+- Keep the background layer behind the page window with a lower `z-index`, and keep the window above it. Set a deliberate fallback background color in case the GIF fails to load. A subtle dark overlay is acceptable only when it suits the theme and leaves the GIF visibly moving around the window.
+- **Check the real rendered page.** Inspect the top, bottom, left, and right edges on desktop and mobile. If any unintentional blank bands remain, increase the scale or switch to the direct image URL. Do not claim the wallpaper is fixed based on CSS inspection alone. If you cannot preview it live, state that visual verification remains untested.
+- Avoid blindly applying `width: 100vw`, `height: 100vh`, `object-fit: fill`, or a changed `aspect-ratio` to a third-party iframe and assuming this guarantees coverage. The provider's internal player can ignore or override those dimensions.
 - Use layered backgrounds, decorative borders, frames, corner ornaments, tape, pins, scribbles, pixel accents, star fields, or stickers as the chosen theme calls for them.
 - Make the main content readable over busy backgrounds. Use a themed text area, patterned border, inset surface, or local backdrop when needed, without making every section a generic card.
 - Colors may clash deliberately when it is part of the intended aesthetic. They should still feel chosen, rather than accidentally inherited from unrelated assets.
@@ -186,7 +197,7 @@ The page should feel alive, but the motion must suit the specific mood.
 - Keep the content and graphics easy for the owner to replace. Use clearly named asset paths, CSS variables, and simple data structures where useful.
 - Use meaningful alt text for informational images. Mark purely decorative GIFs and textures as decorative for assistive technology.
 - Avoid excessive JavaScript, dependencies, layout-shifting animations, and oversized assets.
-- Check the actual page at desktop and mobile sizes. Make sure background textures tile correctly, GIFs load, links work, images do not overflow, and the design remains understandable when an asset fails.
+- Check the actual page at desktop and mobile sizes. Make sure background textures tile correctly, GIFs load, links work, images do not overflow, and the design remains understandable when an asset fails. For a full-screen GIF background, confirm the animation covers all four viewport edges with no player letterboxing; CSS sizing on an embed wrapper alone is not proof.
 - Respect the current request and the project's technical constraints. This stylesheet governs aesthetic decisions, not permission to remove useful functionality.
 
 ## 10. Anti-patterns
@@ -200,6 +211,7 @@ Avoid these unless the user explicitly requests them:
 - Using a modern landing-page hero, bento grid, repeated rounded cards, pill navigation, rounded buttons, or an app-like component layout as the default.
 - Rounding every corner. Use square corners by default. Do not use large border radii unless the user explicitly asks for them.
 - Hiding the animated wallpaper behind a full-screen modern layout. The wallpaper should remain visible around the floating central page when that composition is used.
+- Leaving blank, gray, or black letterbox bands around a requested full-screen wallpaper. For provider embeds, resize the actual iframe/player or use a direct GIF asset; if necessary, zoom the player inside a clipped viewport wrapper until the frame covers every edge.
 - Making the wallpaper a subtle afterthought. When the chosen concept calls for an animated GIF background, make it a meaningful, visible part of the page design.
 - Assuming pink, black, neon, anime, or kawaii is the default.
 - Using only a retro font while omitting the graphics and GIFs that give the design its character.
