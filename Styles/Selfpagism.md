@@ -6,9 +6,33 @@ Use this guide to design and build a personal website that feels like someone's 
 
 The site is for self-expression, not professional customers. It does not need to look corporate, polished in a conventional product-design sense, or optimized to sell something. It should feel specific to one person, with a recognizable mood, interests, references, visual obsessions, and a little internet-era personality.
 
-**Core direction:** expressive, image-heavy, personal, handmade, playful or intense as the owner wants, and unafraid of decoration. Treat the page like a personal artifact, not a SaaS landing page.
+**Core direction:** expressive, image-heavy, personal, handmade, and guided by the owner's taste. Treat the page like someone's actual personal website, not a SaaS landing page, a polished design agency concept, or an AI-generated aesthetic demo. The goal is individuality and atmosphere, not trendy polish.
+
+**Do not confuse dark and edgy with neon-modern.** Dark personal websites do not automatically need glowing red or purple accents, giant display type, gradients, glass panels, soft shadows, or sleek cyberpunk decoration. Use the color, density, background, and graphics from the user's references instead.
 
 **2000s-core GIFs are a defining requirement, not an optional finishing touch.** Use real animated GIFs, blinkies, pixel buttons, decorative separators, tiled textures, and other web-era graphics throughout the design when the chosen theme supports them. A page that only uses a retro font or a nostalgic color palette is not enough.
+
+## Typical page structure: animated wallpaper + floating window
+
+This is the most useful starting point for the personal-site style shown in the supplied source-code examples. It is a default pattern to consider, not a rigid template. The user's own references still decide the final structure.
+
+**Start with the background, then place the website on top of it.** A common composition is a repeating or full-screen animated GIF wallpaper with one centered, floating, rectangular main page/window. The wallpaper remains clearly visible around the central window. The main page feels like an independent little site sitting on top of its own background.
+
+- Ask the user whether they prefer a tiled animated GIF, a full-screen animated GIF, a still image, or a patterned background. If they provide a background, use it instead of replacing it with a random one.
+- Build one centered main panel with a real, simple page structure. A title/header area, straightforward navigation, a content region, and a small footer are often enough.
+- When it suits the reference, use a narrow left navigation rail, a central content area, and optional decorative material along one side. A simple central iframe/content panel is also a valid old-web pattern. Do not force three columns onto every site.
+- **Use square corners by default. Set `border-radius: 0`.** Main windows, title bars, navigation areas, frames, image borders, buttons, forms, and content regions should have square corners unless the user specifically asks for rounded styling.
+- Use plain 1px borders, simple inset/outset edges, horizontal rules, compact title bars, basic lists, underlined links, ordinary headings, and image-led sections. Small uneven details are better than layers of polished decoration.
+- Make animated GIFs and still images part of the composition: a header graphic, small GIF buttons along a rail, decorations positioned around the main window, a background, an image embedded in an article, or a repeating divider.
+- A dark page should still feel like an old personal website. Favor a dark wallpaper, flat opaque content surface, ordinary text, simple borders, and the owner's graphics. Do not turn it into a neon dashboard or a contemporary landing page.
+- Keep the wallpaper visible outside the page on large screens. On smaller screens, let the main window fit the viewport and scroll naturally. Preserve the same simple rectangular feel without clipping content.
+- If a floating panel or a centered window is not appropriate for the user's chosen concept, follow the user's preference instead. Selfpagism is an expressive style, not one mandatory layout.
+
+### Source-code cues from the user's examples
+
+The supplied xsolimini source shows a central content frame, side navigation, multiple small graphic buttons, decorative GIFs positioned around the layout, and repeated image strips. The supplied bokuwatetsuo source shows a background/cover layer, a single main content wrapper, simple top navigation, section headings, horizontal rules, large images, an update feed, and a guestbook link.
+
+Use those structural ideas as inspiration. Recreate the approach in clean, maintainable code rather than copying their markup, assets, exact dimensions, or content wholesale.
 
 ## Optional component specimen
 
@@ -172,6 +196,11 @@ Avoid these unless the user explicitly requests them:
 - Treating the site as a professional portfolio, startup landing page, customer-facing business, or generic blog theme.
 - Making the result sterile, overly minimal, or interchangeable.
 - Applying the same template to every user and changing only the accent color.
+- Turning the page into a neon-modern or cyberpunk dashboard with glowing accents, huge display typography, gradients, glassmorphism, blur layers, or glossy surfaces when those are not in the user's references.
+- Using a modern landing-page hero, bento grid, repeated rounded cards, pill navigation, rounded buttons, or an app-like component layout as the default.
+- Rounding every corner. Use square corners by default. Do not use large border radii unless the user explicitly asks for them.
+- Hiding the animated wallpaper behind a full-screen modern layout. The wallpaper should remain visible around the floating central page when that composition is used.
+- Making the wallpaper a subtle afterthought. When the chosen concept calls for an animated GIF background, make it a meaningful, visible part of the page design.
 - Assuming pink, black, neon, anime, or kawaii is the default.
 - Using only a retro font while omitting the graphics and GIFs that give the design its character.
 - Replacing GIFs with emojis, generic icon libraries, or static gradients.
@@ -204,9 +233,8 @@ Use these as inspiration and inspect them directly when accessible. Study their 
 - [xsolimini.fr](https://xsolimini.fr/)
 - [bokuwatetsuo.net](https://bokuwatetsuo.net/)
 - [Blinkies.cafe](https://blinkies.cafe/), a reference for the classic narrow animated blinkie format.
-- [RetroCrave](https://www.retrocrave.com/), a reference shelf for early-web motifs such as animated graphics, tiled backgrounds, link buttons, and guestbook-era decoration.
 
-The first three links are the user's chosen design references and should take priority when accessible. The extra links are research aids, not a replacement for the user's own taste.
+The first three links are the user's chosen design references and should take priority when accessible. The user's supplied source-code excerpts are also important structural references. The blinkies resource is a small utility for one kind of old-web graphic, not a design template.
 
 ## One-line summary
 
