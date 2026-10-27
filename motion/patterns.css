@@ -69,12 +69,12 @@
 .m-number-pop { animation: m-number-pop var(--m-duration-enter) var(--m-ease-spring) both; }
 @keyframes m-number-pop { from { opacity: .2; transform: translateY(var(--m-distance-2)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 .m-badge-pop { animation: m-badge-pop var(--m-duration-enter) var(--m-ease-spring) both; transform-origin: center; }
-@keyframes m-badge-pop { 0% { opacity: 0; transform: translate(3px, -4px) scale(.65); } 70% { opacity: 1; transform: translate(0) scale(1.08); } 100% { transform: scale(1); } }
+@keyframes m-badge-pop { 0% { opacity: 0; transform: translate(3px, -4px) scale(.65); } 70% { opacity: 1; transform: translate(0) scale(1); } 100% { transform: scale(1); } }
 
 .m-error-shake { animation: m-error-shake var(--m-duration-enter) var(--m-ease-standard) both; }
 @keyframes m-error-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(calc(-1 * var(--m-distance-2))); } 50% { transform: translateX(var(--m-distance-2)); } 75% { transform: translateX(calc(-1 * var(--m-distance-1))); } }
 .m-success-pop { animation: m-success-pop var(--m-duration-emphasis) var(--m-ease-enter) both; }
-@keyframes m-success-pop { 0% { opacity: 0; transform: translateY(var(--m-distance-3)) scale(.92); } 65% { opacity: 1; transform: translateY(0) scale(1.025); } 100% { transform: scale(1); } }
+@keyframes m-success-pop { 0% { opacity: 0; transform: translateY(var(--m-distance-3)) scale(.92); } 65% { opacity: 1; transform: translateY(0) scale(1); } 100% { transform: scale(1); } }
 
 .m-skeleton {
   background: currentColor; opacity: .09; border-radius: .25rem;
