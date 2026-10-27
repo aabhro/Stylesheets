@@ -44,7 +44,7 @@
 .m-dialog { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; }
 .m-dialog[hidden], .m-dropdown[hidden], .m-panel[hidden], .m-toast[hidden] { display: none !important; }
 .m-dialog__backdrop {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0; border: 0;
   background: rgba(0, 0, 0, .55);
   opacity: 0;
 }
@@ -75,7 +75,7 @@
 
 .m-skeleton {
   background: currentColor; opacity: .09; border-radius: .25rem;
-  animation: m-skeleton-pulse 1.2s ease-in-out infinite alternate;
+  animation: m-skeleton-pulse var(--m-duration-loop) ease-in-out infinite alternate;
 }
 @keyframes m-skeleton-pulse { to { opacity: .16; } }
 .m-reveal { animation: m-reveal var(--m-duration-panel) var(--m-ease-enter) both; }
@@ -87,10 +87,10 @@
   animation: m-shimmer 1.8s linear infinite;
 }
 .m-shimmer-text {
-  background-image: linear-gradient(100deg, currentColor 35%, transparent 50%, currentColor 65%);
+  background-image: linear-gradient(100deg, var(--m-shimmer-muted, #737373) 35%, var(--m-shimmer-highlight, #f5f5f5) 50%, var(--m-shimmer-muted, #737373) 65%);
   background-size: 250% 100%; background-clip: text; -webkit-background-clip: text;
   color: transparent;
-  animation: m-shimmer 1.8s linear infinite;
+  animation: m-shimmer var(--m-duration-loop) linear infinite;
 }
 @keyframes m-shimmer { to { background-position: -250% 0; } }
 
@@ -128,7 +128,7 @@
 .m-toggle input:checked + .m-toggle__track .m-toggle__thumb { transform: translateX(1rem); }
 .m-toggle input:focus-visible + .m-toggle__track { outline: 2px solid currentColor; outline-offset: 3px; }
 
-.m-thinking { animation: m-thinking 1.7s ease-in-out infinite; }
+.m-thinking { animation: m-thinking var(--m-duration-loop) ease-in-out infinite; }
 @keyframes m-thinking { 0%,100% { opacity: .48; } 50% { opacity: 1; } }
 .m-stream > * { animation: m-reveal var(--m-duration-enter) var(--m-ease-enter) both; }
 .m-stream > *:nth-child(2) { animation-delay: calc(var(--m-stagger) * 1); }
