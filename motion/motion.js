@@ -88,6 +88,36 @@
     }, duration);
   }
 
+
+  function clearText(element) {
+    if (!element) return;
+    element.classList.remove("is-clearing");
+    void element.offsetWidth;
+    element.classList.add("is-clearing");
+    element.addEventListener("animationend", function () {
+      element.textContent = "";
+      element.classList.remove("is-clearing");
+    }, { once: true });
+  }
+
+  function morphText(element, value) {
+    if (!element || element.textContent === String(value)) return;
+    var originalWidth = element.getBoundingClientRect().width;
+    element.style.width = originalWidth + "px";
+    element.style.maxWidth = "none";
+    element.classList.add("m-text-morph");
+    element.textContent = String(value);
+    var targetWidth = element.scrollWidth;
+    requestAnimationFrame(function () {
+      element.style.width = targetWidth + "px";
+    });
+    global.setTimeout(function () {
+      element.style.width = "";
+      element.style.maxWidth = "";
+    }, reduced() ? 0 : 330);
+    replay(element, "m-text-swap-soft");
+  }
+
   function selectTab(tab, group) {
     if (!tab) return;
     group = group || tab.closest(".m-tabs");
@@ -209,6 +239,8 @@
     setOpen: setOpen,
     replay: replay,
     swapText: swapText,
+    clearText: clearText,
+    morphText: morphText,
     showToast: showToast,
     selectTab: selectTab,
     bind: bind
