@@ -146,7 +146,7 @@
 .m-tilt { transform: perspective(800px) rotateX(var(--m-tilt-x, 0deg)) rotateY(var(--m-tilt-y, 0deg)); transition: transform var(--m-duration-control) var(--m-ease-enter); transform-style: preserve-3d; }
 .m-donut__arc { transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset var(--m-duration-panel) var(--m-ease-enter); }
 .m-counter-digit { display: inline-block; animation: m-number-pop var(--m-duration-fast) var(--m-ease-enter) both; }
-.m-text-morph { transition: max-width var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
+.m-text-morph { transition: width var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
 
 
 /* Additional patterns so the local catalog includes reusable implementations. */
