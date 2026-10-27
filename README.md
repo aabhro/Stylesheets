@@ -59,6 +59,8 @@ A style prompt for expressive personal websites, diaries, blogs, digital scrapbo
 <p>
   <a href="Styles/Selfpagism.md"><strong>Read the stylesheet →</strong></a>
   &nbsp;·&nbsp;
+  <a href="Components/Selfpagism.html">View optional component specimen</a>
+  &nbsp;·&nbsp;
   <a href="https://github.com/aabhro/Stylesheets/tree/main/Styles">Browse the Styles folder</a>
 </p>
 
