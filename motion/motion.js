@@ -221,6 +221,16 @@
     });
   }
 
+  function refreshTabIndicators() {
+    document.querySelectorAll(".m-tabs").forEach(function (group) {
+      var active = group.querySelector('[role="tab"][aria-selected="true"]');
+      var indicator = group.querySelector(".m-tabs__indicator");
+      if (!active || !indicator) return;
+      indicator.style.setProperty("--m-tab-left", active.offsetLeft + "px");
+      indicator.style.setProperty("--m-tab-width", active.offsetWidth + "px");
+    });
+  }
+
   function bindTilt(root) {
     if (reduced() || !global.matchMedia || !global.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     root.querySelectorAll("[data-motion-tilt]").forEach(function (element) {
@@ -374,6 +384,9 @@
       }
     });
   }
+
+  if (global.addEventListener) global.addEventListener("resize", refreshTabIndicators, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshTabIndicators);
 
   global.Motion = {
     prefersReducedMotion: reduced,
