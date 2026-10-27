@@ -10,6 +10,12 @@ The site is for self-expression, not professional customers. It does not need to
 
 **2000s-core GIFs are a defining requirement, not an optional finishing touch.** Use real animated GIFs, blinkies, pixel buttons, decorative separators, tiled textures, and other web-era graphics throughout the design when the chosen theme supports them. A page that only uses a retro font or a nostalgic color palette is not enough.
 
+## Optional component specimen
+
+See [\u0060Components/Selfpagism.html\u0060](../Components/Selfpagism.html) for a standalone example themed around the Stylesheets repository. It demonstrates reusable patterns such as Tenor GIF embeds, blinkies, 88×31-style buttons, stamps, tiled textures, dividers, status panels, archive rows, an update log, webring-style links, and a guestbook form.
+
+**This file is a reference, not a required website template.** Do not force its dark, edgy underwater theme onto other Selfpagism projects. Do not assume the user wants every component shown in the specimen. Borrow only the elements that suit the user's stated aesthetic and content, adapt them to the page, and replace sample content with real user-provided details. The user's chosen theme and supplied assets always take priority.
+
 ## 1. Start by asking the owner
 
 Before writing code or choosing a finished direction, ask the user what kind of personal page they want. Do not assume every personal site should be pink, kawaii, dark, minimal, or nostalgic in the same way.
