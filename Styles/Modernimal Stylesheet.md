@@ -17,6 +17,22 @@ When making design decisions, follow this order:
 5. **Do not invent features.** Improve the requested experience without adding unsolicited hero sections, dashboards, onboarding cards, timers, labels, promotional copy, or unrelated tools.
 6. **Prefer simplicity when uncertain.** Choose fewer visual elements, fewer dependencies, and less layout clutter.
 
+## Mandatory component library reference
+
+**Before designing, building, or redesigning any UI, inspect [`Components/Modernimal.html`](../Components/Modernimal.html). This is the canonical interactive reference for Modernimal components, patterns, and examples.**
+
+**This reference is a required part of the stylesheet, not optional inspiration. Do not ignore it and do not reinvent a component when an appropriate pattern already exists. Reuse its component structure, styles, tokens, accessibility patterns, and interaction behavior, then adapt them to the current project's context.**
+
+Use this workflow:
+1. Find the closest component or interaction in `Components/Modernimal.html` before implementing a new one.
+2. Reuse its existing pattern where it fits. Keep related buttons grouped, floating menus and dialogs on an opaque `#0a0a0a` panel, and standalone icons unboxed.
+3. Adapt labels, content, dimensions, layout, states, and behavior to the product's actual needs. The library is a starting point, not a mandate to copy every demo verbatim.
+4. Preserve the target project's architecture, existing features, terminology, framework, and user requirements. Do not replace the entire project with the showcase itself.
+5. If no example fits, build a compatible extension using the same tokens, motion, accessibility, and interaction rules. Avoid adding unnecessary dependencies.
+6. Check keyboard use, focus, responsive behavior, reduced motion, empty/loading/error states, and theme consistency for the adapted component.
+
+Reference URL: https://github.com/aabhro/Stylesheets/blob/main/Components/Modernimal.html
+
 ## 2. Visual identity
 
 ### Core traits
@@ -547,6 +563,8 @@ Before changing code:
 9. For a React or other multi-component UI page, first write a compact `<design_plan>` preflight describing the intended layout, visual hierarchy, palette, interaction patterns, and risks to verify. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
 
 ## 20. Reusable prompt for another AI
+
+**Component reuse is required:** inspect `../Components/Modernimal.html` first, reuse a matching component when one exists, and adapt it to the current context rather than copying blindly or inventing a duplicate pattern.
 
 Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep `#0a0a0a` as the dominant background and overlay-backdrop color. Use lighter shades rarely: `#171717` only for slight surface separation, and `#262626` mainly for small hover states and subtle edges. Do not use lighter grays as large background fills. Use only this palette unless the feature or current request clearly requires otherwise: `#0a0a0a`, `#171717`, `#262626`, `#404040`, `#525252`, `#737373`, `#a3a3a3`, `#d4d4d4`, `#e5e5e5`, `#f5f5f5`, and `#fafafa`. Never introduce teal or blue tints. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful.
 
