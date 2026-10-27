@@ -19,6 +19,8 @@
   &nbsp;·&nbsp;
   <a href="Styles/Selfpagism.md">Open Selfpagism</a>
   &nbsp;·&nbsp;
+  <a href="Styles/Motion.md">Motion standard</a>
+  &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
 </p>
 
@@ -66,18 +68,27 @@ A style prompt for expressive personal websites, diaries, blogs, digital scrapbo
 
 ---
 
+## Shared standard
+
+### [Motion Standard](Styles/Motion.md)
+
+A required motion and interaction guide used by every style in this repository. It connects component behavior to the [transitions.dev motion skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev), with shared rules for transition selection, semantic tokens, complete enter/exit states, reduced motion, performance, and verification.
+
+**Use it alongside every stylesheet.** The motion implementation stays consistent while the chosen style controls the visual personality.
+
 ## Quick start
 
 1. **Choose a guide** from the list above.
-2. **Share it with your AI coding assistant** or keep it open as a design reference.
-3. **Describe the task clearly.** The guide establishes defaults; your current requirements take priority.
-4. **Review the result** for consistency, accessibility, responsive behavior, and working interactions.
+2. **Use the shared [Motion Standard](Styles/Motion.md)** alongside the chosen style. It applies to every guide.
+3. **Share both references with your AI coding assistant** and describe the task clearly. Your current requirements still take priority.
+4. **Review the result** for consistency, accessibility, responsive behavior, motion states, and working interactions.
 
 These documents are design references, not component libraries. Adapt them to the project's existing architecture and requirements.
 
 ## Adding a style
 
 - Place each stylesheet in `Styles/`.
+- Link [Motion Standard](Styles/Motion.md) near the beginning and from the implementation/review workflow. This shared rule is mandatory for every style.
 - Use a descriptive filename and give the guide a clear scope.
 - Keep rules concrete, reusable, and easy to follow.
 - Add the guide to **Available styles** in this README, with a short description and a direct link.
