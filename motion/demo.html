@@ -1,190 +1,894 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Motion / Stylesheets</title>
-<link rel="stylesheet" href="tokens.css">
-<link rel="stylesheet" href="patterns.css">
-<style>
-  :root { color-scheme: dark; --demo-bg: #0a0a0a; --demo-border: #292929; --demo-text: #f5f5f5; --demo-muted: #a3a3a3; }
-  * { box-sizing: border-box; }
-  body { margin: 0; color: var(--demo-text); background: var(--demo-bg); font: 15px/1.5 ui-sans-serif, system-ui, sans-serif; }
-  main { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 64px 0 96px; }
-  header { padding-bottom: 32px; border-bottom: 1px solid var(--demo-border); margin-bottom: 32px; }
-  h1 { font-size: clamp(32px, 6vw, 58px); letter-spacing: -.055em; line-height: 1.02; margin: 12px 0; font-weight: 600; }
-  h2 { font-size: 16px; margin: 0 0 18px; font-weight: 550; }
-  p { color: var(--demo-muted); max-width: 62ch; }
-  .eyebrow { color: var(--demo-muted); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .demo { border: 1px solid var(--demo-border); padding: 22px; min-width: 0; }
-  .row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-  button, .button { font: inherit; color: inherit; cursor: pointer; padding: 8px 12px; background: #171717; border: 1px solid #333; border-radius: 7px; }
-  button:hover { background: #202020; }
-  button:focus-visible { outline: 2px solid #888; outline-offset: 3px; }
-  .muted { color: var(--demo-muted); }
-  .menu-wrap { position: relative; display: inline-block; }
-  .m-dropdown { position: absolute; top: calc(100% + 8px); left: 0; z-index: 2; width: 180px; padding: 6px; background: #0a0a0a; border: 1px solid #333; }
-  .m-dropdown button { display: block; width: 100%; border: 0; text-align: left; background: transparent; }
-  .m-dropdown button:hover { background: #1d1d1d; }
-  .sample-dialog { border: 1px solid #333; padding: 24px; background: #0a0a0a; }
-  .sample-toast { position: fixed; right: 20px; bottom: 20px; z-index: 1100; padding: 12px 16px; border: 1px solid #444; background: #0a0a0a; max-width: calc(100vw - 40px); }
-  .tabs { border-bottom: 1px solid #333; }
-  .tabs [role=tab] { background: transparent; border: 0; border-radius: 0; color: #aaa; }
-  .tabs [aria-selected=true] { color: #fff; }
-  .m-tabs__indicator { height: 2px; background: #eee; }
-  .tab-panel { padding: 14px 4px; min-height: 46px; }
-  .skeleton-set { display: grid; gap: 9px; }
-  .skeleton-line { height: 9px; }
-  .skeleton-line.short { width: 55%; }
-  .m-matrix { margin: 10px; }
-  .test-card { padding: 16px; border: 1px solid #333; min-width: 120px; }
-  .m-toggle__track { color: #eee; }
-  .m-like { border: 0; background: transparent; font-size: 24px; }
-  .m-accordion { display: block; border-top: 1px solid #333; padding: 12px 0; }
-  .m-accordion summary { cursor: pointer; }
-  .m-accordion__content-inner { padding-top: 8px; color: var(--demo-muted); }
-  @media (max-width: 680px) { main { padding-top: 32px; } .grid { grid-template-columns: 1fr; } }
+<meta name="color-scheme" content="dark">
+<title>Motion · Stylesheets</title>
+<meta name="description" content="Interactive motion patterns for the Stylesheets design systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Stylesheets Motion — shared semantic tokens. Load once per project. */
+:root {
+  --m-duration-instant: 80ms;
+  --m-duration-fast: 140ms;
+  --m-duration-control: 180ms;
+  --m-duration-enter: 220ms;
+  --m-duration-exit: 150ms;
+  --m-duration-panel: 280ms;
+  --m-duration-emphasis: 420ms;
+  --m-duration-loop: 1600ms;
+  --m-stagger: 35ms;
+
+  --m-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --m-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --m-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --m-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-spring: cubic-bezier(0.2, 1.35, 0.4, 1);
+  --m-ease-linear: linear;
+
+  --m-distance-1: 3px;
+  --m-distance-2: 6px;
+  --m-distance-3: 10px;
+  --m-distance-4: 16px;
+  --m-distance-5: 28px;
+
+  --m-scale-1: 0.985;
+  --m-scale-2: 0.97;
+  --m-scale-3: 0.94;
+
+  --m-blur-1: 2px;
+  --m-blur-2: 5px;
+  --m-blur-3: 10px;
+
+  --m-motion-outline: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --m-duration-instant: 0ms;
+    --m-duration-fast: 0ms;
+    --m-duration-control: 0ms;
+    --m-duration-enter: 0ms;
+    --m-duration-exit: 0ms;
+    --m-duration-panel: 0ms;
+    --m-duration-emphasis: 0ms;
+    --m-duration-loop: 0ms;
+    --m-stagger: 0ms;
+  }
+}
+
+/* Stylesheets Motion — composable UI motion patterns.
+   Load tokens.css before this file. Classes describe behavior, not theme. */
+
+.m-motion {
+  transition-property: transform, opacity, color, background-color, border-color, box-shadow;
+  transition-duration: var(--m-duration-control);
+  transition-timing-function: var(--m-ease-standard);
+}
+.m-hover-lift {
+  transition: transform var(--m-duration-control) var(--m-ease-standard), opacity var(--m-duration-fast) var(--m-ease-standard);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .m-hover-lift:hover { transform: translateY(calc(-1 * var(--m-distance-1))); }
+  .m-avatar-list:has(.m-avatar:hover) .m-avatar:not(:hover) { transform: translateY(1px) scale(.985); }
+  .m-avatar-list .m-avatar { transition: transform var(--m-duration-control) var(--m-ease-spring); }
+  .m-avatar-list .m-avatar:hover { transform: translateY(calc(-1 * var(--m-distance-2))) scale(1.04); z-index: 1; }
+}
+.m-press { transition: transform var(--m-duration-instant) var(--m-ease-standard); }
+.m-press:active { transform: scale(.985); }
+.m-focus:focus-visible { outline: 2px solid var(--m-motion-outline); outline-offset: 3px; }
+
+.m-dropdown, .m-panel, .m-dialog__panel, .m-dialog__backdrop, .m-toast {
+  transition-property: opacity, transform, filter;
+  transition-duration: var(--m-duration-enter);
+  transition-timing-function: var(--m-ease-enter);
+}
+.m-dropdown {
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--m-distance-2))) scale(var(--m-scale-1));
+  transform-origin: var(--m-origin, top center);
+  pointer-events: none;
+}
+.m-dropdown[data-state="open"] { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.m-dropdown[data-state="closing"] { opacity: 0; transform: translateY(calc(-1 * var(--m-distance-1))) scale(.99); transition-duration: var(--m-duration-exit); transition-timing-function: var(--m-ease-exit); }
+
+.m-panel {
+  opacity: 0;
+  transform: translateX(var(--m-panel-distance, 12px));
+  pointer-events: none;
+}
+.m-panel[data-state="open"] { opacity: 1; transform: translateX(0); pointer-events: auto; }
+.m-panel[data-state="closing"] { opacity: 0; transform: translateX(var(--m-panel-distance, 12px)); transition-duration: var(--m-duration-exit); transition-timing-function: var(--m-ease-exit); }
+
+.m-dialog { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 1rem; }
+.m-dialog[hidden], .m-dropdown[hidden], .m-panel[hidden], .m-toast[hidden] { display: none !important; }
+.m-dialog__backdrop {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0; border: 0;
+  background: rgba(0, 0, 0, .55);
+  opacity: 0;
+}
+.m-dialog__panel {
+  position: relative; z-index: 1; width: min(100%, 34rem);
+  opacity: 0; transform: translateY(var(--m-distance-2)) scale(var(--m-scale-2));
+  transform-origin: center;
+}
+.m-dialog[data-state="open"] .m-dialog__backdrop { opacity: 1; }
+.m-dialog[data-state="open"] .m-dialog__panel { opacity: 1; transform: translateY(0) scale(1); }
+.m-dialog[data-state="closing"] .m-dialog__backdrop,
+.m-dialog[data-state="closing"] .m-dialog__panel { opacity: 0; transition-duration: var(--m-duration-exit); transition-timing-function: var(--m-ease-exit); }
+.m-dialog[data-state="closing"] .m-dialog__panel { transform: translateY(var(--m-distance-1)) scale(.99); }
+
+.m-text-swap { animation: m-text-swap var(--m-duration-fast) var(--m-ease-standard) both; }
+@keyframes m-text-swap { from { opacity: .25; transform: translateY(var(--m-distance-1)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+.m-icon-swap { animation: m-icon-swap var(--m-duration-fast) var(--m-ease-standard) both; }
+@keyframes m-icon-swap { from { opacity: 0; transform: scale(.82); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: scale(1); filter: blur(0); } }
+.m-number-pop { animation: m-number-pop var(--m-duration-enter) var(--m-ease-spring) both; }
+@keyframes m-number-pop { from { opacity: .2; transform: translateY(var(--m-distance-2)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+.m-badge-pop { animation: m-badge-pop var(--m-duration-enter) var(--m-ease-spring) both; transform-origin: center; }
+@keyframes m-badge-pop { 0% { opacity: 0; transform: translate(3px, -4px) scale(.65); } 70% { opacity: 1; transform: translate(0) scale(1.08); } 100% { transform: scale(1); } }
+
+.m-error-shake { animation: m-error-shake var(--m-duration-enter) var(--m-ease-standard) both; }
+@keyframes m-error-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(calc(-1 * var(--m-distance-2))); } 50% { transform: translateX(var(--m-distance-2)); } 75% { transform: translateX(calc(-1 * var(--m-distance-1))); } }
+.m-success-pop { animation: m-success-pop var(--m-duration-emphasis) var(--m-ease-enter) both; }
+@keyframes m-success-pop { 0% { opacity: 0; transform: translateY(var(--m-distance-3)) scale(.92); } 65% { opacity: 1; transform: translateY(0) scale(1.025); } 100% { transform: scale(1); } }
+
+.m-skeleton {
+  background: currentColor; opacity: .09; border-radius: .25rem;
+  animation: m-skeleton-pulse var(--m-duration-loop) ease-in-out infinite alternate;
+}
+@keyframes m-skeleton-pulse { to { opacity: .16; } }
+.m-reveal { animation: m-reveal var(--m-duration-panel) var(--m-ease-enter) both; }
+@keyframes m-reveal { from { opacity: 0; transform: translateY(var(--m-distance-2)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: none; filter: blur(0); } }
+.m-shimmer {
+  opacity: .65;
+  background-image: linear-gradient(100deg, currentColor 20%, transparent 50%, currentColor 80%);
+  background-size: 250% 100%;
+  animation: m-shimmer var(--m-duration-loop) linear infinite;
+}
+.m-shimmer-text {
+  background-image: linear-gradient(100deg, var(--m-shimmer-muted, #737373) 35%, var(--m-shimmer-highlight, #f5f5f5) 50%, var(--m-shimmer-muted, #737373) 65%);
+  background-size: 250% 100%; background-clip: text; -webkit-background-clip: text;
+  color: transparent;
+  animation: m-shimmer var(--m-duration-loop) linear infinite;
+}
+@keyframes m-shimmer { to { background-position: -250% 0; } }
+
+.m-tabs { position: relative; }
+.m-tabs__list { position: relative; display: flex; }
+.m-tabs__indicator {
+  position: absolute; left: 0; bottom: 0; width: var(--m-tab-width, 0px);
+  transform: translateX(var(--m-tab-left, 0px));
+  transition: transform var(--m-duration-control) var(--m-ease-enter), width var(--m-duration-control) var(--m-ease-enter);
+  pointer-events: none;
+}
+.m-tooltip { opacity: 0; transform: translateY(var(--m-distance-1)) scale(.98); pointer-events: none; transition: opacity var(--m-duration-fast) var(--m-ease-standard), transform var(--m-duration-fast) var(--m-ease-standard); }
+[data-tooltip-open="true"] .m-tooltip, .m-tooltip[data-state="open"] { opacity: 1; transform: translateY(0) scale(1); }
+.m-accordion__content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--m-duration-panel) var(--m-ease-enter); }
+.m-accordion[open] .m-accordion__content { grid-template-rows: 1fr; }
+.m-accordion__content-inner { min-height: 0; overflow: hidden; }
+
+.m-toast { opacity: 0; transform: translateY(var(--m-distance-3)) scale(.99); }
+.m-toast[data-state="open"] { opacity: 1; transform: translateY(0) scale(1); }
+.m-toast[data-state="closing"] { opacity: 0; transform: translateY(var(--m-distance-1)); transition-duration: var(--m-duration-exit); transition-timing-function: var(--m-ease-exit); }
+
+.m-like { position: relative; transition: transform var(--m-duration-fast) var(--m-ease-spring); }
+.m-like[aria-pressed="true"] { transform: scale(1.07); }
+.m-like[aria-pressed="true"] .m-like__icon { animation: m-like-pop 260ms var(--m-ease-spring) both; }
+@keyframes m-like-pop { 50% { transform: scale(1.3); } }
+.m-check { transition: background-color var(--m-duration-control) var(--m-ease-standard), border-color var(--m-duration-control) var(--m-ease-standard); }
+.m-check svg path { stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset var(--m-duration-control) var(--m-ease-enter); }
+.m-check[aria-checked="true"] svg path { stroke-dashoffset: 0; }
+
+.m-toggle { position: relative; display: inline-flex; align-items: center; cursor: pointer; gap: .6rem; }
+.m-toggle input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.m-toggle__track { width: 2.4rem; height: 1.35rem; border: 1px solid currentColor; border-radius: 999px; position: relative; opacity: .65; transition: background-color var(--m-duration-control), opacity var(--m-duration-control); }
+.m-toggle__thumb { position: absolute; width: .85rem; height: .85rem; border-radius: 50%; top: .19rem; left: .2rem; background: currentColor; transition: transform var(--m-duration-control) var(--m-ease-enter); }
+.m-toggle input:checked + .m-toggle__track { opacity: 1; }
+.m-toggle input:checked + .m-toggle__track .m-toggle__thumb { transform: translateX(1rem); }
+.m-toggle input:focus-visible + .m-toggle__track { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.m-thinking { animation: m-thinking var(--m-duration-loop) ease-in-out infinite; }
+@keyframes m-thinking { 0%,100% { opacity: .48; } 50% { opacity: 1; } }
+.m-stream > * { animation: m-reveal var(--m-duration-enter) var(--m-ease-enter) both; }
+.m-stream > *:nth-child(2) { animation-delay: calc(var(--m-stagger) * 1); }
+.m-stream > *:nth-child(3) { animation-delay: calc(var(--m-stagger) * 2); }
+.m-stream > *:nth-child(4) { animation-delay: calc(var(--m-stagger) * 3); }
+.m-matrix { display: grid; grid-template-columns: repeat(4, .35rem); gap: .25rem; }
+.m-matrix i { display: block; width: .35rem; aspect-ratio: 1; border-radius: 50%; background: currentColor; opacity: .25; animation: m-matrix 900ms ease-in-out infinite alternate; }
+.m-matrix i:nth-child(4n + 1) { animation-delay: -450ms; }
+.m-matrix i:nth-child(3n + 2) { animation-delay: -250ms; }
+@keyframes m-matrix { to { opacity: 1; transform: scale(.65); } }
+.m-banner-stack > * { transition: transform var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
+.m-banner-stack > *:nth-last-child(2) { transform: translateY(-4px) scale(.99); opacity: .8; }
+.m-banner-stack > *:nth-last-child(3) { transform: translateY(-8px) scale(.97); opacity: .6; }
+
+.m-tilt { transform: perspective(800px) rotateX(var(--m-tilt-x, 0deg)) rotateY(var(--m-tilt-y, 0deg)); transition: transform var(--m-duration-control) var(--m-ease-enter); transform-style: preserve-3d; }
+.m-donut__arc { transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset var(--m-duration-panel) var(--m-ease-enter); }
+.m-counter-digit { display: inline-block; animation: m-number-pop var(--m-duration-fast) var(--m-ease-enter) both; }
+.m-text-morph { transition: width var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
+
+
+/* Additional patterns so the local catalog includes reusable implementations. */
+.m-card-resize {
+  transition: width var(--m-duration-panel) var(--m-ease-enter),
+              height var(--m-duration-panel) var(--m-ease-enter),
+              flex-basis var(--m-duration-panel) var(--m-ease-enter),
+              grid-template-columns var(--m-duration-panel) var(--m-ease-enter);
+}
+.m-page-transition[data-direction="forward"] { animation: m-page-forward var(--m-duration-panel) var(--m-ease-enter) both; }
+.m-page-transition[data-direction="back"] { animation: m-page-back var(--m-duration-panel) var(--m-ease-enter) both; }
+@keyframes m-page-forward { from { opacity: 0; transform: translateX(var(--m-distance-3)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes m-page-back { from { opacity: 0; transform: translateX(calc(-1 * var(--m-distance-3))); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: none; filter: blur(0); } }
+
+.m-input-clear.is-clearing { animation: m-input-clear-out var(--m-duration-control) var(--m-ease-exit) both; }
+@keyframes m-input-clear-out { to { opacity: 0; transform: translateX(var(--m-distance-2)); filter: blur(var(--m-blur-1)); } }
+.m-text-swap-soft { animation: m-text-swap-soft var(--m-duration-fast) ease-in-out both; }
+@keyframes m-text-swap-soft { from { opacity: .35; filter: blur(var(--m-blur-1)); } to { opacity: 1; filter: blur(0); } }
+.m-learn-more__arrow { display: inline-block; transition: transform var(--m-duration-fast) var(--m-ease-enter); }
+.m-learn-more:hover .m-learn-more__arrow,
+.m-learn-more:focus-visible .m-learn-more__arrow { transform: translateX(var(--m-distance-1)); }
+
+.m-trigger-morph__line { transform-origin: center; transition: transform var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
+[aria-expanded="true"] .m-trigger-morph__line--vertical { transform: rotate(90deg); opacity: 0; }
+.m-counter-spin { display: inline-flex; overflow: hidden; vertical-align: bottom; }
+.m-counter-spin .m-counter-digit { animation: m-counter-spin var(--m-duration-enter) var(--m-ease-enter) both; }
+@keyframes m-counter-spin { from { opacity: .25; transform: translateY(100%); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+.m-text-morph { display: inline-block; overflow: hidden; white-space: nowrap; }
+.m-reasoning-stream > * { animation: m-reveal var(--m-duration-enter) var(--m-ease-enter) both; }
+.m-streaming-text .m-stream-chunk { animation: m-text-swap-soft var(--m-duration-fast) ease-in-out both; }
+.m-donut { display: inline-block; }
+.m-donut__arc { fill: none; stroke-linecap: round; }
+
+@media (prefers-reduced-motion: reduce) {
+  .m-motion, .m-hover-lift, .m-press, .m-dropdown, .m-panel, .m-dialog__panel, .m-dialog__backdrop,
+  .m-text-swap, .m-text-swap-soft, .m-input-clear, .m-page-transition, .m-icon-swap, .m-number-pop, .m-badge-pop, .m-error-shake, .m-success-pop,
+  .m-skeleton, .m-reveal, .m-shimmer, .m-shimmer-text, .m-tabs__indicator, .m-tooltip,
+  .m-accordion__content, .m-toast, .m-like, .m-check, .m-toggle__track, .m-toggle__thumb,
+  .m-thinking, .m-stream > *, .m-reasoning-stream > *, .m-streaming-text .m-stream-chunk, .m-matrix i, .m-banner-stack > *, .m-tilt, .m-donut__arc, .m-counter-digit, .m-counter-spin .m-counter-digit, .m-card-resize, .m-trigger-morph__line, .m-learn-more__arrow, .m-text-morph {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .m-hover-lift:hover, .m-avatar-list .m-avatar:hover { transform: none; }
+  .m-tilt { transform: none !important; }
+}
+
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0a; --surface: #171717; --hover: #262626;
+  --edge: #262626; --edge-soft: rgba(38,38,38,.65);
+  --text: #f5f5f5; --sub: #d4d4d4; --muted: #a3a3a3;
+  --overlay: #0a0a0a; --backdrop: rgba(10,10,10,.76);
+  --shadow: 0 16px 48px rgba(10,10,10,.38);
+  --fast: 120ms; --motion: 180ms; --enter: 220ms;
+  --ease: cubic-bezier(.2,0,0,1); --pill: 999px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(245,245,245,.10) transparent; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 13px/1.65 "Noto Sans",system-ui,sans-serif; -webkit-font-smoothing: antialiased; }
+button,input,textarea { font: inherit; }
+button { color: inherit; }
+a { color: inherit; text-decoration: none; }
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible { outline: 2px solid var(--sub); outline-offset: 3px; }
+::selection { background: #d4d4d4; color: #0a0a0a; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(245,245,245,.10); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(245,245,245,.18); }
+.topbar { position: sticky; top: 0; z-index: 50; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 clamp(18px,4vw,58px); border-bottom: 1px solid var(--edge-soft); background: var(--bg); }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; letter-spacing: -.035em; white-space: nowrap; }
+.brand-mark { width: 19px; height: 19px; display: grid; place-items: center; border: 1px solid var(--edge); border-radius: 6px; font-size: 10px; color: var(--sub); }
+.brand span:last-child { color: var(--muted); font-weight: 400; }
+.topnav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.topnav a { padding: 6px 10px; border-radius: var(--pill); color: var(--muted); transition: color var(--motion) var(--ease),background-color var(--motion) var(--ease); }
+.topnav a:hover { color: var(--text); background: var(--hover); }
+.content { width: min(1120px,100%); margin: 0 auto; padding: 46px clamp(18px,4vw,58px) 88px; }
+.intro { max-width: 760px; padding-bottom: 28px; border-bottom: 1px solid var(--edge-soft); }
+.eyebrow { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 13px; }
+.eyebrow i { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--sub); }
+h1 { margin: 0 0 12px; font-size: clamp(34px,5vw,52px); font-weight: 500; letter-spacing: -.065em; line-height: 1.08; }
+.intro p { max-width: 610px; margin: 0; color: var(--sub); font-size: 13px; line-height: 1.8; }
+.meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--edge); border-radius: var(--pill); padding: 3px 9px; color: var(--muted); font-size: 10px; }
+section { padding-top: 33px; scroll-margin-top: 78px; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--edge-soft); }
+h2 { margin: 0 0 4px; font-size: 20px; font-weight: 500; letter-spacing: -.04em; line-height: 1.3; }
+.section-head p { max-width: 620px; margin: 0; color: var(--muted); font-size: 11px; }
+.count { color: var(--muted); font-size: 10px; white-space: nowrap; }
+.doc-row { display: grid; grid-template-columns: minmax(150px,.72fr) minmax(0,1.28fr); gap: clamp(18px,3vw,40px); padding: 21px 0 23px; border-bottom: 1px solid var(--edge-soft); scroll-margin-top: 82px; }
+.doc-info,.example { min-width: 0; }
+.doc-title { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.doc-title h3 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: -.02em; }
+.kind { font-size: 9px; color: var(--muted); border: 1px solid var(--edge); border-radius: 5px; padding: 1px 5px; }
+.description { font-size: 11px; color: var(--muted); margin: 0; line-height: 1.75; max-width: 300px; }
+.usage { margin: 10px 0 0; font-size: 10px; color: var(--sub); }
+.stage { min-height: 76px; padding: 10px 2px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; position: relative; }
+.stage.stack { align-items: stretch; flex-direction: column; flex-wrap: nowrap; }
+.stage.center { justify-content: center; }
+.stage-note { font-size: 10px; color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 35px; padding: 0 13px; border: 1px solid transparent; border-radius: var(--pill); font-weight: 500; font-size: 11px; line-height: 1; white-space: nowrap; cursor: pointer; transition: background-color var(--motion) var(--ease),color var(--motion) var(--ease),border-color var(--motion) var(--ease),opacity var(--fast) var(--ease),transform var(--fast) var(--ease); }
+.btn:active:not(:disabled) { transform: scale(.985); }
+.btn.primary { background: #f5f5f5; color: #0a0a0a; }
+.btn.primary:hover { background: #d4d4d4; }
+.btn.secondary { border-color: var(--edge); color: var(--text); background: transparent; }
+.btn.secondary:hover { background: var(--hover); border-color: #404040; }
+.btn.ghost { color: var(--sub); background: transparent; }
+.btn.ghost:hover { background: var(--hover); color: var(--text); }
+.btn:disabled { opacity: .38; cursor: not-allowed; }
+.group { display: inline-flex; align-items: center; gap: 1px; border: 1px solid var(--edge); border-radius: var(--pill); padding: 3px; }
+.group .btn { min-height: 28px; padding: 0 11px; border: 0; }
+.group .btn[aria-pressed="true"] { background: var(--hover); color: var(--text); }
+.icon-btn { display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; border: 0; border-radius: var(--pill); background: transparent; color: var(--muted); cursor: pointer; transition: color var(--motion) var(--ease),background-color var(--motion) var(--ease); }
+.icon-btn:hover { color: var(--text); background: var(--hover); }
+.control { width: 100%; min-width: 0; min-height: 37px; padding: 0 12px; border: 1px solid var(--edge); border-radius: 10px; background: transparent; color: var(--text); outline: none; transition: border-color var(--motion) var(--ease),box-shadow var(--motion) var(--ease); }
+.control::placeholder { color: var(--muted); }
+.control:hover { border-color: #404040; }
+.control:focus { border-color: #737373; box-shadow: 0 0 0 2px rgba(163,163,163,.09); }
+.field { display: flex; flex-direction: column; gap: 6px; width: min(100%,340px); min-width: 0; }
+.label { font-size: 10px; color: var(--sub); font-weight: 500; }
+.hint { font-size: 10px; color: var(--muted); }
+.menu-wrap { position: relative; display: inline-block; }
+.m-dropdown { min-width: 175px; padding: 5px; border: 1px solid rgba(38,38,38,.85); border-radius: 12px; background: #0a0a0a; color: #f5f5f5; box-shadow: var(--shadow); z-index: 60; }
+.m-dropdown .menu-action { width: 100%; min-height: 32px; display: flex; align-items: center; border: 0; border-radius: 7px; background: transparent; color: var(--sub); padding: 0 9px; text-align: left; white-space: nowrap; cursor: pointer; font-size: 11px; }
+.m-dropdown .menu-action:hover { background: #262626; color: #f5f5f5; }
+.dialog-panel { border: 1px solid #262626; border-radius: 14px; background: #0a0a0a; color: #f5f5f5; box-shadow: var(--shadow); overflow: hidden; }
+.dialog-head { padding: 18px 19px 12px; border-bottom: 1px solid #262626; }
+.dialog-head strong { display: block; font-size: 13px; font-weight: 600; }
+.dialog-head p { color: #a3a3a3; margin: 4px 0 0; font-size: 11px; }
+.dialog-body { padding: 15px 19px; color: #d4d4d4; font-size: 12px; }
+.dialog-foot { display: flex; justify-content: flex-end; gap: 7px; padding: 0 19px 17px; }
+.m-dialog__backdrop { background: rgba(10,10,10,.76); cursor: default; }
+.sample-toast { display: flex; align-items: flex-start; gap: 9px; padding: 12px; border: 1px solid #262626; border-radius: 12px; box-shadow: var(--shadow); background: #0a0a0a; color: #f5f5f5; }
+.toast-copy { min-width: 0; flex: 1; }
+.sample-toast strong { display: block; font-size: 11px; font-weight: 600; }
+.sample-toast p { color: #a3a3a3; margin: 2px 0 0; font-size: 10px; }
+.tabs { position: relative; width: 100%; border-bottom: 1px solid var(--edge-soft); }
+.tabs-list { position: relative; display: flex; align-items: center; gap: 2px; }
+.tabs [role="tab"] { min-height: 36px; padding: 0 12px; border: 0; border-radius: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; transition: color var(--motion) var(--ease); }
+.tabs [role="tab"]:hover,.tabs [role="tab"][aria-selected="true"] { color: var(--text); }
+.tabs .m-tabs__indicator { height: 2px; background: #f5f5f5; bottom: -1px; }
+.tab-panel { padding: 12px 2px; min-height: 46px; color: var(--sub); font-size: 11px; }
+.m-accordion { border-bottom: 1px solid var(--edge-soft); }
+.m-accordion summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; color: var(--sub); cursor: pointer; list-style: none; font-size: 12px; }
+.m-accordion summary::-webkit-details-marker { display: none; }
+.m-accordion summary::after { content: "+"; font-size: 17px; color: var(--muted); transition: transform var(--motion) var(--ease); }
+.m-accordion[open] summary::after { content: "−"; }
+.m-accordion__content-inner { padding: 0 0 12px; color: var(--muted); font-size: 11px; }
+.m-accordion__content { display: grid; }
+.m-accordion[open] .m-accordion__content { grid-template-rows: 1fr; }
+.state-line { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.m-toggle input { cursor: pointer; }
+.m-toggle__track { background: #404040; border-color: #404040; }
+.m-toggle input:checked + .m-toggle__track { background: #d4d4d4; border-color: #d4d4d4; }
+.m-toggle__thumb { background: #f5f5f5; }
+.m-toggle input:checked + .m-toggle__track .m-toggle__thumb { background: #0a0a0a; }
+.m-like { font-size: 21px; border: 0; padding: 0 8px; background: transparent; }
+.m-like:hover { background: transparent; }
+.m-skeleton { border-radius: 4px; }
+.skeleton-lines { display: grid; gap: 8px; max-width: 360px; width: 100%; }
+.skeleton-line { height: 8px; width: 100%; border-radius: 999px; }
+.skeleton-line.medium { width: 72%; }
+.skeleton-line.short { width: 48%; }
+.test-card { width: min(100%,250px); border-bottom: 1px solid var(--edge); padding: 10px 0; }
+.test-card strong { font-weight: 500; }
+.error-row { display: flex; align-items: flex-start; gap: 8px; max-width: 360px; width: 100%; }
+.error-row .field { flex: 1; }
+footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-soft); color: var(--muted); font-size: 10px; }
+@media(max-width:700px) {
+  .topbar { align-items: flex-start; flex-direction: column; padding-top: 12px; padding-bottom: 10px; gap: 8px; }
+  .topnav { width: 100%; overflow-x: auto; flex-wrap: nowrap; }
+  .content { padding-top: 28px; }
+  .doc-row { grid-template-columns: 1fr; gap: 7px; }
+  .stage { padding: 6px 0 10px; }
+  .section-head { align-items: flex-start; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+}
 </style>
-<script src="motion.js"></script>
 </head>
 <body>
-<main>
-  <header>
-    <div class="eyebrow">Stylesheets / Motion system</div>
+<header class="topbar">
+  <a class="brand" href="#top"><span class="brand-mark">M</span><span>stylesheets</span><span>/ motion</span></a>
+  <nav class="topnav" aria-label="Motion examples">
+    <a href="#actions">Actions</a><a href="#overlays">Overlays</a><a href="#navigation">Navigation</a><a href="#feedback">Feedback</a><a href="#utilities">Utilities</a>
+  </nav>
+</header>
+<main class="content" id="top">
+  <header class="intro">
+    <div class="eyebrow"><i></i> Shared motion system</div>
     <h1>Motion, with a reason.</h1>
-    <p>A working local showcase of the shared transition tokens, CSS patterns, and state helpers. Motion mechanics are consistent; the active stylesheet still decides the aesthetic.</p>
-    <div class="row"><button class="m-press" data-motion-replay="#headline" data-motion-class="m-reveal">Replay reveal</button><button class="m-press" id="reduced-state" type="button">Check reduced-motion setting</button></div>
-    <p class="muted" id="headline">Short transitions. Complete state changes. Reduced-motion support.</p>
+    <p>Reusable motion patterns for every Stylesheets theme. The mechanics stay consistent. The active stylesheet still decides whether a transition feels quiet, playful, expressive, or theatrical.</p>
+    <div class="meta"><span class="chip">CSS + vanilla JavaScript</span><span class="chip">35 pattern references</span><span class="chip">Reduced-motion aware</span></div>
   </header>
 
-  <div class="grid">
-    <section class="demo">
-      <h2>01 / Anchored menu</h2>
-      <div class="menu-wrap">
-        <button class="m-press" data-motion-open="#demo-menu" aria-controls="demo-menu" aria-expanded="false">Open menu</button>
-        <div class="m-dropdown" id="demo-menu" data-state="closed" hidden aria-hidden="true">
-          <button type="button" data-motion-close="#demo-menu">Rename item</button>
-          <button type="button" data-motion-close="#demo-menu">Duplicate item</button>
-          <button type="button" data-motion-close="#demo-menu">Archive item</button>
+  <section id="actions">
+    <div class="section-head"><div><h2>Actions and states</h2><p>Keep feedback brief. Related controls share one treatment.</p></div><span class="count">01</span></div>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Button feedback</h3><span class="kind">PRESS</span></div><p class="description">Small tactile feedback, without making neighboring elements jump.</p><p class="usage">A tiny scale change on press.</p></div>
+      <div class="example"><div class="stage">
+        <div class="group" role="group" aria-label="Example actions"><button class="btn primary m-press" type="button" id="primary-action">Save changes</button><button class="btn m-press" type="button" data-motion-toast="#demo-toast">Preview toast</button><button class="btn m-press" type="button" data-motion-open="#demo-dialog" aria-controls="demo-dialog" aria-expanded="false">Open dialog</button></div>
+      </div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Menu dropdown</h3><span class="kind">ENTER / EXIT</span></div><p class="description">The menu grows from its trigger, closes after an action, and dismisses when you click elsewhere or press Escape.</p></div>
+      <div class="example"><div class="stage">
+        <div class="menu-wrap"><button class="btn secondary m-press" type="button" id="menu-trigger" data-motion-open="#demo-menu" aria-controls="demo-menu" aria-expanded="false">Open menu <span aria-hidden="true">⌄</span></button>
+          <div class="m-dropdown" id="demo-menu" data-state="closed" hidden aria-hidden="true" role="menu">
+            <button class="menu-action" type="button" role="menuitem" data-motion-close="#demo-menu">Rename item</button>
+            <button class="menu-action" type="button" role="menuitem" data-motion-close="#demo-menu">Duplicate item</button>
+            <div class="divider"></div>
+            <button class="menu-action" type="button" role="menuitem" data-motion-close="#demo-menu">Archive item</button>
+          </div>
         </div>
-      </div>
-    </section>
+        <span class="stage-note">Try clicking outside the menu.</span>
+      </div></div>
+    </article>
+  </section>
 
-    <section class="demo">
-      <h2>02 / Modal</h2>
-      <button class="m-press" data-motion-open="#demo-dialog" aria-controls="demo-dialog" aria-expanded="false">Open dialog</button>
-      <section class="m-dialog" id="demo-dialog" data-state="closed" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-        <div class="m-dialog__backdrop" data-motion-close="#demo-dialog" aria-hidden="true"></div>
-        <div class="m-dialog__panel sample-dialog">
-          <h2 id="dialog-title">Changes saved</h2>
-          <p>This panel animates in and out. Press Escape or use the close action.</p>
-          <button type="button" data-motion-close="#demo-dialog">Close</button>
-        </div>
-      </section>
-    </section>
-
-    <section class="demo">
-      <h2>03 / Text and icon states</h2>
-      <div class="row">
+  <section id="overlays">
+    <div class="section-head"><div><h2>Overlays and menus</h2><p>Floating surfaces use an opaque #0a0a0a panel. The dimming backdrop is separate.</p></div><span class="count">02</span></div>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Dialog</h3><span class="kind">FOCUS</span></div><p class="description">A short entrance, faster dismissal, Escape support, and focus restoration.</p></div>
+      <div class="example"><div class="stage"><button class="btn secondary m-press" type="button" data-motion-open="#demo-dialog" aria-controls="demo-dialog" aria-expanded="false">Open confirmation</button><span class="stage-note">Press Escape to close.</span></div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Context and status</h3></div><p class="description">Text changes should explain state without distracting from the task.</p></div>
+      <div class="example"><div class="stage">
         <span id="status-text">Ready to save</span>
-        <button class="m-press" data-motion-swap="#status-text" data-motion-text="Saved successfully">Simulate save</button>
-        <button class="m-press" data-motion-replay="#sample-icon" data-motion-class="m-icon-swap"><span id="sample-icon">↗</span> Replay icon</button>
-      </div>
-    </section>
+        <div class="group" role="group" aria-label="Status examples"><button class="btn m-press" type="button" data-motion-swap="#status-text" data-motion-text="Saved successfully">Simulate save</button><button class="btn m-press" type="button" data-motion-morph="#copy-label" data-motion-text="Copied">Copy label</button></div>
+        <span id="copy-label" class="chip">Copy</span>
+      </div></div>
+    </article>
+  </section>
 
-    <section class="demo">
-      <h2>04 / Toast</h2>
-      <button class="m-press" data-motion-toast="#demo-toast">Show toast</button>
-      <div class="m-toast sample-toast" id="demo-toast" data-state="closed" hidden aria-hidden="true" role="status">
-        <span class="m-success-pop">✓</span> Your changes are saved.
-        <button type="button" data-motion-close="#demo-toast" aria-label="Dismiss toast">×</button>
-      </div>
-    </section>
-
-    <section class="demo">
-      <h2>05 / Sliding tabs</h2>
-      <div class="m-tabs tabs" id="demo-tabs">
-        <div class="m-tabs__list" role="tablist" aria-label="Example views">
-          <button role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
-          <button role="tab" id="tab-details" aria-controls="panel-details" aria-selected="false" tabindex="-1">Details</button>
-          <button role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1">History</button>
-          <span class="m-tabs__indicator"></span>
+  <section id="navigation">
+    <div class="section-head"><div><h2>Navigation and disclosure</h2><p>State changes remain readable when motion is reduced or unavailable.</p></div><span class="count">03</span></div>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Sliding tabs</h3></div><p class="description">A restrained underline tracks the selected view. Arrow keys move between tabs.</p></div>
+      <div class="example">
+        <div class="m-tabs tabs" id="demo-tabs">
+          <div class="m-tabs__list tabs-list" role="tablist" aria-label="Example views">
+            <button type="button" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+            <button type="button" role="tab" id="tab-details" aria-controls="panel-details" aria-selected="false" tabindex="-1">Details</button>
+            <button type="button" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1">History</button>
+            <span class="m-tabs__indicator" aria-hidden="true"></span>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">A shared motion scale keeps everyday UI quick.</div>
+          <div class="tab-panel" role="tabpanel" id="panel-details" aria-labelledby="tab-details" hidden>Use the smallest transition that explains the change.</div>
+          <div class="tab-panel" role="tabpanel" id="panel-history" aria-labelledby="tab-history" hidden>Test re-entry, exit states, and reduced motion.</div>
         </div>
-        <div class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">A shared motion scale keeps everyday UI quick.</div>
-        <div class="tab-panel" role="tabpanel" id="panel-details" aria-labelledby="tab-details" hidden>Use the smallest transition that explains the change.</div>
-        <div class="tab-panel" role="tabpanel" id="panel-history" aria-labelledby="tab-history" hidden>Test re-entry, exits, and reduced motion.</div>
       </div>
-    </section>
-
-    <section class="demo">
-      <h2>06 / Accordion</h2>
-      <details class="m-accordion" open>
-        <summary>What should motion communicate?</summary>
-        <div class="m-accordion__content"><div class="m-accordion__content-inner">Cause and effect, hierarchy, and changes of state. It should not compete with the content.</div></div>
-      </details>
-      <details class="m-accordion">
-        <summary>Should every control animate?</summary>
-        <div class="m-accordion__content"><div class="m-accordion__content-inner">No. Use animation where it adds useful feedback.</div></div>
-      </details>
-    </section>
-
-    <section class="demo">
-      <h2>07 / Loading and reveal</h2>
-      <div class="skeleton-set" id="skeleton-view">
-        <div class="m-skeleton skeleton-line"></div><div class="m-skeleton skeleton-line"></div><div class="m-skeleton skeleton-line short"></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Accordion</h3></div><p class="description">Native disclosure keeps keyboard behavior and content availability reliable.</p></div>
+      <div class="example">
+        <details class="m-accordion" open><summary>What should motion communicate?</summary><div class="m-accordion__content"><div class="m-accordion__content-inner">Cause and effect, hierarchy, status, and meaningful changes in state. It should not compete with the content.</div></div></details>
+        <details class="m-accordion"><summary>Should every control animate?</summary><div class="m-accordion__content"><div class="m-accordion__content-inner">No. Use motion when it provides useful feedback or preserves spatial context.</div></div></details>
       </div>
-      <div class="row" style="margin-top:12px"><button class="m-press" id="reveal-content">Reveal loaded content</button><span class="m-thinking">Processing</span><span class="m-shimmer-text">Preparing preview</span></div>
-    </section>
+    </article>
+  </section>
 
-    <section class="demo">
-      <h2>08 / Status and actions</h2>
-      <div class="row">
-        <button class="m-press m-like" aria-pressed="false" id="like-button"><span class="m-like__icon">♡</span></button>
-        <label class="m-toggle"><input type="checkbox" checked><span class="m-toggle__track"><span class="m-toggle__thumb"></span></span><span>Enabled</span></label>
-        <span class="m-badge-pop">● New</span>
-      </div>
-      <div class="row" style="margin-top:18px"><div class="m-matrix" aria-label="Loading"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="muted">Compact activity indicator</span></div>
-    </section>
+  <section id="feedback">
+    <div class="section-head"><div><h2>Feedback and loading</h2><p>Communicate success, errors, and activity. Do not fake progress.</p></div><span class="count">04</span></div>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Toast notifications</h3></div><p class="description">Short-lived, non-blocking feedback. Dismissal cancels the auto-close timer.</p></div>
+      <div class="example"><div class="stage"><button class="btn primary m-press" type="button" data-motion-toast="#demo-toast">Show toast</button><span class="stage-note">The toast also dismisses automatically.</span></div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Validation error</h3></div><p class="description">A short shake accompanies a visible message and an accessible invalid state.</p></div>
+      <div class="example"><div class="stage stack">
+        <div class="error-row"><label class="field"><span class="label">Example identifier</span><input class="control" id="demo-input" value="invalid-value" aria-invalid="false" aria-describedby="error-message"><span class="hint" id="error-message">Use the test button to preview invalid feedback.</span></label><button class="btn secondary m-press" id="shake-input" type="button" style="align-self:flex-start;margin-top:20px">Test error</button></div>
+      </div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Skeleton reveal</h3></div><p class="description">A placeholder is replaced by actual content. It should not simulate a loading state that does not exist.</p></div>
+      <div class="example"><div class="stage stack">
+        <div class="skeleton-lines" id="skeleton-view" aria-label="Loading preview"><div class="m-skeleton skeleton-line"></div><div class="m-skeleton skeleton-line medium"></div><div class="m-skeleton skeleton-line short"></div></div>
+        <div class="state-line"><button class="btn secondary m-press" id="reveal-content" type="button">Reveal loaded content</button><span class="stage-note">A one-time preview.</span></div>
+      </div></div>
+    </article>
+  </section>
 
-    <section class="demo">
-      <h2>09 / Pointer tilt (optional)</h2>
-      <div class="test-card" data-motion-tilt>
-        <span class="eyebrow">Pointer only</span>
-        <p>Try moving your cursor across this card.</p>
-      </div>
-    </section>
+  <section id="utilities">
+    <div class="section-head"><div><h2>Utilities and micro-interactions</h2><p>Keep optional effects on elements where they support the task.</p></div><span class="count">05</span></div>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Text clear and morph</h3></div><p class="description">Clear a field deliberately or animate a short label change, not every keystroke.</p></div>
+      <div class="example"><div class="stage stack">
+        <div class="state-line" style="max-width:430px;width:100%"><input id="clear-input" class="control" value="A value to clear" aria-label="Text to clear"><button class="btn secondary m-press" type="button" data-motion-clear="#clear-input">Clear</button></div>
+        <div class="state-line"><span id="morph-label" class="chip">Copy</span><button class="btn secondary m-press" type="button" data-motion-morph="#morph-label" data-motion-text="Copied">Morph text</button></div>
+      </div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Toggle and like</h3></div><p class="description">A state change combines semantic attributes with restrained feedback.</p></div>
+      <div class="example"><div class="stage">
+        <div class="group" role="group" aria-label="Action states"><button class="btn m-like" type="button" aria-pressed="false" id="like-button"><span class="m-like__icon" aria-hidden="true">♡</span><span>Like</span></button><button class="btn m-press" type="button" data-motion-replay="#success-mark" data-motion-class="m-success-pop">Replay success</button></div>
+        <label class="m-toggle"><input type="checkbox" checked aria-label="Enable motion preview"><span class="m-toggle__track"><span class="m-toggle__thumb"></span></span><span class="stage-note">Enabled</span></label>
+        <span class="m-badge-pop chip" id="success-mark">Complete</span>
+      </div></div>
+    </article>
+    <article class="doc-row">
+      <div class="doc-info"><div class="doc-title"><h3>Pointer tilt</h3><span class="kind">OPTIONAL</span></div><p class="description">A very slight tilt works for decorative previews. It should never be necessary to understand or operate the UI.</p></div>
+      <div class="example"><div class="stage"><div class="test-card" data-motion-tilt><strong>Pointer-only preview</strong><p class="description">Move the cursor across this text. Touch and reduced-motion users get a static layout.</p></div></div></div>
+    </article>
+  </section>
 
-    <section class="demo">
-      <h2>10 / Validation feedback</h2>
-      <div class="row"><input id="demo-input" aria-label="Example invalid input" value="invalid-value" style="font:inherit;color:inherit;background:#0a0a0a;border:1px solid #555;padding:9px;width:min(100%,220px)"><button id="shake-input" class="m-press">Test error</button></div>
-      <p class="muted" id="error-message" role="status">Error feedback should be paired with a clear message.</p>
-    </section>
-  </div>
-  <footer>Dependency-free local demo. Production dialogs should add project-appropriate focus trapping and focus return. Check your operating system's reduced-motion preference to verify the static/low-motion path.</footer>
+  <footer>Local, dependency-free motion patterns. The demo uses the repository's shared tokens and CSS/JS files inlined into this document so it remains portable. Production dialogs still need project-appropriate focus management and testing.</footer>
 </main>
+
+<section class="m-dialog" id="demo-dialog" data-state="closed" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+  <div class="m-dialog__backdrop" data-motion-close="#demo-dialog" aria-hidden="true"></div>
+  <div class="m-dialog__panel dialog-panel">
+    <div class="dialog-head"><strong id="dialog-title">Confirm changes</strong><p>Your edits are ready to be saved.</p></div>
+    <div class="dialog-body">This dialog demonstrates separate backdrop and panel transitions. Press Escape or choose an action to close it.</div>
+    <div class="dialog-foot"><button class="btn m-press" type="button" data-motion-close="#demo-dialog">Cancel</button><button class="btn primary m-press" type="button" data-motion-close="#demo-dialog">Confirm</button></div>
+  </div>
+</section>
+<div class="m-toast sample-toast" id="demo-toast" data-state="closed" hidden aria-hidden="true" role="status">
+  <span class="m-success-pop" aria-hidden="true">✓</span><div class="toast-copy"><strong>Changes saved</strong><p>Your demo action completed successfully.</p></div><button class="icon-btn" type="button" data-motion-close="#demo-toast" aria-label="Dismiss toast">×</button>
+</div>
+
+<script>(function (global) {
+  "use strict";
+
+  var reduceQuery = global.matchMedia ? global.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var reduced = function () { return !!(reduceQuery && reduceQuery.matches); };
+
+  function parseTime(value) {
+    var number = parseFloat(value) || 0;
+    return value && value.indexOf("ms") !== -1 ? number : number * 1000;
+  }
+
+  function maxMotionTime(element) {
+    if (!element || reduced()) return 0;
+    var nodes = [element].concat(Array.prototype.slice.call(element.querySelectorAll("*")));
+    var max = 0;
+    nodes.forEach(function (node) {
+      var style = global.getComputedStyle(node);
+      var durations = style.transitionDuration.split(",").map(parseTime);
+      var delays = style.transitionDelay.split(",").map(parseTime);
+      for (var i = 0; i < durations.length; i++) {
+        max = Math.max(max, durations[i] + (delays[i % delays.length] || 0));
+      }
+    });
+    return max;
+  }
+
+  function waitForMotion(element) {
+    var duration = maxMotionTime(element);
+    return new Promise(function (resolve) {
+      global.setTimeout(resolve, duration > 1 ? duration + 30 : 0);
+    });
+  }
+
+  async function setOpen(element, open, trigger) {
+    if (!element) return;
+    if (trigger) trigger.setAttribute("aria-expanded", open ? "true" : "false");
+
+    if (open) {
+      if (element._motionTimer) {
+        global.clearTimeout(element._motionTimer);
+        element._motionTimer = null;
+      }
+      if (trigger) element._motionTrigger = trigger;
+      element.hidden = false;
+      element.removeAttribute("inert");
+      element.setAttribute("aria-hidden", "false");
+      element.dataset.state = "opening";
+      void element.offsetWidth;
+      requestAnimationFrame(function () {
+        if (element.dataset.state === "opening") element.dataset.state = "open";
+        if (element.classList.contains("m-dialog")) {
+          var first = element.querySelector("button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])");
+          if (first) first.focus();
+        }
+      });
+      return;
+    }
+
+    if (element._motionTimer) {
+      global.clearTimeout(element._motionTimer);
+      element._motionTimer = null;
+    }
+    if (element._motionTimer) {
+      global.clearTimeout(element._motionTimer);
+      element._motionTimer = null;
+    }
+    element.dataset.state = "closing";
+    element.setAttribute("aria-hidden", "true");
+    element.setAttribute("inert", "");
+    await waitForMotion(element);
+    if (element.dataset.state === "closing") {
+      element.hidden = true;
+      element.dataset.state = "closed";
+      if (element._motionTrigger && !element.classList.contains("m-toast")) element._motionTrigger.focus();
+    }
+  }
+
+  function replay(element, className) {
+    if (!element) return;
+    className = className || "m-icon-swap";
+    element.classList.remove(className);
+    void element.offsetWidth;
+    element.classList.add(className);
+    element.addEventListener("animationend", function () {
+      element.classList.remove(className);
+    }, { once: true });
+  }
+
+  function swapText(element, value) {
+    if (!element || element.textContent === String(value)) return;
+    element.textContent = String(value);
+    replay(element, "m-text-swap");
+  }
+
+  function showToast(element, duration) {
+    if (!element) return;
+    duration = typeof duration === "number" ? duration : 3200;
+    if (element._motionTimer) global.clearTimeout(element._motionTimer);
+    element.hidden = false;
+    element.removeAttribute("inert");
+    element.setAttribute("aria-hidden", "false");
+    element.dataset.state = "opening";
+    requestAnimationFrame(function () { element.dataset.state = "open"; });
+    element._motionTimer = global.setTimeout(function () {
+      setOpen(element, false);
+    }, duration);
+  }
+
+
+  function clearText(element) {
+    if (!element) return;
+    element.classList.remove("is-clearing");
+    void element.offsetWidth;
+    element.classList.add("is-clearing");
+    element.addEventListener("animationend", function () {
+      if ("value" in element) element.value = "";
+      else element.textContent = "";
+      element.classList.remove("is-clearing");
+    }, { once: true });
+  }
+
+  function morphText(element, value) {
+    if (!element || element.textContent === String(value)) return;
+    var originalWidth = element.getBoundingClientRect().width;
+    element.style.width = originalWidth + "px";
+    element.style.maxWidth = "none";
+    element.classList.add("m-text-morph");
+    element.textContent = String(value);
+    var targetWidth = element.scrollWidth;
+    requestAnimationFrame(function () {
+      element.style.width = targetWidth + "px";
+    });
+    global.setTimeout(function () {
+      element.style.width = "";
+      element.style.maxWidth = "";
+    }, reduced() ? 0 : 330);
+    replay(element, "m-text-swap-soft");
+  }
+
+  function selectTab(tab, group) {
+    if (!tab) return;
+    group = group || tab.closest(".m-tabs");
+    if (!group) return;
+    var tabs = Array.prototype.slice.call(group.querySelectorAll('[role="tab"]'));
+    tabs.forEach(function (item) {
+      var active = item === tab;
+      item.setAttribute("aria-selected", active ? "true" : "false");
+      item.tabIndex = active ? 0 : -1;
+    });
+    var indicator = group.querySelector(".m-tabs__indicator");
+    if (indicator) {
+      indicator.style.setProperty("--m-tab-left", tab.offsetLeft + "px");
+      indicator.style.setProperty("--m-tab-width", tab.offsetWidth + "px");
+    }
+    var panels = group.querySelectorAll('[role="tabpanel"]');
+    panels.forEach(function (panel) {
+      var active = panel.id === tab.getAttribute("aria-controls");
+      panel.hidden = !active;
+    });
+  }
+
+  function bindTilt(root) {
+    if (reduced() || !global.matchMedia || !global.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    root.querySelectorAll("[data-motion-tilt]").forEach(function (element) {
+      if (element.dataset.motionTiltBound) return;
+      element.dataset.motionTiltBound = "true";
+      element.classList.add("m-tilt");
+      element.addEventListener("pointermove", function (event) {
+        var rect = element.getBoundingClientRect();
+        var x = (event.clientX - rect.left) / rect.width;
+        var y = (event.clientY - rect.top) / rect.height;
+        element.style.setProperty("--m-tilt-x", ((0.5 - y) * 5).toFixed(2) + "deg");
+        element.style.setProperty("--m-tilt-y", ((x - 0.5) * 6).toFixed(2) + "deg");
+      });
+      element.addEventListener("pointerleave", function () {
+        element.style.setProperty("--m-tilt-x", "0deg");
+        element.style.setProperty("--m-tilt-y", "0deg");
+      });
+    });
+  }
+
+  function bind(root) {
+    root = root || document;
+    bindTilt(root);
+    root.addEventListener("click", function (event) {
+      if (!event.target.closest) return;
+      var openTrigger = event.target.closest("[data-motion-open]");
+      if (openTrigger) {
+        var selector = openTrigger.getAttribute("data-motion-open");
+        var target = selector && document.querySelector(selector);
+        if (target) {
+          var alreadyOpen = target.dataset.state === "open" || target.dataset.state === "opening";
+          setOpen(target, !alreadyOpen, openTrigger);
+        }
+      }
+
+      var closeTrigger = event.target.closest("[data-motion-close]");
+      if (closeTrigger) {
+        var closeSelector = closeTrigger.getAttribute("data-motion-close");
+        var closeTarget = closeSelector ? document.querySelector(closeSelector) : closeTrigger.closest(".m-dialog, .m-dropdown, .m-panel, .m-toast");
+        if (closeTarget) {
+          var opener = closeTarget._motionTrigger || (closeTarget.id ? document.querySelector('[data-motion-open="#' + closeTarget.id + '"]') : null);
+          setOpen(closeTarget, false, opener);
+        }
+      }
+
+      document.querySelectorAll('.m-dropdown[data-state="open"]').forEach(function (menu) {
+        var menuTrigger = menu._motionTrigger;
+        if (!menu.contains(event.target) && !openTrigger && !closeTrigger) {
+          setOpen(menu, false, menuTrigger);
+        }
+      });
+
+      var clearTrigger = event.target.closest("[data-motion-clear]");
+      if (clearTrigger) {
+        var clearTarget = document.querySelector(clearTrigger.getAttribute("data-motion-clear"));
+        if (clearTarget) clearText(clearTarget);
+      }
+
+      var morphTrigger = event.target.closest("[data-motion-morph]");
+      if (morphTrigger) {
+        var morphTarget = document.querySelector(morphTrigger.getAttribute("data-motion-morph"));
+        if (morphTarget) morphText(morphTarget, morphTrigger.getAttribute("data-motion-text") || morphTrigger.textContent);
+      }
+
+      var swapTrigger = event.target.closest("[data-motion-swap]");
+      if (swapTrigger) {
+        var selectorSwap = swapTrigger.getAttribute("data-motion-swap");
+        var targetSwap = selectorSwap && document.querySelector(selectorSwap);
+        if (targetSwap) swapText(targetSwap, swapTrigger.getAttribute("data-motion-text") || swapTrigger.textContent);
+      }
+
+      var replayTrigger = event.target.closest("[data-motion-replay]");
+      if (replayTrigger) {
+        var replaySelector = replayTrigger.getAttribute("data-motion-replay");
+        var replayTarget = replaySelector ? document.querySelector(replaySelector) : replayTrigger;
+        if (replayTarget) replay(replayTarget, replayTrigger.getAttribute("data-motion-class") || "m-icon-swap");
+      }
+
+      var toastTrigger = event.target.closest("[data-motion-toast]");
+      if (toastTrigger) {
+        var toastTarget = document.querySelector(toastTrigger.getAttribute("data-motion-toast"));
+        if (toastTarget) showToast(toastTarget, Number(toastTrigger.getAttribute("data-motion-duration")) || 3200);
+      }
+
+      var tab = event.target.closest('.m-tabs [role="tab"]');
+      if (tab) selectTab(tab);
+    });
+
+    root.addEventListener("keydown", function (event) {
+      var activeDialog = event.target.closest && event.target.closest('.m-dialog[data-state="open"]');
+      if (activeDialog && event.key === "Tab") {
+        var focusables = Array.prototype.slice.call(activeDialog.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(function (node) {
+          return !node.hidden && node.getAttribute("aria-hidden") !== "true";
+        });
+        if (!focusables.length) {
+          event.preventDefault();
+          var dialogPanel = activeDialog.querySelector(".m-dialog__panel");
+          if (dialogPanel) {
+            dialogPanel.setAttribute("tabindex", "-1");
+            dialogPanel.focus();
+          }
+        } else if (event.shiftKey && document.activeElement === focusables[0]) {
+          event.preventDefault();
+          focusables[focusables.length - 1].focus();
+        } else if (!event.shiftKey && document.activeElement === focusables[focusables.length - 1]) {
+          event.preventDefault();
+          focusables[0].focus();
+        }
+      }
+
+      if (event.key === "Escape") {
+        var dialog = document.querySelector('.m-dialog[data-state="open"]');
+        if (dialog) {
+          var opener = document.querySelector('[data-motion-open="#' + dialog.id + '"]');
+          setOpen(dialog, false, opener);
+          if (opener) opener.focus();
+          return;
+        }
+        var surface = document.querySelector('.m-dropdown[data-state="open"], .m-panel[data-state="open"]');
+        if (surface) setOpen(surface, false);
+      }
+
+      var tab = event.target.closest && event.target.closest('.m-tabs [role="tab"]');
+      if (tab && ["ArrowLeft", "ArrowRight", "Home", "End"].indexOf(event.key) !== -1) {
+        var tabs = Array.prototype.slice.call(tab.closest(".m-tabs").querySelectorAll('[role="tab"]'));
+        var index = tabs.indexOf(tab);
+        if (event.key === "ArrowRight") index = (index + 1) % tabs.length;
+        if (event.key === "ArrowLeft") index = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") index = 0;
+        if (event.key === "End") index = tabs.length - 1;
+        event.preventDefault();
+        tabs[index].focus();
+        selectTab(tabs[index]);
+      }
+    });
+  }
+
+  global.Motion = {
+    prefersReducedMotion: reduced,
+    setOpen: setOpen,
+    replay: replay,
+    swapText: swapText,
+    clearText: clearText,
+    morphText: morphText,
+    showToast: showToast,
+    selectTab: selectTab,
+    bind: bind
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () { bind(document); });
+  } else {
+    bind(document);
+  }
+})(window);
+</script>
 <script>
-  const activeTab = document.querySelector('#demo-tabs [aria-selected="true"]');
-  requestAnimationFrame(() => Motion.selectTab(activeTab));
-  document.querySelector('#like-button').addEventListener('click', function () {
-    const liked = this.getAttribute('aria-pressed') !== 'true';
-    this.setAttribute('aria-pressed', String(liked));
-    this.querySelector('.m-like__icon').textContent = liked ? '♥' : '♡';
+(function () {
+  "use strict";
+  var firstTab = document.querySelector('#demo-tabs [role="tab"][aria-selected="true"]');
+  if (firstTab) Motion.selectTab(firstTab);
+
+  document.getElementById("like-button").addEventListener("click", function () {
+    var liked = this.getAttribute("aria-pressed") !== "true";
+    this.setAttribute("aria-pressed", String(liked));
+    this.querySelector(".m-like__icon").textContent = liked ? "♥" : "♡";
   });
-  document.querySelector('#reveal-content').addEventListener('click', function () {
-    const view = document.querySelector('#skeleton-view');
-    view.innerHTML = '<strong class="m-reveal">Content ready</strong><p class="m-reveal">The skeleton is gone. The loaded content is now visible.</p>';
+
+  document.getElementById("reveal-content").addEventListener("click", function () {
+    var view = document.getElementById("skeleton-view");
+    view.innerHTML = '<strong class="m-reveal">Preview loaded</strong><p class="description m-reveal">The placeholder has been replaced with content.</p>';
+    view.setAttribute("aria-label", "Preview loaded");
     this.disabled = true;
   });
-  document.querySelector('#shake-input').addEventListener('click', function () {
-    const input = document.querySelector('#demo-input');
-    input.setAttribute('aria-invalid', 'true');
-    Motion.replay(input, 'm-error-shake');
-    document.querySelector('#error-message').textContent = 'Invalid value. Review the input and try again.';
+
+  document.getElementById("shake-input").addEventListener("click", function () {
+    var field = document.getElementById("demo-input");
+    field.setAttribute("aria-invalid", "true");
+    document.getElementById("error-message").textContent = "This value is invalid. Review it and try again.";
+    Motion.replay(field, "m-error-shake");
   });
-  document.querySelector('#reduced-state').addEventListener('click', function () {
-    this.textContent = Motion.prefersReducedMotion() ? 'Reduced motion is enabled' : 'Reduced motion is not enabled';
+
+  document.getElementById("primary-action").addEventListener("click", function () {
+    Motion.swapText(document.getElementById("status-text"), "Changes saved");
   });
+
+  document.querySelectorAll(".m-accordion summary").forEach(function (summary) {
+    summary.addEventListener("click", function () {
+      var details = summary.closest("details");
+      var wasOpen = details.open;
+      details.open = !wasOpen;
+    });
+  });
+})();
 </script>
 </body>
 </html>
