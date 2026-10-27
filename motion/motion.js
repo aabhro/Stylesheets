@@ -36,6 +36,7 @@
     if (trigger) trigger.setAttribute("aria-expanded", open ? "true" : "false");
 
     if (open) {
+      if (trigger) element._motionTrigger = trigger;
       element.hidden = false;
       element.removeAttribute("inert");
       element.setAttribute("aria-hidden", "false");
@@ -43,6 +44,10 @@
       void element.offsetWidth;
       requestAnimationFrame(function () {
         if (element.dataset.state === "opening") element.dataset.state = "open";
+        if (element.classList.contains("m-dialog")) {
+          var first = element.querySelector("button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])");
+          if (first) first.focus();
+        }
       });
       return;
     }
@@ -54,6 +59,7 @@
     if (element.dataset.state === "closing") {
       element.hidden = true;
       element.dataset.state = "closed";
+      if (element.classList.contains("m-dialog") && element._motionTrigger) element._motionTrigger.focus();
     }
   }
 
@@ -95,7 +101,8 @@
     void element.offsetWidth;
     element.classList.add("is-clearing");
     element.addEventListener("animationend", function () {
-      element.textContent = "";
+      if ("value" in element) element.value = "";
+      else element.textContent = "";
       element.classList.remove("is-clearing");
     }, { once: true });
   }
