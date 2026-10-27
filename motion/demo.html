@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion / Stylesheets</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="patterns.css">
+<style>
+  :root { color-scheme: dark; --demo-bg: #0a0a0a; --demo-border: #292929; --demo-text: #f5f5f5; --demo-muted: #a3a3a3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--demo-text); background: var(--demo-bg); font: 15px/1.5 ui-sans-serif, system-ui, sans-serif; }
+  main { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 64px 0 96px; }
+  header { padding-bottom: 32px; border-bottom: 1px solid var(--demo-border); margin-bottom: 32px; }
+  h1 { font-size: clamp(32px, 6vw, 58px); letter-spacing: -.055em; line-height: 1.02; margin: 12px 0; font-weight: 600; }
+  h2 { font-size: 16px; margin: 0 0 18px; font-weight: 550; }
+  p { color: var(--demo-muted); max-width: 62ch; }
+  .eyebrow { color: var(--demo-muted); text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .demo { border: 1px solid var(--demo-border); padding: 22px; min-width: 0; }
+  .row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  button, .button { font: inherit; color: inherit; cursor: pointer; padding: 8px 12px; background: #171717; border: 1px solid #333; border-radius: 7px; }
+  button:hover { background: #202020; }
+  button:focus-visible { outline: 2px solid #888; outline-offset: 3px; }
+  .muted { color: var(--demo-muted); }
+  .menu-wrap { position: relative; display: inline-block; }
+  .m-dropdown { position: absolute; top: calc(100% + 8px); left: 0; z-index: 2; width: 180px; padding: 6px; background: #0a0a0a; border: 1px solid #333; }
+  .m-dropdown button { display: block; width: 100%; border: 0; text-align: left; background: transparent; }
+  .m-dropdown button:hover { background: #1d1d1d; }
+  .sample-dialog { border: 1px solid #333; padding: 24px; background: #0a0a0a; }
+  .sample-toast { position: fixed; right: 20px; bottom: 20px; z-index: 1100; padding: 12px 16px; border: 1px solid #444; background: #0a0a0a; max-width: calc(100vw - 40px); }
+  .tabs { border-bottom: 1px solid #333; }
+  .tabs [role=tab] { background: transparent; border: 0; border-radius: 0; color: #aaa; }
+  .tabs [aria-selected=true] { color: #fff; }
+  .m-tabs__indicator { height: 2px; background: #eee; }
+  .tab-panel { padding: 14px 4px; min-height: 46px; }
+  .skeleton-set { display: grid; gap: 9px; }
+  .skeleton-line { height: 9px; }
+  .skeleton-line.short { width: 55%; }
+  .m-matrix { margin: 10px; }
+  .test-card { padding: 16px; border: 1px solid #333; min-width: 120px; }
+  .m-toggle__track { color: #eee; }
+  .m-like { border: 0; background: transparent; font-size: 24px; }
+  .m-accordion { display: block; border-top: 1px solid #333; padding: 12px 0; }
+  .m-accordion summary { cursor: pointer; }
+  .m-accordion__content-inner { padding-top: 8px; color: var(--demo-muted); }
+  @media (max-width: 680px) { main { padding-top: 32px; } .grid { grid-template-columns: 1fr; } }
+</style>
+<script defer src="motion.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Stylesheets / Motion system</div>
+    <h1>Motion, with a reason.</h1>
+    <p>A working local showcase of the shared transition tokens, CSS patterns, and state helpers. Motion mechanics are consistent; the active stylesheet still decides the aesthetic.</p>
+    <div class="row"><button class="m-press" data-motion-replay="#headline" data-motion-class="m-reveal">Replay reveal</button><button class="m-press" id="reduced-state" type="button">Check reduced-motion setting</button></div>
+    <p class="muted" id="headline">Short transitions. Complete state changes. Reduced-motion support.</p>
+  </header>
+
+  <div class="grid">
+    <section class="demo">
+      <h2>01 / Anchored menu</h2>
+      <div class="menu-wrap">
+        <button class="m-press" data-motion-open="#demo-menu" aria-controls="demo-menu" aria-expanded="false">Open menu</button>
+        <div class="m-dropdown" id="demo-menu" data-state="closed" hidden aria-hidden="true">
+          <button type="button" data-motion-close="#demo-menu">Rename item</button>
+          <button type="button" data-motion-close="#demo-menu">Duplicate item</button>
+          <button type="button" data-motion-close="#demo-menu">Archive item</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h2>02 / Modal</h2>
+      <button class="m-press" data-motion-open="#demo-dialog" aria-controls="demo-dialog" aria-expanded="false">Open dialog</button>
+      <section class="m-dialog" id="demo-dialog" data-state="closed" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+        <button class="m-dialog__backdrop" data-motion-close="#demo-dialog" aria-label="Close dialog"></button>
+        <div class="m-dialog__panel sample-dialog">
+          <h2 id="dialog-title">Changes saved</h2>
+          <p>This panel animates in and out. Press Escape or use the close action.</p>
+          <button type="button" data-motion-close="#demo-dialog">Close</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="demo">
+      <h2>03 / Text and icon states</h2>
+      <div class="row">
+        <span id="status-text">Ready to save</span>
+        <button class="m-press" data-motion-swap="#status-text" data-motion-text="Saved successfully">Simulate save</button>
+        <button class="m-press" data-motion-replay="#sample-icon" data-motion-class="m-icon-swap"><span id="sample-icon">↗</span> Replay icon</button>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h2>04 / Toast</h2>
+      <button class="m-press" data-motion-toast="#demo-toast">Show toast</button>
+      <div class="m-toast sample-toast" id="demo-toast" data-state="closed" hidden aria-hidden="true" role="status">
+        <span class="m-success-pop">✓</span> Your changes are saved.
+        <button type="button" data-motion-close="#demo-toast" aria-label="Dismiss toast">×</button>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h2>05 / Sliding tabs</h2>
+      <div class="m-tabs tabs" id="demo-tabs">
+        <div class="m-tabs__list" role="tablist" aria-label="Example views">
+          <button role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+          <button role="tab" id="tab-details" aria-controls="panel-details" aria-selected="false" tabindex="-1">Details</button>
+          <button role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1">History</button>
+          <span class="m-tabs__indicator"></span>
+        </div>
+        <div class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">A shared motion scale keeps everyday UI quick.</div>
+        <div class="tab-panel" role="tabpanel" id="panel-details" aria-labelledby="tab-details" hidden>Use the smallest transition that explains the change.</div>
+        <div class="tab-panel" role="tabpanel" id="panel-history" aria-labelledby="tab-history" hidden>Test re-entry, exits, and reduced motion.</div>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h2>06 / Accordion</h2>
+      <details class="m-accordion" open>
+        <summary>What should motion communicate?</summary>
+        <div class="m-accordion__content"><div class="m-accordion__content-inner">Cause and effect, hierarchy, and changes of state. It should not compete with the content.</div></div>
+      </details>
+      <details class="m-accordion">
+        <summary>Should every control animate?</summary>
+        <div class="m-accordion__content"><div class="m-accordion__content-inner">No. Use animation where it adds useful feedback.</div></div>
+      </details>
+    </section>
+
+    <section class="demo">
+      <h2>07 / Loading and reveal</h2>
+      <div class="skeleton-set" id="skeleton-view">
+        <div class="m-skeleton skeleton-line"></div><div class="m-skeleton skeleton-line"></div><div class="m-skeleton skeleton-line short"></div>
+      </div>
+      <div class="row" style="margin-top:12px"><button class="m-press" id="reveal-content">Reveal loaded content</button><span class="m-thinking">Processing</span><span class="m-shimmer-text">Preparing preview</span></div>
+    </section>
+
+    <section class="demo">
+      <h2>08 / Status and actions</h2>
+      <div class="row">
+        <button class="m-press m-like" aria-pressed="false" id="like-button"><span class="m-like__icon">♡</span></button>
+        <label class="m-toggle"><input type="checkbox" checked><span class="m-toggle__track"><span class="m-toggle__thumb"></span></span><span>Enabled</span></label>
+        <span class="m-badge-pop">● New</span>
+      </div>
+      <div class="row" style="margin-top:18px"><div class="m-matrix" aria-label="Loading"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="muted">Compact activity indicator</span></div>
+    </section>
+
+    <section class="demo">
+      <h2>09 / Pointer tilt (optional)</h2>
+      <div class="test-card" data-motion-tilt>
+        <span class="eyebrow">Pointer only</span>
+        <p>Try moving your cursor across this card.</p>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h2>10 / Validation feedback</h2>
+      <div class="row"><input id="demo-input" aria-label="Example invalid input" value="invalid-value" style="font:inherit;color:inherit;background:#0a0a0a;border:1px solid #555;padding:9px;width:min(100%,220px)"><button id="shake-input" class="m-press">Test error</button></div>
+      <p class="muted" id="error-message" role="status">Error feedback should be paired with a clear message.</p>
+    </section>
+  </div>
+  <footer>Dependency-free local demo. Production dialogs should add project-appropriate focus trapping and focus return. Check your operating system's reduced-motion preference to verify the static/low-motion path.</footer>
+</main>
+<script>
+  const activeTab = document.querySelector('#demo-tabs [aria-selected="true"]');
+  requestAnimationFrame(() => Motion.selectTab(activeTab));
+  document.querySelector('#like-button').addEventListener('click', function () {
+    const liked = this.getAttribute('aria-pressed') !== 'true';
+    this.setAttribute('aria-pressed', String(liked));
+    this.querySelector('.m-like__icon').textContent = liked ? '♥' : '♡';
+  });
+  document.querySelector('#reveal-content').addEventListener('click', function () {
+    const view = document.querySelector('#skeleton-view');
+    view.innerHTML = '<strong class="m-reveal">Content ready</strong><p class="m-reveal">The skeleton is gone. The loaded content is now visible.</p>';
+    this.disabled = true;
+  });
+  document.querySelector('#shake-input').addEventListener('click', function () {
+    const input = document.querySelector('#demo-input');
+    input.setAttribute('aria-invalid', 'true');
+    Motion.replay(input, 'm-error-shake');
+    document.querySelector('#error-message').textContent = 'Invalid value. Review the input and try again.';
+  });
+  document.querySelector('#reduced-state').addEventListener('click', function () {
+    this.textContent = Motion.prefersReducedMotion() ? 'Reduced motion is enabled' : 'Reduced motion is not enabled';
+  });
+</script>
+</body>
+</html>
