@@ -68,7 +68,7 @@
 .m-badge-pop { animation: m-badge-pop var(--m-duration-enter) var(--m-ease-spring) both; transform-origin: center; }
 @keyframes m-badge-pop { 0% { opacity: 0; transform: translate(3px, -4px) scale(.65); } 70% { opacity: 1; transform: translate(0) scale(1.08); } 100% { transform: scale(1); } }
 
-.m-error-shake { animation: m-error-shake 240ms var(--m-ease-standard) both; }
+.m-error-shake { animation: m-error-shake var(--m-duration-enter) var(--m-ease-standard) both; }
 @keyframes m-error-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(calc(-1 * var(--m-distance-2))); } 50% { transform: translateX(var(--m-distance-2)); } 75% { transform: translateX(calc(-1 * var(--m-distance-1))); } }
 .m-success-pop { animation: m-success-pop var(--m-duration-emphasis) var(--m-ease-enter) both; }
 @keyframes m-success-pop { 0% { opacity: 0; transform: translateY(var(--m-distance-3)) scale(.92); } 65% { opacity: 1; transform: translateY(0) scale(1.025); } 100% { transform: scale(1); } }
@@ -84,7 +84,7 @@
   opacity: .65;
   background-image: linear-gradient(100deg, currentColor 20%, transparent 50%, currentColor 80%);
   background-size: 250% 100%;
-  animation: m-shimmer 1.8s linear infinite;
+  animation: m-shimmer var(--m-duration-loop) linear infinite;
 }
 .m-shimmer-text {
   background-image: linear-gradient(100deg, var(--m-shimmer-muted, #737373) 35%, var(--m-shimmer-highlight, #f5f5f5) 50%, var(--m-shimmer-muted, #737373) 65%);
@@ -148,12 +148,45 @@
 .m-counter-digit { display: inline-block; animation: m-number-pop var(--m-duration-fast) var(--m-ease-enter) both; }
 .m-text-morph { transition: max-width var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
 
+
+/* Additional patterns so the local catalog includes reusable implementations. */
+.m-card-resize {
+  transition: width var(--m-duration-panel) var(--m-ease-enter),
+              height var(--m-duration-panel) var(--m-ease-enter),
+              flex-basis var(--m-duration-panel) var(--m-ease-enter),
+              grid-template-columns var(--m-duration-panel) var(--m-ease-enter);
+}
+.m-page-transition[data-direction="forward"] { animation: m-page-forward var(--m-duration-panel) var(--m-ease-enter) both; }
+.m-page-transition[data-direction="back"] { animation: m-page-back var(--m-duration-panel) var(--m-ease-enter) both; }
+@keyframes m-page-forward { from { opacity: 0; transform: translateX(var(--m-distance-3)); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes m-page-back { from { opacity: 0; transform: translateX(calc(-1 * var(--m-distance-3))); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: none; filter: blur(0); } }
+
+.m-input-clear.is-clearing { animation: m-input-clear-out var(--m-duration-control) var(--m-ease-exit) both; }
+@keyframes m-input-clear-out { to { opacity: 0; transform: translateX(var(--m-distance-2)); filter: blur(var(--m-blur-1)); } }
+.m-text-swap-soft { animation: m-text-swap-soft var(--m-duration-fast) ease-in-out both; }
+@keyframes m-text-swap-soft { from { opacity: .35; filter: blur(var(--m-blur-1)); } to { opacity: 1; filter: blur(0); } }
+.m-learn-more__arrow { display: inline-block; transition: transform var(--m-duration-fast) var(--m-ease-enter); }
+.m-learn-more:hover .m-learn-more__arrow,
+.m-learn-more:focus-visible .m-learn-more__arrow { transform: translateX(var(--m-distance-1)); }
+
+.m-trigger-morph__line { transform-origin: center; transition: transform var(--m-duration-control) var(--m-ease-enter), opacity var(--m-duration-fast); }
+[aria-expanded="true"] .m-trigger-morph__line--vertical { transform: rotate(90deg); opacity: 0; }
+.m-counter-spin { display: inline-flex; overflow: hidden; vertical-align: bottom; }
+.m-counter-spin .m-counter-digit { animation: m-counter-spin var(--m-duration-enter) var(--m-ease-enter) both; }
+@keyframes m-counter-spin { from { opacity: .25; transform: translateY(100%); filter: blur(var(--m-blur-1)); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+.m-text-morph { display: inline-block; overflow: hidden; white-space: nowrap; }
+.m-reasoning-stream > * { animation: m-reveal var(--m-duration-enter) var(--m-ease-enter) both; }
+.m-streaming-text .m-stream-chunk { animation: m-text-swap-soft var(--m-duration-fast) ease-in-out both; }
+.m-donut { display: inline-block; }
+.m-donut__arc { fill: none; stroke-linecap: round; }
+
 @media (prefers-reduced-motion: reduce) {
   .m-motion, .m-hover-lift, .m-press, .m-dropdown, .m-panel, .m-dialog__panel, .m-dialog__backdrop,
-  .m-text-swap, .m-icon-swap, .m-number-pop, .m-badge-pop, .m-error-shake, .m-success-pop,
+  .m-text-swap, .m-text-swap-soft, .m-input-clear, .m-page-transition, .m-icon-swap, .m-number-pop, .m-badge-pop, .m-error-shake, .m-success-pop,
   .m-skeleton, .m-reveal, .m-shimmer, .m-shimmer-text, .m-tabs__indicator, .m-tooltip,
   .m-accordion__content, .m-toast, .m-like, .m-check, .m-toggle__track, .m-toggle__thumb,
-  .m-thinking, .m-stream > *, .m-matrix i, .m-banner-stack > *, .m-tilt, .m-donut__arc, .m-counter-digit {
+  .m-thinking, .m-stream > *, .m-reasoning-stream > *, .m-streaming-text .m-stream-chunk, .m-matrix i, .m-banner-stack > *, .m-tilt, .m-donut__arc, .m-counter-digit, .m-counter-spin .m-counter-digit, .m-card-resize, .m-trigger-morph__line, .m-learn-more__arrow, .m-text-morph {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
