@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Motion smoke tests · Stylesheets</title>
+  <meta name="description" content="A dependency-free browser smoke-test runner for the Stylesheets motion helpers.">
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./patterns.css">
+  <script src="./motion.js"></script>
+  <style>
+    :root { color-scheme: dark; --bg: #0a0a0a; --text: #f5f5f5; --muted: #a3a3a3; --edge: #262626; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 14px/1.55 "Noto Sans", system-ui, sans-serif; }
+    main { width: min(100% - 32px, 820px); margin: 0 auto; padding: 52px 0 72px; }
+    a { color: inherit; text-underline-offset: 3px; }
+    .eyebrow { color: var(--muted); font-size: 12px; }
+    h1 { margin: 10px 0 8px; font-size: clamp(27px, 5vw, 40px); line-height: 1.15; letter-spacing: -.045em; }
+    .intro { max-width: 570px; margin: 0; color: #d4d4d4; }
+    .toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 28px 0 18px; }
+    button { font: inherit; cursor: pointer; }
+    .primary { min-height: 39px; border: 1px solid #f5f5f5; border-radius: 999px; padding: 0 17px; background: #f5f5f5; color: #0a0a0a; font-weight: 600; }
+    .primary:hover { background: #e5e5e5; }
+    .primary:disabled { cursor: wait; opacity: .65; }
+    .summary { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+    .results { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--edge); }
+    .result { display: flex; align-items: flex-start; gap: 12px; padding: 15px 2px; border-bottom: 1px solid var(--edge); }
+    .status { flex: 0 0 22px; width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--edge); border-radius: 50%; font-size: 12px; }
+    .pass .status { color: #f5f5f5; border-color: #525252; }
+    .fail .status { color: #f5f5f5; border-color: #a3a3a3; }
+    .result-title { font-weight: 600; }
+    .detail { margin-top: 3px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .test-fixtures { position: absolute; left: -10000px; top: 0; width: 320px; }
+    .fixture-trigger { display: inline-flex; }
+    .fixture-menu { width: 200px; border: 1px solid var(--edge); border-radius: 10px; padding: 8px; background: #0a0a0a; }
+    .fixture-menu button { display: block; width: 100%; padding: 8px; text-align: left; border: 0; background: transparent; color: #f5f5f5; }
+    .fixture-toast { position: absolute; right: auto; bottom: auto; width: 260px; padding: 14px; border: 1px solid var(--edge); border-radius: 12px; background: #0a0a0a; color: #f5f5f5; }
+    .fixture-tabs { position: relative; display: flex; gap: 12px; }
+    .fixture-tabs [role="tab"] { padding: 5px; border: 0; background: transparent; color: #d4d4d4; }
+    .fixture-tabs [role="tab"][aria-selected="true"] { color: #f5f5f5; }
+    .fixture-tabs .m-tabs__indicator { position: absolute; bottom: -2px; left: 0; height: 1px; background: #f5f5f5; }
+    .fixture-panel { padding-top: 8px; }
+    @media (max-width: 560px) { main { padding-top: 32px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow"><a href="../README.md">Stylesheets</a> / motion / browser tests</div>
+    <h1>Motion smoke tests</h1>
+    <p class="intro">A small, dependency-free check for the public motion helpers and their key state changes. Run it in a browser after changing <code>motion.js</code>, <code>tokens.css</code>, or <code>patterns.css</code>.</p>
+    <div class="toolbar">
+      <button class="primary m-press" id="run-tests" type="button">Run checks</button>
+      <span class="summary" id="summary" role="status" aria-live="polite">Checks have not run yet.</span>
+    </div>
+    <ol class="results" id="results" aria-label="Test results"></ol>
+    <p class="detail" style="margin-top:18px">This is a browser smoke test, not a substitute for checking keyboard behavior, mobile layout, and reduced-motion settings manually.</p>
+  </main>
+
+  <div class="test-fixtures" aria-hidden="true">
+    <div class="menu-wrap">
+      <button id="menu-trigger" class="fixture-trigger" type="button" aria-expanded="false" aria-controls="test-menu">Menu</button>
+      <div id="test-menu" class="m-dropdown fixture-menu" data-state="closed" hidden aria-hidden="true" role="menu">
+        <button type="button" role="menuitem">Test action</button>
+      </div>
+    </div>
+    <div id="test-tabs" class="m-tabs fixture-tabs">
+      <button id="tab-one" type="button" role="tab" aria-selected="true" aria-controls="panel-one" tabindex="0">One</button>
+      <button id="tab-two" type="button" role="tab" aria-selected="false" aria-controls="panel-two" tabindex="-1">Two</button>
+      <span class="m-tabs__indicator" aria-hidden="true"></span>
+      <div id="panel-one" class="fixture-panel" role="tabpanel">Panel one</div>
+      <div id="panel-two" class="fixture-panel" role="tabpanel" hidden>Panel two</div>
+    </div>
+    <div id="test-toast" class="m-toast fixture-toast" data-state="closed" hidden aria-hidden="true" role="status">Smoke test toast</div>
+    <span id="morph-target">Ready</span>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var runButton = document.getElementById("run-tests");
+      var results = document.getElementById("results");
+      var summary = document.getElementById("summary");
+      var menu = document.getElementById("test-menu");
+      var trigger = document.getElementById("menu-trigger");
+      var toast = document.getElementById("test-toast");
+
+      function assert(condition, message) {
+        if (!condition) throw new Error(message);
+      }
+
+      function frame() {
+        return new Promise(function (resolve) { requestAnimationFrame(resolve); });
+      }
+
+      function wait(ms) {
+        return new Promise(function (resolve) { setTimeout(resolve, ms); });
+      }
+
+      function addResult(name, passed, detail) {
+        var item = document.createElement("li");
+        item.className = "result " + (passed ? "pass" : "fail");
+        var status = document.createElement("span");
+        status.className = "status";
+        status.setAttribute("aria-hidden", "true");
+        status.textContent = passed ? "✓" : "×";
+        var body = document.createElement("div");
+        var title = document.createElement("div");
+        title.className = "result-title";
+        title.textContent = name;
+        body.appendChild(title);
+        if (detail) {
+          var explanation = document.createElement("div");
+          explanation.className = "detail";
+          explanation.textContent = detail;
+          body.appendChild(explanation);
+        }
+        item.appendChild(status);
+        item.appendChild(body);
+        results.appendChild(item);
+      }
+
+      var tests = [
+        {
+          name: "Public Motion API is available",
+          run: function () {
+            ["prefersReducedMotion", "setOpen", "replay", "swapText", "clearText", "morphText", "showToast", "selectTab", "bind"].forEach(function (key) {
+              assert(typeof Motion[key] === "function", "Motion." + key + " is missing");
+            });
+          }
+        },
+        {
+          name: "Menu opens with accessible state",
+          run: async function () {
+            menu.hidden = true;
+            menu.dataset.state = "closed";
+            menu.setAttribute("aria-hidden", "true");
+            trigger.setAttribute("aria-expanded", "false");
+            await Motion.setOpen(menu, true, trigger);
+            await frame();
+            assert(!menu.hidden, "menu should be visible");
+            assert(menu.dataset.state === "open", "menu state should be open");
+            assert(menu.getAttribute("aria-hidden") === "false", "aria-hidden should be false");
+            assert(trigger.getAttribute("aria-expanded") === "true", "trigger should be expanded");
+          }
+        },
+        {
+          name: "Menu closes and completes its exit state",
+          run: async function () {
+            await Motion.setOpen(menu, false, trigger);
+            assert(menu.hidden, "menu should be hidden after the exit transition");
+            assert(menu.dataset.state === "closed", "menu state should be closed");
+            assert(menu.getAttribute("aria-hidden") === "true", "aria-hidden should be true");
+            assert(trigger.getAttribute("aria-expanded") === "false", "trigger should not be expanded");
+          }
+        },
+        {
+          name: "Tabs update selection and panel visibility",
+          run: function () {
+            var first = document.getElementById("tab-one");
+            var second = document.getElementById("tab-two");
+            var panelOne = document.getElementById("panel-one");
+            var panelTwo = document.getElementById("panel-two");
+            Motion.selectTab(second);
+            assert(second.getAttribute("aria-selected") === "true", "second tab should be selected");
+            assert(first.getAttribute("aria-selected") === "false", "first tab should be deselected");
+            assert(panelOne.hidden, "first panel should be hidden");
+            assert(!panelTwo.hidden, "second panel should be visible");
+          }
+        },
+        {
+          name: "Text morph updates content",
+          run: function () {
+            var target = document.getElementById("morph-target");
+            Motion.morphText(target, "Updated");
+            assert(target.textContent === "Updated", "target text did not update");
+            if (target._morphCleanup) target._morphCleanup();
+          }
+        },
+        {
+          name: "Toast enters the visible state",
+          run: async function () {
+            await Motion.showToast(toast, 1000);
+            await frame();
+            assert(!toast.hidden, "toast should be visible");
+            assert(toast.dataset.state === "open", "toast state should be open");
+            assert(toast.getAttribute("aria-hidden") === "false", "aria-hidden should be false");
+            if (toast._motionTimer) clearTimeout(toast._motionTimer);
+            await Motion.setOpen(toast, false);
+          }
+        },
+        {
+          name: "Reduced-motion preference is readable",
+          run: function () {
+            assert(typeof Motion.prefersReducedMotion() === "boolean", "preference should return a boolean");
+          }
+        }
+      ];
+
+      async function runTests() {
+        runButton.disabled = true;
+        results.replaceChildren();
+        var passed = 0;
+        var failed = 0;
+        for (var i = 0; i < tests.length; i++) {
+          try {
+            await tests[i].run();
+            addResult(tests[i].name, true, "Passed");
+            passed++;
+          } catch (error) {
+            addResult(tests[i].name, false, error && error.message ? error.message : String(error));
+            failed++;
+          }
+        }
+        summary.textContent = passed + " passed · " + failed + " failed · " + tests.length + " total";
+        runButton.disabled = false;
+      }
+
+      runButton.addEventListener("click", runTests);
+      runTests();
+    })();
+  </script>
+</body>
+</html>
