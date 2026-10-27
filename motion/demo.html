@@ -267,7 +267,7 @@
   --overlay: #0a0a0a; --backdrop: rgba(10,10,10,.76);
   --shadow: 0 16px 48px rgba(10,10,10,.38);
   --fast: 120ms; --motion: 180ms; --enter: 220ms;
-  --ease: cubic-bezier(.2,0,0,1); --pill: 999px;
+  --ease: cubic-bezier(.2,0,0,1); --m-ease-spring: cubic-bezier(.2,.8,.2,1); --pill: 999px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(245,245,245,.10) transparent; }
@@ -334,7 +334,7 @@ h2 { margin: 0 0 4px; font-size: 20px; font-weight: 500; letter-spacing: -.04em;
 .label { font-size: 10px; color: var(--sub); font-weight: 500; }
 .hint { font-size: 10px; color: var(--muted); }
 .menu-wrap { position: relative; display: inline-block; }
-.m-dropdown { min-width: 175px; padding: 5px; border: 1px solid rgba(38,38,38,.85); border-radius: 12px; background: #0a0a0a; color: #f5f5f5; box-shadow: var(--shadow); z-index: 60; }
+.m-dropdown { position: absolute; top: calc(100% + 6px); left: 0; min-width: 175px; padding: 5px; border: 1px solid rgba(38,38,38,.85); border-radius: 12px; background: #0a0a0a; color: #f5f5f5; box-shadow: var(--shadow); z-index: 60; }
 .m-dropdown .menu-action { width: 100%; min-height: 32px; display: flex; align-items: center; border: 0; border-radius: 7px; background: transparent; color: var(--sub); padding: 0 9px; text-align: left; white-space: nowrap; cursor: pointer; font-size: 11px; }
 .m-dropdown .menu-action:hover { background: #262626; color: #f5f5f5; }
 .dialog-panel { border: 1px solid #262626; border-radius: 14px; background: #0a0a0a; color: #f5f5f5; box-shadow: var(--shadow); overflow: hidden; }
@@ -501,7 +501,7 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     <article class="doc-row">
       <div class="doc-info"><div class="doc-title"><h3>Text clear and morph</h3></div><p class="description">Clear a field deliberately or animate a short label change, not every keystroke.</p></div>
       <div class="example"><div class="stage stack">
-        <div class="state-line" style="max-width:430px;width:100%"><input id="clear-input" class="control" value="A value to clear" aria-label="Text to clear"><button class="btn secondary m-press" type="button" data-motion-clear="#clear-input">Clear</button></div>
+        <div class="state-line" style="max-width:430px;width:100%"><input id="clear-input" class="control m-input-clear" value="A value to clear" aria-label="Text to clear"><button class="btn secondary m-press" type="button" data-motion-clear="#clear-input">Clear</button></div>
         <div class="state-line"><span id="morph-label" class="chip">Copy</span><button class="btn secondary m-press" type="button" data-motion-morph="#morph-label" data-motion-text="Copied">Morph text</button></div>
       </div></div>
     </article>
@@ -808,7 +808,7 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
       if (event.key === "Escape") {
         var dialog = document.querySelector('.m-dialog[data-state="open"]');
         if (dialog) {
-          var opener = document.querySelector('[data-motion-open="#' + dialog.id + '"]');
+          var opener = dialog._motionTrigger || document.querySelector('[data-motion-open="#' + dialog.id + '"]');
           setOpen(dialog, false, opener);
           if (opener) opener.focus();
           return;
@@ -881,13 +881,6 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     Motion.swapText(document.getElementById("status-text"), "Changes saved");
   });
 
-  document.querySelectorAll(".m-accordion summary").forEach(function (summary) {
-    summary.addEventListener("click", function () {
-      var details = summary.closest("details");
-      var wasOpen = details.open;
-      details.open = !wasOpen;
-    });
-  });
 })();
 </script>
 </body>
