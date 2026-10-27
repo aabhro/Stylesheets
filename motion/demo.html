@@ -759,6 +759,16 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     });
   }
 
+  function refreshTabIndicators() {
+    document.querySelectorAll(".m-tabs").forEach(function (group) {
+      var active = group.querySelector('[role="tab"][aria-selected="true"]');
+      var indicator = group.querySelector(".m-tabs__indicator");
+      if (!active || !indicator) return;
+      indicator.style.setProperty("--m-tab-left", active.offsetLeft + "px");
+      indicator.style.setProperty("--m-tab-width", active.offsetWidth + "px");
+    });
+  }
+
   function bindTilt(root) {
     if (reduced() || !global.matchMedia || !global.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     root.querySelectorAll("[data-motion-tilt]").forEach(function (element) {
@@ -913,6 +923,9 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     });
   }
 
+  if (global.addEventListener) global.addEventListener("resize", refreshTabIndicators, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshTabIndicators);
+
   global.Motion = {
     prefersReducedMotion: reduced,
     setOpen: setOpen,
@@ -944,6 +957,18 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     this.querySelector(".m-like__icon").textContent = liked ? "♥" : "♡";
   });
 
+  document.querySelectorAll("[data-motion-morph]").forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      event.stopPropagation();
+      var target = document.querySelector(this.getAttribute("data-motion-morph"));
+      if (!target) return;
+      var next = this.getAttribute("data-motion-text") || this.textContent;
+      var current = target.textContent;
+      Motion.morphText(target, next);
+      this.setAttribute("data-motion-text", current);
+    });
+  });
+
   document.getElementById("reveal-content").addEventListener("click", function () {
     var view = document.getElementById("skeleton-view");
     view.innerHTML = '<strong class="m-reveal">Preview loaded</strong><p class="description m-reveal">The placeholder has been replaced with content.</p>';
@@ -951,17 +976,22 @@ footer { padding-top: 30px; margin-top: 26px; border-top: 1px solid var(--edge-s
     this.disabled = true;
   });
 
+  var field = document.getElementById("demo-input");
+  var errorMessage = document.getElementById("error-message");
   document.getElementById("shake-input").addEventListener("click", function () {
-    var field = document.getElementById("demo-input");
     field.setAttribute("aria-invalid", "true");
-    document.getElementById("error-message").textContent = "This value is invalid. Review it and try again.";
+    errorMessage.textContent = "This value is invalid. Review it and try again.";
     Motion.replay(field, "m-error-shake");
+  });
+  field.addEventListener("input", function () {
+    field.setAttribute("aria-invalid", "false");
+    errorMessage.textContent = "Use the test button to preview invalid feedback.";
   });
 
   document.getElementById("primary-action").addEventListener("click", function () {
-    Motion.swapText(document.getElementById("status-text"), "Changes saved");
+    var status = document.getElementById("status-text");
+    Motion.swapText(status, status.textContent === "Changes saved" ? "Ready to save" : "Changes saved");
   });
-
 })();
 </script>
 </body>
