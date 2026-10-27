@@ -17,6 +17,15 @@ When making design decisions, follow this order:
 5. **Do not invent features.** Improve the requested experience without adding unsolicited hero sections, dashboards, onboarding cards, timers, labels, promotional copy, or unrelated tools.
 6. **Prefer simplicity when uncertain.** Choose fewer visual elements, fewer dependencies, and less layout clutter.
 
+
+## Mandatory shared motion standard
+
+**Always follow the repository's [Motion Standard](Motion.md) when designing or changing UI motion.** It applies to Modernimal and every other style in the repository. Use the official [transitions.dev motion skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev) as the primary source for matching components to production-ready transition recipes.
+
+Before implementing component motion, inspect the actual component state and use the closest official recipe when one fits. Use the official semantic tokens, preserve documented state orchestration and reduced-motion guards, and verify enter, exit, repeat, keyboard, and reduced-motion behavior. Do not copy the transitions.dev recipe library into this repository.
+
+Modernimal keeps the motion visually restrained. The shared standard governs transition selection, token consistency, complete state changes, accessibility, performance, and verification. This section does not replace Modernimal's visual direction or the canonical component specimen.
+
 ## Mandatory component library reference
 
 **Before designing, building, or redesigning any UI, inspect [`Components/Modernimal.html`](../Components/Modernimal.html). This is the canonical interactive reference for Modernimal components, patterns, and examples.**
