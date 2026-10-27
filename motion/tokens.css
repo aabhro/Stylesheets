@@ -1,0 +1,49 @@
+/* Stylesheets Motion — shared semantic tokens. Load once per project. */
+:root {
+  --m-duration-instant: 80ms;
+  --m-duration-fast: 140ms;
+  --m-duration-control: 180ms;
+  --m-duration-enter: 220ms;
+  --m-duration-exit: 150ms;
+  --m-duration-panel: 280ms;
+  --m-duration-emphasis: 420ms;
+  --m-duration-loop: 1600ms;
+  --m-stagger: 35ms;
+
+  --m-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --m-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --m-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --m-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-spring: cubic-bezier(0.2, 1.35, 0.4, 1);
+  --m-ease-linear: linear;
+
+  --m-distance-1: 3px;
+  --m-distance-2: 6px;
+  --m-distance-3: 10px;
+  --m-distance-4: 16px;
+  --m-distance-5: 28px;
+
+  --m-scale-1: 0.985;
+  --m-scale-2: 0.97;
+  --m-scale-3: 0.94;
+
+  --m-blur-1: 2px;
+  --m-blur-2: 5px;
+  --m-blur-3: 10px;
+
+  --m-motion-outline: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --m-duration-instant: 0ms;
+    --m-duration-fast: 0ms;
+    --m-duration-control: 0ms;
+    --m-duration-enter: 0ms;
+    --m-duration-exit: 0ms;
+    --m-duration-panel: 0ms;
+    --m-duration-emphasis: 0ms;
+    --m-duration-loop: 0ms;
+    --m-stagger: 0ms;
+  }
+}
