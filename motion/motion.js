@@ -36,6 +36,10 @@
     if (trigger) trigger.setAttribute("aria-expanded", open ? "true" : "false");
 
     if (open) {
+      if (element._motionTimer) {
+        global.clearTimeout(element._motionTimer);
+        element._motionTimer = null;
+      }
       if (trigger) element._motionTrigger = trigger;
       element.hidden = false;
       element.removeAttribute("inert");
@@ -52,6 +56,10 @@
       return;
     }
 
+    if (element._motionTimer) {
+      global.clearTimeout(element._motionTimer);
+      element._motionTimer = null;
+    }
     element.dataset.state = "closing";
     element.setAttribute("aria-hidden", "true");
     element.setAttribute("inert", "");
@@ -176,7 +184,10 @@
       if (openTrigger) {
         var selector = openTrigger.getAttribute("data-motion-open");
         var target = selector && document.querySelector(selector);
-        if (target) setOpen(target, true, openTrigger);
+        if (target) {
+          var alreadyOpen = target.dataset.state === "open" || target.dataset.state === "opening";
+          setOpen(target, !alreadyOpen, openTrigger);
+        }
       }
 
       var closeTrigger = event.target.closest("[data-motion-close]");
@@ -184,9 +195,28 @@
         var closeSelector = closeTrigger.getAttribute("data-motion-close");
         var closeTarget = closeSelector ? document.querySelector(closeSelector) : closeTrigger.closest(".m-dialog, .m-dropdown, .m-panel, .m-toast");
         if (closeTarget) {
-          var opener = closeTarget.id ? document.querySelector('[data-motion-open="#' + closeTarget.id + '"]') : null;
+          var opener = closeTarget._motionTrigger || (closeTarget.id ? document.querySelector('[data-motion-open="#' + closeTarget.id + '"]') : null);
           setOpen(closeTarget, false, opener);
         }
+      }
+
+      document.querySelectorAll('.m-dropdown[data-state="open"]').forEach(function (menu) {
+        var menuTrigger = menu._motionTrigger;
+        if (!menu.contains(event.target) && !openTrigger && !closeTrigger) {
+          setOpen(menu, false, menuTrigger);
+        }
+      });
+
+      var clearTrigger = event.target.closest("[data-motion-clear]");
+      if (clearTrigger) {
+        var clearTarget = document.querySelector(clearTrigger.getAttribute("data-motion-clear"));
+        if (clearTarget) clearText(clearTarget);
+      }
+
+      var morphTrigger = event.target.closest("[data-motion-morph]");
+      if (morphTrigger) {
+        var morphTarget = document.querySelector(morphTrigger.getAttribute("data-motion-morph"));
+        if (morphTarget) morphText(morphTarget, morphTrigger.getAttribute("data-motion-text") || morphTrigger.textContent);
       }
 
       var swapTrigger = event.target.closest("[data-motion-swap]");
