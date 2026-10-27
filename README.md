@@ -21,6 +21,8 @@
   &nbsp;·&nbsp;
   <a href="Styles/Motion.md">Motion standard</a>
   &nbsp;·&nbsp;
+  <a href="https://raw.githack.com/aabhro/Stylesheets/main/motion/demo.html">Run motion demo</a>
+  &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
 </p>
 
@@ -72,7 +74,7 @@ A style prompt for expressive personal websites, diaries, blogs, digital scrapbo
 
 ### [Motion Standard](Styles/Motion.md)
 
-A shared motion implementation for every style in this repository, with a local agent skill, semantic tokens, reusable CSS patterns, JavaScript helpers, a pattern catalog, and a working demo. The local implementation is in [`motion/`](motion/), with [`motion/SKILL.md`](motion/SKILL.md) as the agent entry point.
+A shared motion implementation for every style in this repository, with a local agent skill, semantic tokens, reusable CSS patterns, JavaScript helpers, a pattern catalog, and a working demo. The local implementation is in [`motion/`](motion/), with [`motion/SKILL.md`](motion/SKILL.md) as the agent entry point. [Run the interactive demo](https://raw.githack.com/aabhro/Stylesheets/main/motion/demo.html).
 
 **Use it alongside every stylesheet.** Motion engineering stays consistent while the chosen style controls the visual personality.
 
