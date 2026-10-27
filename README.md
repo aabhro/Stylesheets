@@ -17,6 +17,8 @@
   &nbsp;·&nbsp;
   <a href="Styles/Modernimal%20Stylesheet.md">Open Modernimal</a>
   &nbsp;·&nbsp;
+  <a href="Styles/selfpagism.md">Open selfpagism</a>
+  &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
 </p>
 
@@ -39,6 +41,23 @@ A practical guide for building minimal, monochrome interfaces with clear hierarc
 
 <p>
   <a href="Styles/Modernimal%20Stylesheet.md"><strong>Read the stylesheet →</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/aabhro/Stylesheets/tree/main/Styles">Browse the Styles folder</a>
+</p>
+
+---
+
+### [selfpagism](Styles/selfpagism.md)
+
+A style prompt for expressive personal websites, diaries, blogs, digital scrapbooks, fan shrines, and handmade corners of the internet.
+
+- **Visual direction:** personal, image-rich, eccentric, and guided by the owner's chosen aesthetic rather than professional design conventions.
+- **Visual language:** 2000s-core GIFs, blinkies, pixel buttons, tiled backgrounds, stamps, textures, and layered decoration.
+- **Personalization:** explicitly asks for the user's theme, images, backgrounds, decorations, and Pinterest references before settling on a direction.
+- **Engineering:** responsive layouts, accessible motion, replaceable assets, and modern implementation without losing the old-web spirit.
+
+<p>
+  <a href="Styles/selfpagism.md"><strong>Read the stylesheet →</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/aabhro/Stylesheets/tree/main/Styles">Browse the Styles folder</a>
 </p>
