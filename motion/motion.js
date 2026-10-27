@@ -297,10 +297,10 @@
     });
 
     root.addEventListener("keydown", function (event) {
-      var activeDialog = event.target.closest && event.target.closest('.m-dialog[data-state="open"]');
+      var activeDialog = document.querySelector('.m-dialog[data-state="open"]');
       if (activeDialog && event.key === "Tab") {
         var focusables = Array.prototype.slice.call(activeDialog.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(function (node) {
-          return !node.hidden && node.getAttribute("aria-hidden") !== "true";
+          return !node.hidden && node.getAttribute("aria-hidden") !== "true" && !node.closest("[hidden]");
         });
         if (!focusables.length) {
           event.preventDefault();
@@ -309,6 +309,9 @@
             dialogPanel.setAttribute("tabindex", "-1");
             dialogPanel.focus();
           }
+        } else if (!activeDialog.contains(document.activeElement)) {
+          event.preventDefault();
+          (event.shiftKey ? focusables[focusables.length - 1] : focusables[0]).focus();
         } else if (event.shiftKey && document.activeElement === focusables[0]) {
           event.preventDefault();
           focusables[focusables.length - 1].focus();
