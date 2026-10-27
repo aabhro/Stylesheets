@@ -59,7 +59,7 @@
     if (element.dataset.state === "closing") {
       element.hidden = true;
       element.dataset.state = "closed";
-      if (element.classList.contains("m-dialog") && element._motionTrigger) element._motionTrigger.focus();
+      if (element._motionTrigger && !element.classList.contains("m-toast")) element._motionTrigger.focus();
     }
   }
 
