@@ -72,15 +72,15 @@ A style prompt for expressive personal websites, diaries, blogs, digital scrapbo
 
 ### [Motion Standard](Styles/Motion.md)
 
-A required motion and interaction guide used by every style in this repository. It connects component behavior to the [transitions.dev motion skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev), with shared rules for transition selection, semantic tokens, complete enter/exit states, reduced motion, performance, and verification.
+A shared motion implementation for every style in this repository, with a local agent skill, semantic tokens, reusable CSS patterns, JavaScript helpers, a pattern catalog, and a working demo. The local implementation is in [`motion/`](motion/), with [`motion/SKILL.md`](motion/SKILL.md) as the agent entry point.
 
-**Use it alongside every stylesheet.** The motion implementation stays consistent while the chosen style controls the visual personality.
+**Use it alongside every stylesheet.** Motion engineering stays consistent while the chosen style controls the visual personality.
 
 ## Quick start
 
 1. **Choose a guide** from the list above.
-2. **Use the shared [Motion Standard](Styles/Motion.md)** alongside the chosen style. It applies to every guide.
-3. **Share both references with your AI coding assistant** and describe the task clearly. Your current requirements still take priority.
+2. **Use the shared [Motion Standard](Styles/Motion.md) and local [`motion/SKILL.md`](motion/SKILL.md)** alongside the chosen style. They apply to every guide.
+3. **Share the style and local motion references with your AI coding assistant** and describe the task clearly. Your current requirements still take priority.
 4. **Review the result** for consistency, accessibility, responsive behavior, motion states, and working interactions.
 
 These documents are design references, not component libraries. Adapt them to the project's existing architecture and requirements.
