@@ -4,503 +4,353 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Selfpagism Specimen — Stylesheets</title>
-<meta name="description" content="An optional dark, edgy Selfpagism component specimen for the Stylesheets repository.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Stylesheets / personal web specimen</title>
+<meta name="description" content="An optional Selfpagism specimen with an animated wallpaper and a centered rectangular personal website window.">
 <style>
+/* This is a reference, not a fixed theme. Swap the wallpaper and graphics for the user's own assets. */
 :root{
   color-scheme:dark;
-  --void:#070708;
-  --panel:#0d0d10;
-  --panel-raised:#121216;
-  --ink:#ece9e8;
-  --ash:#a5a1a3;
-  --dim:#69666b;
-  --line:#29252b;
-  --red:#ff3157;
-  --red-deep:#8f102b;
-  --rust:#3a101b;
-  --acid:#d4ff50;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
-  --display:"Space Grotesk",Arial,sans-serif;
-  --fast:130ms;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --page:1200px;
+  --wallpaper-fallback:#080d13;
+  --window:#11171e;
+  --window-deep:#0b1016;
+  --title:#26313d;
+  --title-edge:#566574;
+  --edge:#5b6875;
+  --edge-soft:#333e49;
+  --text:#d5dce2;
+  --text-soft:#b1bbc4;
+  --muted:#85929f;
+  --link:#b9d5ed;
+  --accent:#a9c0d6;
+  --mono:"Courier New",monospace;
+  --sans:Tahoma,Verdana,Arial,sans-serif;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:88px;scrollbar-width:thin;scrollbar-color:#3a343b transparent}
-body{margin:0;background:var(--void);color:var(--ink);font:14px/1.7 var(--mono);overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(rgba(255,255,255,.13) .7px,transparent .7px);background-size:5px 5px;opacity:.16}
-a{color:inherit;text-decoration:none}
-button,input,textarea{font:inherit}
-button,a,input,textarea{ -webkit-tap-highlight-color:transparent}
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--acid);outline-offset:4px}
-::selection{background:var(--red);color:#fff}
-::-webkit-scrollbar{width:7px;height:7px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#383139;border:2px solid var(--void)}
-::-webkit-scrollbar-thumb:hover{background:#62565f}
-img{max-width:100%;height:auto}
-button{cursor:pointer}
-.shell{width:min(var(--page),100% - 42px);margin-inline:auto}
-.topline{border-bottom:1px solid var(--line);background:rgba(7,7,8,.94)}
-.topline-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:38px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-.live{display:inline-flex;align-items:center;gap:8px;color:var(--ash)}
-.live-dot{width:6px;height:6px;display:inline-block;border-radius:50%;background:var(--red);box-shadow:0 0 8px rgba(255,49,87,.7);animation:pulse 2.5s infinite}
-.topline a{color:var(--acid)}
-header{position:sticky;top:0;z-index:50;background:rgba(7,7,8,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.navbar{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:66px}
-.wordmark{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;letter-spacing:-.07em;font-size:21px}
-.wordmark-mark{display:grid;place-items:center;width:27px;height:27px;background:var(--red);color:#08080a;font:700 15px/1 var(--mono);clip-path:polygon(0 0,100% 0,100% 73%,73% 100%,0 100%)}
-.wordmark small{font:10px/1.4 var(--mono);letter-spacing:.05em;color:var(--dim);display:block;margin-top:3px}
-.navlinks{display:flex;align-items:center;gap:clamp(12px,2.6vw,32px);font-size:11px;text-transform:uppercase;letter-spacing:.045em}
-.navlinks a{color:var(--ash);transition:color var(--fast) var(--ease)}
-.navlinks a:hover{color:var(--acid)}
-.navlinks .nav-out{color:var(--ink);border-bottom:1px solid var(--red);padding:7px 0}
-.hero{position:relative;padding:clamp(48px,9vw,116px) 0 70px;border-bottom:1px solid var(--line);overflow:hidden}
-.hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(255,49,87,.12);border-radius:50%;right:-170px;top:-230px;box-shadow:0 0 0 42px rgba(255,49,87,.025),0 0 0 84px rgba(255,49,87,.02);pointer-events:none}
-.kicker{display:flex;align-items:center;gap:10px;color:var(--red);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:22px}
-.kicker:before{content:"";display:inline-block;width:27px;height:1px;background:var(--red)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:clamp(28px,6vw,84px);align-items:center;position:relative;z-index:1}
-h1,h2,h3,p{margin-top:0}
-h1{font:700 clamp(48px,9vw,112px)/.86 var(--display);letter-spacing:-.095em;text-transform:uppercase;margin:0 0 28px;max-width:720px}
-h1 span{display:block;color:var(--red)}
-h1 .outline{-webkit-text-stroke:1px var(--ash);color:transparent}
-.hero-copy{max-width:550px;color:#b6b0b4;font-size:13px}
-.hero-copy strong{color:var(--ink);font-weight:600}
-.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:27px}
-.action{min-height:40px;padding:0 15px;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-transform:uppercase;letter-spacing:.04em;font-size:10px;border:1px solid var(--line);transition:background var(--fast) var(--ease),color var(--fast) var(--ease),border-color var(--fast) var(--ease),transform var(--fast) var(--ease)}
-.action:hover{transform:translateY(-2px);border-color:var(--red)}
-.action-primary{background:var(--red);border-color:var(--red);color:#09090a;font-weight:700}
-.action-primary:hover{background:#ff5473;border-color:#ff5473}
-.action-quiet{background:transparent;color:var(--ink)}
-.hero-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:27px}
-.meta-tag{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--ash);padding:4px 7px;border:1px solid #29262d;background:#0a0a0b}
-.hero-art{position:relative;min-width:0}
-.art-label{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;background:#100d10;border:1px solid #3b2029;border-bottom:0;color:var(--ash);font-size:9px;text-transform:uppercase;letter-spacing:.08em}
-.art-label span:last-child{color:var(--red)}
-.gif-frame{position:relative;background:#060607;border:1px solid #3b2029;padding:8px;overflow:hidden}
-.gif-frame:before,.gif-frame:after{content:"";position:absolute;width:18px;height:18px;pointer-events:none;z-index:4}
-.gif-frame:before{left:4px;top:4px;border-left:1px solid var(--red);border-top:1px solid var(--red)}
-.gif-frame:after{right:4px;bottom:4px;border-right:1px solid var(--red);border-bottom:1px solid var(--red)}
-.tenor-gif-embed{width:100%;min-height:190px;margin:0!important;background:#09090b}
-.gif-link-fallback{display:block;padding:9px;color:var(--ash);font-size:10px;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
-.art-foot{display:flex;justify-content:space-between;gap:12px;padding:8px 0;color:var(--dim);font-size:9px;letter-spacing:.04em;text-transform:uppercase}
-.float-note{position:absolute;right:-12px;bottom:48px;z-index:5;background:var(--acid);color:#0a0a0a;padding:8px 10px;font-size:9px;font-weight:700;letter-spacing:.04em;transform:rotate(3deg);box-shadow:5px 5px 0 #111}
-main{padding-bottom:60px}
-.section{padding:56px 0;border-bottom:1px solid var(--line);scroll-margin-top:90px}
-.section-head{display:grid;grid-template-columns:100px minmax(0,1fr) auto;align-items:start;gap:18px;margin-bottom:28px}
-.section-no{color:var(--red);font-size:10px;padding-top:7px;letter-spacing:.1em}
-.section-title{font:600 clamp(26px,4vw,42px)/1 var(--display);letter-spacing:-.07em;margin:0 0 11px;text-transform:uppercase}
-.section-desc{color:var(--ash);font-size:11px;max-width:660px;margin:0}
-.head-mark{color:var(--dim);font-size:9px;writing-mode:vertical-rl;text-transform:uppercase;letter-spacing:.12em}
-.specimen-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.specimen{border:1px solid var(--line);background:#09090b;min-width:0}
-.specimen-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ash);font-size:9px;text-transform:uppercase;letter-spacing:.07em}
-.specimen-top b{color:var(--red);font-weight:500}
-.specimen-content{padding:12px}
-.gif-ratio{width:100%;overflow:hidden;background:#050506;border:1px solid #262128}
-.gif-ratio .tenor-gif-embed{min-height:245px}
-.specimen-caption{padding:10px 2px 1px;color:var(--ash);font-size:10px}
-.specimen-caption strong{color:var(--ink);font-weight:500}
-.micro-label{font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em}
-.component-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}
-.component{background:rgba(12,11,14,.86);border:1px solid var(--line);padding:17px;min-width:0}
-.component.span-4{grid-column:span 4}
-.component.span-5{grid-column:span 5}
-.component.span-7{grid-column:span 7}
-.component.span-8{grid-column:span 8}
-.component.span-12{grid-column:span 12}
-.component h3{font:600 16px/1.2 var(--display);letter-spacing:-.035em;margin:0 0 8px}
-.component p{font-size:10px;color:var(--ash);margin:0 0 16px}
-.component-index{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:.07em}
-.component-index span:first-child{color:var(--red)}
-.blinkie{height:22px;width:150px;max-width:100%;display:flex;align-items:center;overflow:hidden;border:1px solid #702136;background:#190910;color:#fff;font:700 9px/1 var(--mono);letter-spacing:.02em;white-space:nowrap;position:relative}
-.blinkie:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(255,49,87,.15) 5px 8px);pointer-events:none}
-.blinkie-track{min-width:max-content;animation:blinkie-scroll 7s linear infinite}
-.blinkie b{color:var(--acid)}
-.button-wall{display:flex;flex-wrap:wrap;gap:7px}
-.web88{width:88px;height:31px;display:flex;align-items:center;justify-content:center;gap:4px;flex:0 0 88px;padding:2px;text-align:center;border:1px solid #9c3349;background:#13070b;color:#ffced7;font:700 8px/1.1 var(--mono);text-transform:uppercase;letter-spacing:-.04em;box-shadow:inset 1px 1px #47202b,inset -1px -1px #050505;transition:filter var(--fast),transform var(--fast)}
-.web88:hover{filter:brightness(1.4);transform:translateY(-2px)}
-.web88 .pixel{font-size:14px;color:var(--red)}
-.web88.acid{background:#11150b;color:var(--acid);border-color:#5b6c27;box-shadow:inset 1px 1px #333b1d,inset -1px -1px #050505}
-.web88.paper{background:#d9d4ce;color:#111;font-weight:700;border-color:#fff;box-shadow:inset 1px 1px #fff,inset -1px -1px #827d79}
-.stamp-wall{display:flex;gap:9px;flex-wrap:wrap}
-.stamp{display:grid;place-items:center;min-width:80px;min-height:45px;padding:6px 9px;border:1px dashed var(--red);color:var(--red);font-size:9px;font-weight:700;line-height:1.25;text-align:center;text-transform:uppercase;letter-spacing:.04em;transform:rotate(-2deg)}
-.stamp:nth-child(2n){transform:rotate(2deg);border-color:#656059;color:#c4bcb6}
-.stamp small{display:block;font-size:7px;font-weight:400;color:var(--ash)}
-.tile-swatch{min-height:125px;display:grid;place-items:center;border:1px solid #362d37;background-color:#0b0a0e;background-image:radial-gradient(#433140 .8px,transparent .8px),linear-gradient(45deg,transparent 48%,rgba(255,49,87,.11) 49%,rgba(255,49,87,.11) 51%,transparent 52%);background-size:11px 11px,33px 33px;color:#bbb;font-size:10px;text-align:center}
-.tile-swatch span{padding:6px 9px;background:#070708e8;border:1px solid var(--line)}
-.divider-sample{height:12px;margin:16px 0 12px;background:repeating-linear-gradient(90deg,var(--red) 0 12px,transparent 12px 16px,#f0e4e6 16px 18px,transparent 18px 22px);clip-path:polygon(0 35%,3% 35%,4% 0,6% 100%,8% 30%,12% 30%,13% 0,15% 100%,17% 35%,100% 35%,100% 65%,17% 65%,15% 100%,13% 0,12% 65%,8% 65%,6% 0,4% 100%,3% 65%,0 65%)}
-.hazard{margin-top:12px;border:1px solid #4e3037;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:repeating-linear-gradient(135deg,#160b0e 0 9px,#251016 9px 18px);color:#f5cbd2;text-transform:uppercase;font-size:9px;letter-spacing:.08em}
-.hazard b{background:var(--red);color:#070708;padding:3px 5px}
-.archive{border-top:1px solid var(--line)}
-.archive-row{display:grid;grid-template-columns:90px minmax(0,1fr) 120px;align-items:center;gap:20px;padding:19px 10px;border-bottom:1px solid var(--line);transition:background var(--fast)}
-.archive-row:hover{background:rgba(255,49,87,.045)}
-.archive-id{font-size:10px;color:var(--red)}
-.archive-title{font:600 21px/1.2 var(--display);letter-spacing:-.04em;margin-bottom:4px}
-.archive-desc{font-size:10px;color:var(--ash);margin:0}
-.archive-type{justify-self:end;font-size:9px;color:var(--dim);text-transform:uppercase;text-align:right}
-.archive-type b{display:block;color:var(--acid);font-weight:500;margin-bottom:4px}
-.archive-arrow{display:inline-block;color:var(--red);transition:transform var(--fast)}
-.archive-row:hover .archive-arrow{transform:translateX(4px)}
-.update-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line)}
-.update{padding:16px;border-right:1px solid var(--line)}
-.update:last-child{border-right:0}
-.update-id{color:var(--red);font-size:9px;margin-bottom:12px}
-.update h3{font:500 17px/1.2 var(--display);margin:0 0 8px;letter-spacing:-.03em}
-.update p{margin:0;color:var(--ash);font-size:10px}
-.webring{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:13px;border:1px dashed #59414a;background:#100b0e}
-.ring-link{color:var(--ash);font-size:10px;text-transform:uppercase;letter-spacing:.05em;transition:color var(--fast)}
-.ring-link:hover{color:var(--acid)}
-.ring-center{text-align:center;min-width:90px}
-.ring-center b{display:block;font:700 13px/1.3 var(--display);letter-spacing:.02em}
-.ring-center small{color:var(--dim);font-size:8px}
-.ring-next{text-align:right}
-.guestbook{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px}
-.guest-copy{padding-right:12px}
-.guest-copy h3{font:600 24px/1 var(--display);letter-spacing:-.06em;margin:0 0 12px}
-.guest-copy p{font-size:11px;color:var(--ash)}
-.guest-copy .note{color:var(--dim);font-size:9px;border-left:2px solid var(--red);padding-left:10px;margin-top:18px}
-.guest-form{border:1px solid var(--line);padding:16px;background:#09090b}
-.field{display:grid;gap:6px;margin-bottom:13px}
-.field label{color:var(--ash);font-size:9px;text-transform:uppercase;letter-spacing:.08em}
-.field input,.field textarea{width:100%;border:1px solid #332b34;background:#0a090c;color:var(--ink);padding:11px 12px;border-radius:0;outline:none;font-size:11px;resize:vertical}
-.field input:focus,.field textarea:focus{border-color:var(--red)}
-.field textarea{min-height:84px}
-.form-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.form-hint{color:var(--dim);font-size:9px}
-.form-status{display:none;margin-top:12px;padding:10px;background:#11140b;border-left:2px solid var(--acid);color:#e1efc2;font-size:10px}
+*{box-sizing:border-box;border-radius:0!important}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#596673 transparent}
+body{
+  min-height:100vh;
+  margin:0;
+  padding:1px 0 35px;
+  background-color:var(--wallpaper-fallback);
+  background-image:url("https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/backgrounds/tile-blue-wave.gif");
+  background-repeat:repeat;
+  background-attachment:fixed;
+  color:var(--text);
+  font:13px/1.55 var(--sans);
+}
+a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:#fff;background:#243747}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px dotted #fff;outline-offset:2px}
+img{max-width:100%;height:auto;vertical-align:middle}
+hr{height:1px;border:0;border-top:1px solid var(--edge-soft);margin:18px 0}
+small{font-size:11px}
+.page-window{
+  width:min(920px,calc(100% - 30px));
+  margin:42px auto 0;
+  background:var(--window);
+  border:2px solid var(--edge);
+  box-shadow:7px 7px 0 rgba(0,0,0,.72);
+}
+.titlebar{
+  min-height:31px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:4px 7px;
+  background:var(--title);
+  border-bottom:1px solid #090d12;
+  color:#f0f4f7;
+  font:12px var(--mono);
+}
+.titlebar-name{display:flex;align-items:center;gap:8px;min-width:0}
+.titlebar-icon{width:15px;height:15px;object-fit:contain}
+.window-controls{display:flex;gap:3px;flex-shrink:0}
+.window-controls span{
+  width:17px;height:17px;display:grid;place-items:center;
+  border:1px solid #84919d;background:#19232d;color:#e2e7eb;
+  font:11px/1 var(--sans);
+}
+.site-header{
+  padding:15px 18px 12px;
+  background:#0d131a;
+  border-bottom:1px solid var(--edge);
+}
+.site-name{
+  margin:0 0 5px;
+  font:700 27px/1.05 Georgia,"Times New Roman",serif;
+  letter-spacing:-.7px;
+  color:#e5e9ed;
+  text-align:center;
+}
+.site-subtitle{
+  text-align:center;
+  margin:0;
+  font:11px var(--mono);
+  color:var(--muted);
+}
+.header-decoration{display:flex;justify-content:center;gap:5px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.header-decoration img{image-rendering:auto}
+.site-nav{
+  display:flex;justify-content:center;gap:0;flex-wrap:wrap;
+  padding:0;background:#18222c;border-bottom:1px solid var(--edge);
+}
+.site-nav a{
+  display:block;padding:7px 13px;border-right:1px solid #3a4754;
+  color:#d5e0e9;font:12px var(--mono);text-decoration:none;
+}
+.site-nav a:first-child{border-left:1px solid #3a4754}
+.site-nav a:hover,.site-nav a[aria-current="page"]{background:#2b3a48;color:#fff;text-decoration:underline}
+.page-layout{display:grid;grid-template-columns:165px minmax(0,1fr)}
+.sidebar{
+  padding:13px 11px 17px;
+  background:#0c1218;
+  border-right:1px solid var(--edge);
+  font-size:12px;
+  min-width:0;
+}
+.sidebar h2{
+  font:bold 12px var(--mono);
+  color:#dfe7ed;
+  margin:1px 0 8px;
+  padding-bottom:5px;
+  border-bottom:1px solid var(--edge-soft);
+}
+.sidebar ul{list-style-type:square;margin:0 0 20px;padding-left:17px}
+.sidebar li{margin:5px 0}
+.sidebar .tiny-button{display:block;margin:7px 0}
+.side-note{font:11px/1.5 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.main-content{padding:17px 19px 22px;min-width:0;background:#11171e}
+.welcome{
+  display:grid;grid-template-columns:minmax(0,1fr) 145px;gap:16px;align-items:start;
+}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif}
+h1{font-size:23px;line-height:1.2;margin:0 0 10px;font-weight:bold;color:#eef2f5}
+h2{font-size:18px;line-height:1.25;margin:0 0 9px;color:#e3e8ed}
+h3{font-size:15px;line-height:1.25;margin:0 0 7px;color:#dce4eb}
+p{margin:8px 0 12px}
+p,li{overflow-wrap:anywhere}
+.mini-panel{
+  background:#0a0f14;border:1px solid var(--edge-soft);padding:7px;
+  font:11px/1.5 var(--mono);color:var(--text-soft);
+}
+.mini-panel img{display:block;margin:0 auto 5px;max-height:100px;object-fit:contain}
+.section-title{
+  margin:19px 0 9px;padding:0 0 6px;
+  border-bottom:1px solid var(--edge-soft);
+  font:bold 17px Georgia,"Times New Roman",serif;
+}
+.gif-divider{display:block;width:100%;height:auto;max-height:18px;object-fit:cover;object-position:left center;margin:15px 0}
+.gif-gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.gif-item{min-width:0;text-align:center}
+.gif-item .image-frame{background:#070b10;border:1px solid #4b5967;padding:5px}
+.tenor-gif-embed{width:100%;min-height:165px;margin:0!important;background:#0a0e14}
+.gif-item p{font:11px var(--mono);margin:6px 0 3px}
+.gif-fallback{display:block;font-size:11px;margin-top:4px}
+.button-line{display:flex;align-items:center;justify-content:flex-start;gap:5px;flex-wrap:wrap;margin:10px 0}
+.button-line a,.button-line span{display:inline-block;line-height:0}
+.button-line img{width:88px;height:31px;object-fit:contain;image-rendering:auto}
+.button-line img:hover{outline:1px dotted #d7e2ec}
+.old-list{list-style-type:square;padding-left:20px}
+.old-list li{margin:5px 0}
+.update-table{width:100%;border-collapse:collapse;font-size:12px}
+.update-table th,.update-table td{padding:6px 8px;text-align:left;vertical-align:top;border:1px solid var(--edge-soft)}
+.update-table th{background:#1c2731;color:#e3eaf0;font-weight:bold}
+.update-table td:first-child{width:100px;font-family:var(--mono);color:#c1d2e1}
+.notice{border:1px dashed #6c7884;padding:8px 10px;margin:12px 0;background:#0b1117;font:11px/1.6 var(--mono)}
+.ticker{overflow:hidden;white-space:nowrap;border:1px solid var(--edge-soft);background:#0a1016;margin:16px 0 4px;padding:5px 0;font:11px var(--mono)}
+.ticker span{display:inline-block;min-width:max-content;padding-left:100%;animation:scroll-text 22s linear infinite}
+.form-demo{border:1px solid var(--edge-soft);padding:11px;background:#0b1117}
+.form-demo label{display:block;font:11px var(--mono);margin:0 0 5px}
+.form-demo input,.form-demo textarea{
+  display:block;width:100%;margin:0 0 10px;padding:7px;
+  border:1px solid #64717e;background:#080d12;color:#e1e7ec;
+  font:12px var(--sans);border-radius:0;
+}
+.form-demo textarea{min-height:70px;resize:vertical}
+.form-demo button{padding:5px 10px;border:2px outset #8a969f;background:#273440;color:#f1f4f6;border-radius:0;font:12px var(--mono)}
+.form-demo button:active{border-style:inset}
+.form-status{display:none;margin-top:9px;padding:7px;border:1px solid var(--edge-soft);font-size:11px}
 .form-status.show{display:block}
-.resource-list{display:flex;flex-wrap:wrap;gap:7px}
-.resource-link{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);font-size:10px;color:var(--ash);transition:border-color var(--fast),color var(--fast),background var(--fast)}
-.resource-link:before{content:"↗";color:var(--red)}
-.resource-link:hover{border-color:var(--red);color:var(--ink);background:#10090c}
-footer{padding:28px 0 40px}
-.footer-top{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
-.footer-mark{font:700 19px/1 var(--display);letter-spacing:-.07em}
-.footer-mark span{color:var(--red)}
-.footer-note{color:var(--dim);font-size:9px}
-.footer-bottom{display:flex;justify-content:space-between;gap:15px;padding-top:15px;color:var(--dim);font-size:9px;flex-wrap:wrap}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.38}}
-@keyframes blinkie-scroll{0%{transform:translateX(0)}100%{transform:translateX(-48%)}}
-@media(max-width:800px){
-  .hero-grid{grid-template-columns:1fr;gap:36px}.hero-art{max-width:680px}
-  .section-head{grid-template-columns:58px minmax(0,1fr) auto;gap:12px}
-  .component.span-4,.component.span-5,.component.span-7,.component.span-8{grid-column:span 6}
-  .guestbook{grid-template-columns:1fr;gap:18px}
-  .navlinks{gap:13px}.navlinks a{font-size:10px}
+.site-footer{border-top:1px solid var(--edge);padding:11px 18px;background:#0b1117;text-align:center;font:11px/1.7 var(--mono);color:var(--muted)}
+.footer-small{margin-top:8px}
+@keyframes scroll-text{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@media(max-width:640px){
+  .page-window{width:calc(100% - 18px);margin-top:15px;box-shadow:3px 3px 0 rgba(0,0,0,.72)}
+  .site-header{padding:13px 10px 10px}
+  .site-name{font-size:24px}
+  .site-nav a{padding:7px 9px;font-size:11px}
+  .page-layout{grid-template-columns:1fr}
+  .sidebar{border-right:0;border-bottom:1px solid var(--edge);padding:10px 12px}
+  .sidebar ul{display:flex;flex-wrap:wrap;gap:4px 17px;margin-bottom:10px}
+  .sidebar li{margin:2px 0}
+  .sidebar .tiny-button{display:inline-block;margin-right:6px}
+  .main-content{padding:13px 12px 18px}
+  .welcome{grid-template-columns:1fr}
+  .mini-panel{max-width:230px}
+  .gif-gallery{grid-template-columns:1fr}
+  .tenor-gif-embed{min-height:200px}
+  .update-table th,.update-table td{padding:5px;font-size:11px}
 }
-@media(max-width:560px){
-  .shell{width:min(var(--page),100% - 28px)}
-  .topline-inner{min-height:34px;font-size:8px}
-  .navbar{min-height:58px;gap:8px}.wordmark{font-size:18px;gap:8px}.wordmark small{font-size:8px}
-  .navlinks{gap:10px}.navlinks a{font-size:9px}.navlinks .nav-out{display:none}
-  .hero{padding:58px 0 47px}h1{font-size:clamp(48px,16vw,80px)}
-  .section{padding:41px 0}.section-head{grid-template-columns:40px minmax(0,1fr);gap:8px}.head-mark{display:none}
-  .specimen-grid{grid-template-columns:1fr}.gif-ratio .tenor-gif-embed{min-height:220px}
-  .component.span-4,.component.span-5,.component.span-7,.component.span-8,.component.span-12{grid-column:span 12}
-  .archive-row{grid-template-columns:55px minmax(0,1fr);gap:12px;padding:16px 5px}
-  .archive-type{grid-column:2;justify-self:start;text-align:left;margin-top:-4px}
-  .update-list{grid-template-columns:1fr}.update{border-right:0;border-bottom:1px solid var(--line)}.update:last-child{border-bottom:0}
-  .float-note{right:2px;bottom:28px}.ring-center{min-width:70px}.webring{gap:7px;padding:10px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="topline">
-  <div class="shell topline-inner">
-    <span class="live"><i class="live-dot" aria-hidden="true"></i> INTERNET SPECIMEN / PERSONAL WEB DIVISION</span>
-    <span>NO CLIENTS. NO CONVERSION FUNNEL. <a href="#archive">JUST STYLES.</a></span>
+<div class="page-window" id="top">
+  <div class="titlebar">
+    <div class="titlebar-name"><img class="titlebar-icon" src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/icons/star.gif" alt="" onerror="this.style.display='none'"><span>STYLESHEETS — PERSONAL WEB FILE</span></div>
+    <div class="window-controls" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div>
   </div>
+
+  <header class="site-header">
+    <h1 class="site-name">Stylesheets</h1>
+    <p class="site-subtitle">little guides for making the internet your own</p>
+    <div class="header-decoration" aria-label="Decorative web badges">
+      <img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/made-with-notepad.gif" width="88" height="31" alt="Made with Notepad">
+      <img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/anybrowser.gif" width="88" height="31" alt="Any browser">
+    </div>
+  </header>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="#home" aria-current="page">home</a>
+    <a href="#guides">styles</a>
+    <a href="#gifs">gif file</a>
+    <a href="#updates">updates</a>
+    <a href="#guestbook">guestbook</a>
+  </nav>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <h2>navigate</h2>
+      <ul>
+        <li><a href="#home">home page</a></li>
+        <li><a href="#guides">style guides</a></li>
+        <li><a href="#gifs">image archive</a></li>
+        <li><a href="#updates">update log</a></li>
+        <li><a href="#guestbook">leave a note</a></li>
+        <li><a href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer">GitHub repository</a></li>
+      </ul>
+
+      <h2>current status</h2>
+      <div class="side-note">site: online<br>page: under construction<br>last checked: whenever</div>
+
+      <h2 style="margin-top:19px">tiny buttons</h2>
+      <a class="tiny-button" href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/geocities.gif" width="88" height="31" alt="GeoCities button"></a>
+      <a class="tiny-button" href="https://github.com/aabhro/Stylesheets/tree/main/Styles" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/css-valid.gif" width="88" height="31" alt="CSS badge"></a>
+      <p class="side-note">Use your own badges when building a real site. These are sample assets.</p>
+    </aside>
+
+    <main class="main-content" id="home">
+      <section class="welcome">
+        <div>
+          <h2>Welcome to the archive.</h2>
+          <p><strong>Stylesheets</strong> is a collection of visual guides for people who want their websites to look and feel like something they made themselves.</p>
+          <p>This example uses a wallpaper behind a central page window, regular navigation, ordinary text, a few images, and the sort of details you might add over time. It is a component reference, not a required layout.</p>
+          <p><a href="https://github.com/aabhro/Stylesheets">visit the repository</a> · <a href="#guides">browse the guides</a> · <a href="#gifs">look at the GIFs</a></p>
+        </div>
+        <aside class="mini-panel">
+          <img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/backgrounds/bubbles.gif" alt="Decorative animated bubbles">
+          <strong>NOW LOOKING AT:</strong><br>
+          <span>personal web design</span><br>
+          <span>gif wallpaper</span><br>
+          <span>handmade html</span>
+        </aside>
+      </section>
+
+      <img class="gif-divider" src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/dividers/line-star.gif" alt="" loading="lazy">
+
+      <section id="guides">
+        <h2 class="section-title">The stylesheet shelf</h2>
+        <p>Two current guides, two different approaches. They are prompts for making a real project, not polished website templates.</p>
+        <ul class="old-list">
+          <li><a href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Modernimal%20Stylesheet.md"><strong>Modernimal</strong></a> — quieter interface design, careful spacing, and custom UI patterns.</li>
+          <li><a href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Selfpagism.md"><strong>Selfpagism</strong></a> — personal pages, diaries, weird little archives, GIFs, and visual self-expression.</li>
+        </ul>
+        <div class="notice">NOTE: The central window is the frame. The wallpaper and the user's own graphics give the page its identity. Replace this sample text and imagery with the actual person's interests and references.</div>
+      </section>
+
+      <img class="gif-divider" src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/dividers/line-star.gif" alt="" loading="lazy">
+
+      <section id="gifs">
+        <h2 class="section-title">Image file / deep water</h2>
+        <p>The animated wallpaper is visible around this window. These two GIFs were supplied as visual references and stay inside the page content as actual media.</p>
+        <div class="gif-gallery">
+          <figure class="gif-item">
+            <div class="image-frame">
+              <div class="tenor-gif-embed" data-postid="10994411363898915889" data-share-method="host" data-aspect-ratio="1.0" data-width="100%">
+                <a href="https://tenor.com/view/deep-gif-10994411363898915889" target="_blank" rel="noreferrer">Deep GIF on Tenor</a>
+              </div>
+            </div>
+            <figcaption><p><strong>deep.gif</strong></p><a class="gif-fallback" href="https://tenor.com/view/deep-gif-10994411363898915889" target="_blank" rel="noreferrer">open original</a></figcaption>
+          </figure>
+          <figure class="gif-item">
+            <div class="image-frame">
+              <div class="tenor-gif-embed" data-postid="3329728538457420030" data-share-method="host" data-aspect-ratio="1.0" data-width="100%">
+                <a href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Sea GIF on Tenor</a>
+              </div>
+            </div>
+            <figcaption><p><strong>sea.gif</strong></p><a class="gif-fallback" href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">open original</a></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <img class="gif-divider" src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/dividers/line-star.gif" alt="" loading="lazy">
+
+      <section id="updates">
+        <h2 class="section-title">Update log</h2>
+        <table class="update-table">
+          <thead><tr><th>when</th><th>what changed</th></tr></thead>
+          <tbody>
+            <tr><td>entry 001</td><td>Modernimal stylesheet added to the collection.</td></tr>
+            <tr><td>entry 002</td><td>Selfpagism added for personal websites and old-web expression.</td></tr>
+            <tr><td>entry 003</td><td>Component specimen reworked around wallpaper + a centered page window.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <img class="gif-divider" src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/dividers/line-star.gif" alt="" loading="lazy">
+
+      <section id="guestbook">
+        <h2 class="section-title">Guestbook / leave a note</h2>
+        <p>This is a visual example of a plain old-web form. It does not send or store anything.</p>
+        <form class="form-demo" id="guestbook-form">
+          <label for="nickname">your name or handle</label>
+          <input id="nickname" name="nickname" maxlength="50" placeholder="unknown visitor" required>
+          <label for="message">message</label>
+          <textarea id="message" name="message" maxlength="300" placeholder="say something..." required></textarea>
+          <button type="submit">sign guestbook</button>
+          <div id="form-status" class="form-status" role="status" aria-live="polite">Preview only. Connect a backend or guestbook service to save entries.</div>
+        </form>
+      </section>
+
+      <div class="ticker" aria-label="Decorative scrolling text"><span>THIS IS YOUR PAGE. KEEP THE GIFS. LINK TO YOUR FRIENDS. MAKE SOMETHING WEIRD. THIS IS YOUR PAGE. KEEP THE GIFS. LINK TO YOUR FRIENDS. MAKE SOMETHING WEIRD.</span></div>
+
+      <div class="button-line" aria-label="Small web buttons">
+        <a href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/geocities.gif" width="88" height="31" alt="GeoCities era button"></a>
+        <a href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Selfpagism.md" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/made-with-notepad.gif" width="88" height="31" alt="Made with Notepad"></a>
+        <a href="https://github.com/aabhro/Stylesheets/tree/main/Components" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/promdotdev/prom-neocities-kit/main/buttons/anybrowser.gif" width="88" height="31" alt="Any browser"></a>
+      </div>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div>STYLESHEETS / PERSONAL WEB SPECIMEN</div>
+    <div>best viewed with your own taste · built with html, css and gifs</div>
+    <div class="footer-small"><a href="https://github.com/aabhro/Stylesheets">return to the repository</a></div>
+  </footer>
 </div>
-<header>
-  <div class="shell navbar">
-    <a class="wordmark" href="#top" aria-label="Stylesheets home">
-      <span class="wordmark-mark">S/</span>
-      <span>STYLESHEETS<small>VISUAL SYSTEMS / 001—∞</small></span>
-    </a>
-    <nav class="navlinks" aria-label="Main navigation">
-      <a href="#specimens">Specimens</a>
-      <a href="#archive">Archive</a>
-      <a href="#components">Components</a>
-      <a href="#guestbook">Guestbook</a>
-      <a class="nav-out" href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer">GitHub ↗</a>
-    </nav>
-  </div>
-</header>
 
-<section class="hero" id="top">
-  <div class="shell hero-grid">
-    <div>
-      <div class="kicker">Independent design notes · 2000s residue</div>
-      <h1>Style is a <span>little act</span><span class="outline">of rebellion.</span></h1>
-      <p class="hero-copy">A growing archive of visual systems, strange little interfaces, and personal web experiments. <strong>Stylesheets</strong> is where a page gets to have a personality before someone asks it to optimize a funnel.</p>
-      <div class="hero-actions">
-        <a class="action action-primary" href="#archive">Enter the archive <span aria-hidden="true">↘</span></a>
-        <a class="action action-quiet" href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer">Source on GitHub ↗</a>
-      </div>
-      <div class="hero-meta">
-        <span class="meta-tag">HTML / CSS / JS</span>
-        <span class="meta-tag">Hand assembled</span>
-        <span class="meta-tag">Best viewed with curiosity</span>
-      </div>
-    </div>
-    <div class="hero-art">
-      <div class="art-label"><span>FIG. 01 — BELOW THE SURFACE</span><span>MEDIA FOUND / 02</span></div>
-      <div class="gif-frame">
-        <div class="tenor-gif-embed" data-postid="3329728538457420030" data-share-method="host" data-aspect-ratio="1.0" data-width="100%">
-          <a href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Sea GIF on Tenor</a>
-        </div>
-        <a class="gif-link-fallback" href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Open the original sea GIF ↗</a>
-      </div>
-      <div class="art-foot"><span>VIEWPORT 07 / DEEP WATER</span><span>SCROLL TO DESCEND ↓</span></div>
-      <div class="float-note">NO TEMPLATE<br>NO APOLOGY</div>
-    </div>
-  </div>
-</section>
-
-<main class="shell">
-  <section class="section" id="specimens">
-    <div class="section-head">
-      <div class="section-no">[ 00 / GIF ]</div>
-      <div>
-        <h2 class="section-title">Moving evidence</h2>
-        <p class="section-desc">GIFs are part of the composition, not decorative garnish added after the layout is finished. These are the two supplied Tenor references.</p>
-      </div>
-      <div class="head-mark">animated image archive</div>
-    </div>
-    <div class="specimen-grid">
-      <article class="specimen">
-        <div class="specimen-top"><span>Asset 001 / Deep</span><b>USER SUPPLIED</b></div>
-        <div class="specimen-content">
-          <div class="gif-ratio">
-            <div class="tenor-gif-embed" data-postid="10994411363898915889" data-share-method="host" data-aspect-ratio="1.0" data-width="100%">
-              <a href="https://tenor.com/view/deep-gif-10994411363898915889" target="_blank" rel="noreferrer">Deep GIF on Tenor</a>
-            </div>
-          </div>
-          <div class="specimen-caption"><strong>Deep.</strong> Use as a visual anchor, a strange little interruption, or an atmosphere-setting loop.</div>
-          <a class="gif-link-fallback" href="https://tenor.com/view/deep-gif-10994411363898915889" target="_blank" rel="noreferrer">Open original on Tenor ↗</a>
-        </div>
-      </article>
-      <article class="specimen">
-        <div class="specimen-top"><span>Asset 002 / Sea</span><b>USER SUPPLIED</b></div>
-        <div class="specimen-content">
-          <div class="gif-ratio">
-            <div class="tenor-gif-embed" data-postid="3329728538457420030" data-share-method="host" data-aspect-ratio="1.0" data-width="100%">
-              <a href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Sea GIF on Tenor</a>
-            </div>
-          </div>
-          <div class="specimen-caption"><strong>Sea.</strong> Let the image set the tone, then build the page around its texture, movement, and mood.</div>
-          <a class="gif-link-fallback" href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Open original on Tenor ↗</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="components">
-    <div class="section-head">
-      <div class="section-no">[ 01 / PARTS ]</div>
-      <div>
-        <h2 class="section-title">Small web objects</h2>
-        <p class="section-desc">A reference shelf of reusable elements inspired by personal sites and early-web culture. Take individual parts when they suit the page. This example is intentionally dark and sharp, not a universal theme.</p>
-      </div>
-      <div class="head-mark">pick / remix / discard</div>
-    </div>
-    <div class="component-grid">
-      <article class="component span-5">
-        <div class="component-index"><span>01 / animated label</span><span>150 × 20-ish</span></div>
-        <h3>Blinkie strip</h3>
-        <p>A small looping banner can carry a mood or interest without taking over the page.</p>
-        <div class="blinkie" aria-label="Animated decorative blinkie: handmade for the weird web"><div class="blinkie-track">✶ HANDMADE WEB <b>✶ NO ALGORITHMS ✶</b> HANDMADE WEB <b>✶ NO ALGORITHMS ✶</b></div></div>
-      </article>
-      <article class="component span-7">
-        <div class="component-index"><span>02 / link buttons</span><span>88 × 31</span></div>
-        <h3>Button wall</h3>
-        <p>Old-web buttons are tiny identity markers. These CSS-built samples show how the same shape can carry different voices.</p>
-        <div class="button-wall" aria-label="Sample 88 by 31 pixel-style buttons">
-          <a class="web88" href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer"><span class="pixel">✳</span>stylesheets</a>
-          <a class="web88 acid" href="https://github.com/aabhro/Stylesheets/tree/main/Styles" target="_blank" rel="noreferrer"><span class="pixel">⌘</span>style archive</a>
-          <a class="web88 paper" href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Selfpagism.md" target="_blank" rel="noreferrer"><span class="pixel">S/</span>selfpagism</a>
-          <span class="web88"><span class="pixel">✶</span>made by hand</span>
-        </div>
-      </article>
-      <article class="component span-4">
-        <div class="component-index"><span>03 / stamps</span><span>static or animated</span></div>
-        <h3>Collected marks</h3>
-        <p>Stamps can announce interests, tools, a mood, or an opinion. Let them overlap and rotate a little.</p>
-        <div class="stamp-wall">
-          <div class="stamp">ANTI<br>CORP<small>personal web</small></div>
-          <div class="stamp">HAND<br>CODED<small>html forever</small></div>
-          <div class="stamp">DIVE<br>DEEP<small>est. whenever</small></div>
-        </div>
-      </article>
-      <article class="component span-4">
-        <div class="component-index"><span>04 / background</span><span>tileable</span></div>
-        <h3>Repeat texture</h3>
-        <p>A small repeating texture gives an empty patch of page some character without a huge background image.</p>
-        <div class="tile-swatch"><span>REPEAT / REPEAT / REPEAT</span></div>
-      </article>
-      <article class="component span-4">
-        <div class="component-index"><span>05 / divider</span><span>graphic rhythm</span></div>
-        <h3>Rough cut</h3>
-        <p>Swap a plain horizontal rule for a custom divider or a real GIF. Use it to pace the page.</p>
-        <div class="divider-sample" aria-hidden="true"></div>
-        <div class="hazard"><span>Site under construction</span><b>still alive</b></div>
-      </article>
-      <article class="component span-7">
-        <div class="component-index"><span>06 / status panel</span><span>little window</span></div>
-        <h3>Current signal</h3>
-        <p>A compact status block can be personal and specific. Avoid fake system metrics or made-up user activity.</p>
-        <div style="border:1px solid #352a33;background:#08080a;padding:12px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center">
-          <div><div class="micro-label">TRANSMISSION / 001</div><strong style="display:block;font:600 18px/1.35 var(--display);letter-spacing:-.04em">Collecting odd little things.</strong><span style="font-size:9px;color:var(--ash)">Styles, fragments, and web ephemera.</span></div>
-          <div style="font-size:9px;color:var(--acid);text-align:right">SIGNAL<br>FOUND</div>
-        </div>
-      </article>
-      <article class="component span-5">
-        <div class="component-index"><span>07 / counter motif</span><span>decorative sample</span></div>
-        <h3>Visitor counter</h3>
-        <p>Use a real counter service if the number matters. A static display like this is only a design specimen.</p>
-        <div style="display:flex;align-items:center;gap:10px;border:1px solid #342a33;background:#070708;padding:12px">
-          <span style="color:var(--red);font-size:10px">VISITORS</span>
-          <strong style="font:600 20px/1 var(--mono);letter-spacing:.16em;color:var(--acid)">000000</strong>
-          <span style="margin-left:auto;color:var(--dim);font-size:8px">SAMPLE ONLY</span>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="archive">
-    <div class="section-head">
-      <div class="section-no">[ 02 / INDEX ]</div>
-      <div>
-        <h2 class="section-title">Stylesheet archive</h2>
-        <p class="section-desc">A short index of the repository's current visual guides. The presentation uses an archive-like list, not product cards.</p>
-      </div>
-      <div class="head-mark">open files / read first</div>
-    </div>
-    <div class="archive">
-      <a class="archive-row" href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Modernimal%20Stylesheet.md" target="_blank" rel="noreferrer">
-        <div class="archive-id">FILE / 001</div>
-        <div><div class="archive-title">Modernimal</div><p class="archive-desc">Near-black, carefully spaced, neutral interfaces. Custom controls. Purposeful motion.</p></div>
-        <div class="archive-type"><b>UI / SYSTEM</b>Open document <span class="archive-arrow">↗</span></div>
-      </a>
-      <a class="archive-row" href="https://github.com/aabhro/Stylesheets/blob/main/Styles/Selfpagism.md" target="_blank" rel="noreferrer">
-        <div class="archive-id">FILE / 002</div>
-        <div><div class="archive-title">Selfpagism</div><p class="archive-desc">Personal pages, diaries, image-heavy layouts, blinkies, and 2000s-core GIF energy.</p></div>
-        <div class="archive-type"><b>PERSONAL WEB</b>Open document <span class="archive-arrow">↗</span></div>
-      </a>
-      <a class="archive-row" href="https://github.com/aabhro/Stylesheets/tree/main/Components" target="_blank" rel="noreferrer">
-        <div class="archive-id">DIR / 003</div>
-        <div><div class="archive-title">Component shelf</div><p class="archive-desc">Optional, visual examples of the patterns a guide can suggest and adapt.</p></div>
-        <div class="archive-type"><b>REFERENCE</b>Browse files <span class="archive-arrow">↗</span></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="section" id="updates">
-    <div class="section-head">
-      <div class="section-no">[ 03 / LOG ]</div>
-      <div>
-        <h2 class="section-title">Field notes</h2>
-        <p class="section-desc">An update log component for documenting the life of a personal site. Replace these sample entries with real changes in your own project.</p>
-      </div>
-      <div class="head-mark">latest transmissions</div>
-    </div>
-    <div class="update-list">
-      <article class="update"><div class="update-id">ENTRY / 001</div><h3>Modernimal filed</h3><p>A reusable system for restrained, precise interface design.</p></article>
-      <article class="update"><div class="update-id">ENTRY / 002</div><h3>Selfpagism opened</h3><p>A guide for pages with more personality than polish.</p></article>
-      <article class="update"><div class="update-id">ENTRY / 003</div><h3>Reference shelf started</h3><p>Components to borrow, remix, or ignore when a project calls for them.</p></article>
-    </div>
-  </section>
-
-  <section class="section" id="links">
-    <div class="section-head">
-      <div class="section-no">[ 04 / RING ]</div>
-      <div>
-        <h2 class="section-title">Link ring</h2>
-        <p class="section-desc">A webring-like navigation pattern connects little sites together. These sample links point to repository destinations, not a real webring service.</p>
-      </div>
-      <div class="head-mark">the web is a web</div>
-    </div>
-    <div class="webring">
-      <a class="ring-link" href="https://github.com/aabhro/Stylesheets/tree/main/Styles">← Previous / styles</a>
-      <div class="ring-center"><b>THE SMALL WEB</b><small>sample links / no ring backend</small></div>
-      <a class="ring-link ring-next" href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer">Next / source →</a>
-    </div>
-  </section>
-
-  <section class="section" id="guestbook">
-    <div class="section-head">
-      <div class="section-no">[ 05 / NOTE ]</div>
-      <div>
-        <h2 class="section-title">Leave a trace</h2>
-        <p class="section-desc">A guestbook is an old-web classic. This form demonstrates the visual component only and does not submit or store messages.</p>
-      </div>
-      <div class="head-mark">unsigned messages</div>
-    </div>
-    <div class="guestbook">
-      <div class="guest-copy">
-        <h3>Every good corner has a guestbook.</h3>
-        <p>Let visitors leave a note, a link, or a little proof they passed through. On a real site, connect this form to a backend or embed a guestbook service you trust.</p>
-        <p class="note">FORM STATUS: DEMO ONLY<br>Nothing is sent or saved from this preview.</p>
-      </div>
-      <form class="guest-form" id="guest-form">
-        <div class="field"><label for="guest-name">Handle / name</label><input id="guest-name" name="name" maxlength="50" placeholder="unknown entity" autocomplete="nickname" required></div>
-        <div class="field"><label for="guest-message">Leave a message</label><textarea id="guest-message" name="message" maxlength="360" placeholder="you found the page..." required></textarea></div>
-        <div class="form-bottom"><span class="form-hint">NO TRACKING / NO BACKEND</span><button class="action action-primary" type="submit">Test the form ↗</button></div>
-        <div class="form-status" id="form-status" role="status" aria-live="polite">Demo interaction only. Connect a backend to accept real entries.</div>
-      </form>
-    </div>
-  </section>
-
-  <section class="section" id="resources">
-    <div class="section-head">
-      <div class="section-no">[ 06 / OUTSIDE ]</div>
-      <div>
-        <h2 class="section-title">Further materials</h2>
-        <p class="section-desc">Research links for the kinds of small graphics and components used by personal websites. Check usage rights and asset-hosting rules before copying graphics into a public site.</p>
-      </div>
-      <div class="head-mark">external reference shelf</div>
-    </div>
-    <div class="resource-list">
-      <a class="resource-link" href="https://github.com/promdotdev/prom-neocities-kit" target="_blank" rel="noreferrer">Retro assets kit / tile backgrounds, GIF dividers, pixel buttons</a>
-      <a class="resource-link" href="https://leonardwojcik.com/88x31/" target="_blank" rel="noreferrer">88×31 buttons / context and examples</a>
-      <a class="resource-link" href="https://vamp1.neocities.org/resources" target="_blank" rel="noreferrer">Personal-web graphics directory</a>
-      <a class="resource-link" href="https://blinkies.cafe/" target="_blank" rel="noreferrer">Blinkie maker and archive</a>
-      <a class="resource-link" href="https://www.retrocrave.com/" target="_blank" rel="noreferrer">RetroCrave / old-web effects and motifs</a>
-      <a class="resource-link" href="https://tenor.com/view/deep-gif-10994411363898915889" target="_blank" rel="noreferrer">Supplied GIF / Deep</a>
-      <a class="resource-link" href="https://tenor.com/view/sea-gif-3329728538457420030" target="_blank" rel="noreferrer">Supplied GIF / Sea</a>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <div class="shell">
-    <div class="footer-top">
-      <div class="footer-mark">STYLESHEETS<span> / </span>SELF-PAGISM SPECIMEN</div>
-      <div class="footer-note">AN OPTIONAL COMPONENT REFERENCE · NOT A REQUIRED SITE TEMPLATE</div>
-    </div>
-    <div class="footer-bottom"><span>TAKE THE PARTS THAT FIT. LEAVE THE REST.</span><a href="https://github.com/aabhro/Stylesheets" target="_blank" rel="noreferrer">github.com/aabhro/Stylesheets ↗</a><span>END OF TRANSMISSION //</span></div>
-  </div>
-</footer>
 <script async src="https://tenor.com/embed.js"></script>
 <script>
 (function(){
-  var form = document.getElementById('guest-form');
+  var form = document.getElementById('guestbook-form');
   var status = document.getElementById('form-status');
-  if(form && status){
-    form.addEventListener('submit', function(event){
-      event.preventDefault();
-      status.textContent = 'Demo interaction only. No message was sent or stored. Connect a backend to accept real entries.';
-      status.classList.add('show');
-    });
-  }
+  if (!form || !status) return;
+  form.addEventListener('submit', function(event){
+    event.preventDefault();
+    status.textContent = 'Preview only. No message was sent or stored. Connect a backend or guestbook service to save entries.';
+    status.classList.add('show');
+  });
 })();
 </script>
 </body>
