@@ -436,6 +436,50 @@ hr{border-top-color:#303030}
   .header-decoration::before,.header-decoration::after{font-size:13px;letter-spacing:0}
 }
 
+
+/* Crop the Tenor frame as a square cover layer. This hides the player's own letterboxing. */
+#wallpaper{
+  position:fixed!important;
+  inset:0!important;
+  overflow:hidden!important;
+  background:#000!important;
+}
+#wallpaper .tenor-gif-embed{
+  position:absolute!important;
+  inset:auto!important;
+  left:50%!important;
+  top:50%!important;
+  width:max(100vw,100vh)!important;
+  height:max(100vw,100vh)!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  padding:0!important;
+  aspect-ratio:1 / 1!important;
+  transform:translate(-50%,-50%)!important;
+  overflow:hidden!important;
+}
+#wallpaper iframe{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  border:0!important;
+  transform:none!important;
+}
+#wallpaper-shade{
+  position:fixed!important;
+  inset:0!important;
+  background:rgba(0,0,0,.44)!important;
+}
+
 </style>
 </head>
 <body>
