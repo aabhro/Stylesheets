@@ -268,7 +268,7 @@
       if (event.key === "Escape") {
         var dialog = document.querySelector('.m-dialog[data-state="open"]');
         if (dialog) {
-          var opener = document.querySelector('[data-motion-open="#' + dialog.id + '"]');
+          var opener = dialog._motionTrigger || document.querySelector('[data-motion-open="#' + dialog.id + '"]');
           setOpen(dialog, false, opener);
           if (opener) opener.focus();
           return;
