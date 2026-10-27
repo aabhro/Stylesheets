@@ -127,7 +127,19 @@
 
   function measureTextWidth(element, value) {
     var probe = element.cloneNode(false);
+    var computed = global.getComputedStyle(element);
+    var inheritedMetrics = [
+      "display", "box-sizing", "font-family", "font-size", "font-weight",
+      "font-style", "font-stretch", "letter-spacing", "line-height",
+      "text-transform", "text-indent", "white-space",
+      "padding-left", "padding-right", "border-left-width", "border-right-width",
+      "border-left-style", "border-right-style"
+    ];
+    probe.removeAttribute("id");
     probe.textContent = String(value);
+    inheritedMetrics.forEach(function (property) {
+      probe.style.setProperty(property, computed.getPropertyValue(property));
+    });
     probe.style.position = "fixed";
     probe.style.left = "-10000px";
     probe.style.top = "0";
