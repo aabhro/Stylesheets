@@ -31,13 +31,14 @@
     });
   }
 
-  async function setOpen(element, open, trigger) {
+  async function setOpen(element, open, trigger, restoreFocus) {
     if (!element) return;
     var motionVersion = (element._motionVersion || 0) + 1;
     element._motionVersion = motionVersion;
     if (trigger && trigger.hasAttribute("aria-expanded")) trigger.setAttribute("aria-expanded", open ? "true" : "false");
 
     if (open) {
+      element._motionRestoreFocus = false;
       if (element._motionTimer) {
         global.clearTimeout(element._motionTimer);
         element._motionTimer = null;
@@ -63,6 +64,7 @@
       return;
     }
 
+    element._motionRestoreFocus = !!restoreFocus;
     if (element._motionTimer) {
       global.clearTimeout(element._motionTimer);
       element._motionTimer = null;
@@ -74,7 +76,8 @@
     if (element._motionVersion === motionVersion && element.dataset.state === "closing") {
       element.hidden = true;
       element.dataset.state = "closed";
-      if (element._motionTrigger && !element.classList.contains("m-toast")) element._motionTrigger.focus();
+      if (element._motionRestoreFocus && element._motionTrigger && !element.classList.contains("m-toast")) element._motionTrigger.focus();
+      element._motionRestoreFocus = false;
     }
   }
 
@@ -248,7 +251,7 @@
         var closeTarget = closeSelector ? document.querySelector(closeSelector) : closeTrigger.closest(".m-dialog, .m-dropdown, .m-panel, .m-toast");
         if (closeTarget) {
           var opener = closeTarget._motionTrigger || (closeTarget.id ? document.querySelector('[data-motion-open="#' + closeTarget.id + '"]') : null);
-          setOpen(closeTarget, false, opener);
+          setOpen(closeTarget, false, opener, true);
         }
       }
 
@@ -325,12 +328,12 @@
         var dialog = document.querySelector('.m-dialog[data-state="open"]');
         if (dialog) {
           var opener = dialog._motionTrigger || document.querySelector('[data-motion-open="#' + dialog.id + '"]');
-          setOpen(dialog, false, opener);
+          setOpen(dialog, false, opener, true);
           if (opener) opener.focus();
           return;
         }
         var surface = document.querySelector('.m-dropdown[data-state="open"], .m-panel[data-state="open"]');
-        if (surface) setOpen(surface, false);
+        if (surface) setOpen(surface, false, surface._motionTrigger, true);
       }
 
       var menuItem = event.target.closest && event.target.closest('.m-dropdown[role="menu"] [role="menuitem"]');
