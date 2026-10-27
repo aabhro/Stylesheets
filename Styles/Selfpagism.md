@@ -14,6 +14,15 @@ The site is for self-expression, not professional customers. It does not need to
 
 **2000s-core GIFs are a defining requirement, not an optional finishing touch.** Use real animated GIFs, blinkies, pixel buttons, decorative separators, tiled textures, and other web-era graphics throughout the design when the chosen theme supports them. A page that only uses a retro font or a nostalgic color palette is not enough.
 
+
+## Mandatory shared motion standard
+
+Follow the repository's [Motion Standard](Motion.md) for every interface interaction. It applies to Selfpagism and all other styles, including sites with very different aesthetics. Use the official [transitions.dev motion skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev) as the primary reference for component-specific transitions, state handling, and shared motion tokens.
+
+The common implementation requirements are mandatory: choose a transition for the component's real behavior, handle opening and closing states, keep the official reduced-motion safeguards, preserve keyboard access, and verify the actual interaction. Do not copy the transitions.dev recipe library into this repository.
+
+**The visual expression remains Selfpagism's.** Motion may feel playful, odd, rough, theatrical, nostalgic, or deliberately imperfect when the user's chosen theme calls for it. The shared standard is not a demand to make personal websites look like polished product interfaces. Keep GIFs and decorative movement coherent, avoid competing effects, and respect reduced-motion preferences.
+
 ## One optional structure: animated wallpaper + floating window
 
 The supplied source-code examples demonstrate one possible personal-site composition: a repeating or full-screen animated GIF behind a centered, rectangular page window. It is only a reference pattern. Do not assume every Selfpagism site needs a wallpaper, floating window, sidebar, or any other particular arrangement.
