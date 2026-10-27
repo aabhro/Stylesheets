@@ -4,6 +4,10 @@ A self-contained motion system for every style in this repository.
 
 This folder is the implementation, not merely a pointer to another repository. It contains the agent skill, motion tokens, reusable CSS patterns, a small vanilla-JavaScript controller, a pattern catalog, and a working showcase.
 
+## Preview
+
+[Run the interactive demo](https://raw.githack.com/aabhro/Stylesheets/main/motion/demo.html). The GitHub file viewer displays HTML source rather than executing it. The preview is a self-contained HTML page, so you can also download `demo.html` and open it directly or serve the repository with `python -m http.server 8000` and visit `http://localhost:8000/motion/demo.html`.
+
 ## Files
 
 - `SKILL.md` — instructions coding agents must follow for all stylesheet-driven UI tasks.
