@@ -6,21 +6,22 @@ Use this guide to design and build a personal website that feels like someone's 
 
 The site is for self-expression, not professional customers. It does not need to look corporate, polished in a conventional product-design sense, or optimized to sell something. It should feel specific to one person, with a recognizable mood, interests, references, visual obsessions, and a little internet-era personality.
 
-**Core direction:** expressive, image-heavy, personal, handmade, and guided by the owner's taste. Treat the page like someone's actual personal website, not a SaaS landing page, a polished design agency concept, or an AI-generated aesthetic demo. The goal is individuality and atmosphere, not trendy polish.
+**Core direction:** expressive, image-heavy, personal, handmade, and guided by the owner's taste. Treat the site like someone's actual personal website, not a SaaS landing page, a polished design agency concept, or an AI-generated aesthetic demo. The goal is individuality and atmosphere, not trendy polish.
+
+**This guide and its component files are examples, not a fixed template or a set of restrictions.** The user is free to choose any theme, palette, layout, page count, navigation model, and visual language. Adapt the guide to the user's idea instead of forcing the user into the guide's examples. If their direction conflicts with an optional example below, follow the user's direction.
 
 **Do not confuse dark and edgy with neon-modern.** Dark personal websites do not automatically need glowing red or purple accents, giant display type, gradients, glass panels, soft shadows, or sleek cyberpunk decoration. Use the color, density, background, and graphics from the user's references instead.
 
 **2000s-core GIFs are a defining requirement, not an optional finishing touch.** Use real animated GIFs, blinkies, pixel buttons, decorative separators, tiled textures, and other web-era graphics throughout the design when the chosen theme supports them. A page that only uses a retro font or a nostalgic color palette is not enough.
 
-## Typical page structure: animated wallpaper + floating window
+## One optional structure: animated wallpaper + floating window
 
-This is the most useful starting point for the personal-site style shown in the supplied source-code examples. It is a default pattern to consider, not a rigid template. The user's own references still decide the final structure.
+The supplied source-code examples demonstrate one possible personal-site composition: a repeating or full-screen animated GIF behind a centered, rectangular page window. It is only a reference pattern. Do not assume every Selfpagism site needs a wallpaper, floating window, sidebar, or any other particular arrangement.
 
-**Start with the background, then place the website on top of it.** A common composition is a repeating or full-screen animated GIF wallpaper with one centered, floating, rectangular main page/window. The wallpaper remains clearly visible around the central window. The main page feels like an independent little site sitting on top of its own background.
-
-- Ask the user whether they prefer a tiled animated GIF, a full-screen animated GIF, a still image, or a patterned background. If they provide a background, use it instead of replacing it with a random one.
-- Build one centered main panel with a real, simple page structure. A title/header area, straightforward navigation, a content region, and a small footer are often enough.
-- When it suits the reference, use a narrow left navigation rail, a central content area, and optional decorative material along one side. A simple central iframe/content panel is also a valid old-web pattern. Do not force three columns onto every site.
+- Ask about the preferred background only when it is not already clear. If the user supplies a background, use that asset rather than replacing it with a random one.
+- A centered window with a header, navigation, content, and footer is one option, not a requirement. Choose the structure that suits the user's theme, content, references, and browsing preferences.
+- A narrow left navigation rail, central content area, floating windows, a long scrolling page, a loose collage, a plain index, or an experimental layout are all valid when they fit the brief. Do not force a sidebar, three columns, or a central window onto every site.
+- **The user's freedom and intention come first.** Treat every visual pattern in this guide as a tool to borrow or alter, not a rule that overrides their taste.
 - **Use square corners by default. Set `border-radius: 0`.** Main windows, title bars, navigation areas, frames, image borders, buttons, forms, and content regions should have square corners unless the user specifically asks for rounded styling.
 - Use plain 1px borders, simple inset/outset edges, horizontal rules, compact title bars, basic lists, underlined links, ordinary headings, and image-led sections. Small uneven details are better than layers of polished decoration.
 - Make animated GIFs and still images part of the composition: a header graphic, small GIF buttons along a rail, decorations positioned around the main window, a background, an image embedded in an article, or a repeating divider.
@@ -30,30 +31,43 @@ This is the most useful starting point for the personal-site style shown in the 
 
 ### Source-code cues from the user's examples
 
-The supplied xsolimini source shows a central content frame, side navigation, multiple small graphic buttons, decorative GIFs positioned around the layout, and repeated image strips. The supplied bokuwatetsuo source shows a background/cover layer, a single main content wrapper, simple top navigation, section headings, horizontal rules, large images, an update feed, and a guestbook link.
+The supplied xsolimini source shows a central content frame, side navigation, multiple small graphic buttons, decorative GIFs positioned around the layout, and repeated image strips. The supplied bokuwatetsuo source shows a background/cover layer, a main content wrapper, simple top navigation, section headings, horizontal rules, large images, an update feed, and a guestbook link.
 
-Use those structural ideas as inspiration. Recreate the approach in clean, maintainable code rather than copying their markup, assets, exact dimensions, or content wholesale.
+These are examples of individual techniques, not a required site map or a template to reproduce. Borrow only what suits the user's brief. Do not copy the markup, assets, exact dimensions, or content wholesale.
+
+### Single-page and multi-page websites are both valid
+
+Selfpagism projects can be a single page or a whole collection of connected pages. Do not automatically cram every section into one long HTML file or turn a requested multi-page site into a one-page mockup.
+
+- Ask whether the user has a preferred structure when it is not obvious: one long page, several separate pages, a home page linking to subpages, a diary/archive with dated entries, a shrine, a collection, or another structure.
+- For multi-page work, plan a simple information architecture before implementation. Keep navigation and visual identity consistent where useful, but let individual pages have their own layouts when the concept calls for it.
+- Create real links between relevant pages, make navigation work from every page, and use correct relative paths for local files. Do not leave decorative links pointing nowhere or use `#` as a substitute for pages the user requested.
+- Preserve existing page relationships, filenames, anchors, assets, and working links when editing an existing project. Check for inbound and outbound links before renaming or restructuring files.
+- If the user requests a single-page site, keep it single-page. If they request several pages, build the connected pages and cross-links needed. If they have not decided, ask rather than silently choosing a restrictive structure.
 
 ## Optional component specimen
 
-See [\u0060Components/Selfpagism.html\u0060](../Components/Selfpagism.html) for a standalone example themed around the Stylesheets repository. It demonstrates reusable patterns such as Tenor GIF embeds, blinkies, 88×31-style buttons, stamps, tiled textures, dividers, status panels, archive rows, an update log, webring-style links, and a guestbook form.
+See [\u0060Components/Selfpagism.html\u0060](../Components/Selfpagism.html) for one standalone example themed around the Stylesheets repository. It demonstrates reusable patterns such as GIF embeds, blinkies, 88×31-style buttons, stamps, tiled textures, dividers, status panels, archive rows, an update log, webring-style links, and a guestbook form.
 
-**This file is a reference, not a required website template.** Do not force its dark, edgy underwater theme onto other Selfpagism projects. Do not assume the user wants every component shown in the specimen. Borrow only the elements that suit the user's stated aesthetic and content, adapt them to the page, and replace sample content with real user-provided details. The user's chosen theme and supplied assets always take priority.
+**The specimen is a demonstration, not a default design or required template.** Its theme, component selection, page layout, and content are only examples. Never carry its look into another project automatically, and never assume the user wants every component shown. Reuse, restyle, rearrange, or ignore any of it based on the user's own direction. The user has complete freedom to choose a different aesthetic, layout, content model, and number of pages.
 
-## 1. Start by asking the owner
+## 1. Survey the owner before building
 
-Before writing code or choosing a finished direction, ask the user what kind of personal page they want. Do not assume every personal site should be pink, kawaii, dark, minimal, or nostalgic in the same way.
+**For a new Selfpagism site, theme discovery is a required first step. Do not start coding or decide the finished visual direction until you have asked about the user's theme, unless their request and references already make the direction clear.** Do not ask again for details they already supplied. When the theme is unclear, pause implementation and ask one compact set of questions first.
 
-Ask in one compact, conversational message. Invite partial answers. The user does not need to complete a questionnaire before work can begin.
+Keep the survey conversational and short. Make it easy for the user to answer in their own words or skip details. Ask the most important questions together rather than sending a long questionnaire.
 
-Ask about:
+Cover these points, combining them naturally into a few questions:
 
-1. **The vibe or theme.** What should it feel like? Examples include pink and cute, glittery Y2K, edgy or cyber, dark and moody, emo, grunge, anime-inspired, dreamy, messy scrapbook, webcore, gothic, nature-inspired, romantic, surreal, maximalist, or something difficult to label. These are suggestions, not preset templates.
-2. **Images and decorations.** Ask the user to upload or share images, backgrounds, textures, GIFs, stickers, stamps, blinkies, button graphics, pixel art, wallpapers, screenshots, or other visual assets. Pinterest boards and individual Pinterest links are welcome as visual references.
-3. **Personal content.** What belongs on the site? Examples include diary entries, blog posts, an about section, favorite music, media they love, a gallery, personal links, a collection, a shrine, a guestbook, a now-playing area, or a list of current obsessions.
-4. **How it should feel to browse.** Should it be intentionally chaotic and dense, dreamy and layered, dark and sparse but decorated, or somewhere in between? Does the user want a central content area, sidebars, floating windows, a long scrolling page, or a more experimental composition?
+1. **Theme and mood:** What should the site feel like? Examples include gothic, grunge, glittery Y2K, cute, dreamy, cyber, romantic, nature-inspired, maximalist, webcore, or something entirely different. These are prompts, not preset themes.
+2. **Structure:** Do they picture one long page or multiple connected pages? Are there page types they want, such as a home page, diary, gallery, shrine, links page, or archive?
+3. **Content and assets:** What should appear on the site, and do they have any images, GIFs, backgrounds, Pinterest links, or other references to use?
 
-If the user has already supplied enough information, do not ask these questions again. If they say “surprise me,” make a coherent, distinctive proposal and explain the direction briefly before building. Never turn the process into a long intake form.
+A concise starter message could be: “What theme and mood are you going for? Do you picture one page or several connected pages, and do you have any references or assets you want me to use?” Adapt it to the context rather than repeating it mechanically.
+
+**After asking, wait for the user's answer before building.** Do not treat the survey as optional or silently guess a theme. Exceptions: the user has already stated the theme and enough structural direction, explicitly says to surprise them or make the choices, or asks for a quick implementation where the direction is unmistakable. In those cases, proceed without redundant questions and make sensible, clearly grounded choices.
+
+If the user says “surprise me,” that is permission to choose the direction, not a reason to fall back to this component specimen unchanged. Make a distinctive proposal that suits their context. Never turn the process into a long intake form.
 
 ### Working with references and assets
 
@@ -228,14 +242,14 @@ Avoid these unless the user explicitly requests them:
 
 ## 11. Build workflow
 
-1. Review the user's brief, existing project, and supplied references.
-2. If the direction or assets are missing, ask about the visual theme, image references, decorations, and the personal content they want. Accept Pinterest links and uploaded assets.
-3. Extract a short design direction from the answers: mood, palette, imagery, typography, texture, layout, density, and key GIF motifs.
-4. Plan the structure around the person's content and visual references. Do not begin with a generic professional template.
-5. Build the page with a substantial, intentional use of imagery and visible 2000s-core GIF details.
-6. Check desktop and mobile layouts, reading comfort, keyboard access, reduced motion, link behavior, asset loading, and performance.
-7. Verify that the result feels like the requested person's site. If it looks like a generic landing page with decorative stickers attached, rethink the structure.
-8. Explain what was created, which user assets or references were used, and what remains easy to customize. Be honest about any assets or links that could not be accessed.
+1. Review the user's brief, existing project, files, and supplied references.
+2. For a new site, survey the user about theme and structure before building if either is unclear. Wait for their answer. Do not ask redundant questions when the brief already answers them or the user has delegated the creative choices.
+3. Extract a short design direction from the user's answers: mood, palette, imagery, typography, texture, layout, density, page count, navigation, and key GIF motifs.
+4. Plan the site structure around the user's content and goals. Decide whether it is one page or a connected multi-page site based on their answer; map page relationships and links before coding when needed.
+5. Treat this guide, the component specimen, and the reference sites as inspiration only. Follow the user's chosen direction even when it differs from the examples.
+6. Build the requested page or connected pages with a substantial, intentional use of imagery and visible 2000s-core GIF details where they suit the theme.
+7. Check desktop and mobile layouts, reading comfort, keyboard access, reduced motion, asset loading, performance, and all navigation and cross-page links.
+8. Verify that the result feels like the user's own site, not a stock template. Explain what was created, what references or assets were used, and what remains easy to customize. Be honest about anything you could not access or verify.
 
 ## 12. Reference shelf
 
