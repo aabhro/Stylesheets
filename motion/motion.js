@@ -33,7 +33,9 @@
 
   async function setOpen(element, open, trigger) {
     if (!element) return;
-    if (trigger) trigger.setAttribute("aria-expanded", open ? "true" : "false");
+    var motionVersion = (element._motionVersion || 0) + 1;
+    element._motionVersion = motionVersion;
+    if (trigger && trigger.hasAttribute("aria-expanded")) trigger.setAttribute("aria-expanded", open ? "true" : "false");
 
     if (open) {
       if (element._motionTimer) {
@@ -47,10 +49,15 @@
       element.dataset.state = "opening";
       void element.offsetWidth;
       requestAnimationFrame(function () {
-        if (element.dataset.state === "opening") element.dataset.state = "open";
+        if (element._motionVersion !== motionVersion || element.dataset.state !== "opening") return;
+        element.dataset.state = "open";
         if (element.classList.contains("m-dialog")) {
           var first = element.querySelector("button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])");
           if (first) first.focus();
+        } else if (element.getAttribute("role") === "menu" && element._motionKeyboardOpen) {
+          var firstItem = element.querySelector('[role="menuitem"]:not([disabled])');
+          if (firstItem) firstItem.focus();
+          element._motionKeyboardOpen = false;
         }
       });
       return;
@@ -64,7 +71,7 @@
     element.setAttribute("aria-hidden", "true");
     element.setAttribute("inert", "");
     await waitForMotion(element);
-    if (element.dataset.state === "closing") {
+    if (element._motionVersion === motionVersion && element.dataset.state === "closing") {
       element.hidden = true;
       element.dataset.state = "closed";
       if (element._motionTrigger && !element.classList.contains("m-toast")) element._motionTrigger.focus();
@@ -115,21 +122,65 @@
     }, { once: true });
   }
 
+  function measureTextWidth(element, value) {
+    var probe = element.cloneNode(false);
+    probe.textContent = String(value);
+    probe.style.position = "fixed";
+    probe.style.left = "-10000px";
+    probe.style.top = "0";
+    probe.style.width = "max-content";
+    probe.style.maxWidth = "none";
+    probe.style.minWidth = "0";
+    probe.style.visibility = "hidden";
+    probe.style.pointerEvents = "none";
+    probe.style.transition = "none";
+    probe.style.animation = "none";
+    document.body.appendChild(probe);
+    var width = probe.getBoundingClientRect().width;
+    probe.remove();
+    return width;
+  }
+
   function morphText(element, value) {
     if (!element || element.textContent === String(value)) return;
+    if (element._morphCleanup) element._morphCleanup();
+
     var originalWidth = element.getBoundingClientRect().width;
-    element.style.width = originalWidth + "px";
-    element.style.maxWidth = "none";
+    var targetWidth = measureTextWidth(element, value);
     element.classList.add("m-text-morph");
+    element.style.maxWidth = "none";
+    element.style.width = originalWidth + "px";
     element.textContent = String(value);
-    var targetWidth = element.scrollWidth;
-    requestAnimationFrame(function () {
-      element.style.width = targetWidth + "px";
-    });
-    global.setTimeout(function () {
+    void element.offsetWidth;
+
+    var finished = false;
+    function cleanup() {
+      if (finished) return;
+      finished = true;
+      if (element._morphTimer) global.clearTimeout(element._morphTimer);
+      element.removeEventListener("transitionend", onEnd);
       element.style.width = "";
       element.style.maxWidth = "";
-    }, reduced() ? 0 : 330);
+      element.classList.remove("m-text-morph");
+      element._morphTimer = null;
+      element._morphCleanup = null;
+    }
+    function onEnd(event) {
+      if (event.target === element && event.propertyName === "width") cleanup();
+    }
+    element._morphCleanup = cleanup;
+
+    if (reduced()) {
+      cleanup();
+      replay(element, "m-text-swap-soft");
+      return;
+    }
+
+    element.addEventListener("transitionend", onEnd);
+    requestAnimationFrame(function () {
+      if (!finished) element.style.width = targetWidth + "px";
+    });
+    element._morphTimer = global.setTimeout(cleanup, 360);
     replay(element, "m-text-swap-soft");
   }
 
@@ -185,6 +236,7 @@
         var selector = openTrigger.getAttribute("data-motion-open");
         var target = selector && document.querySelector(selector);
         if (target) {
+          target._motionKeyboardOpen = event.detail === 0;
           var alreadyOpen = target.dataset.state === "open" || target.dataset.state === "opening";
           setOpen(target, !alreadyOpen, openTrigger);
         }
@@ -202,7 +254,8 @@
 
       document.querySelectorAll('.m-dropdown[data-state="open"]').forEach(function (menu) {
         var menuTrigger = menu._motionTrigger;
-        if (!menu.contains(event.target) && !openTrigger && !closeTrigger) {
+        var requestedSurface = openTrigger && document.querySelector(openTrigger.getAttribute("data-motion-open"));
+        if (!menu.contains(event.target) && requestedSurface !== menu && !closeTrigger) {
           setOpen(menu, false, menuTrigger);
         }
       });
@@ -275,6 +328,18 @@
         }
         var surface = document.querySelector('.m-dropdown[data-state="open"], .m-panel[data-state="open"]');
         if (surface) setOpen(surface, false);
+      }
+
+      var menuItem = event.target.closest && event.target.closest('.m-dropdown[role="menu"] [role="menuitem"]');
+      if (menuItem && ["ArrowDown", "ArrowUp", "Home", "End"].indexOf(event.key) !== -1) {
+        var menuItems = Array.prototype.slice.call(menuItem.closest('[role="menu"]').querySelectorAll('[role="menuitem"]:not([disabled])'));
+        var menuIndex = menuItems.indexOf(menuItem);
+        if (event.key === "ArrowDown") menuIndex = (menuIndex + 1) % menuItems.length;
+        if (event.key === "ArrowUp") menuIndex = (menuIndex - 1 + menuItems.length) % menuItems.length;
+        if (event.key === "Home") menuIndex = 0;
+        if (event.key === "End") menuIndex = menuItems.length - 1;
+        event.preventDefault();
+        if (menuItems[menuIndex]) menuItems[menuIndex].focus();
       }
 
       var tab = event.target.closest && event.target.closest('.m-tabs [role="tab"]');
