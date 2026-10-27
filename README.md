@@ -17,7 +17,7 @@
   &nbsp;·&nbsp;
   <a href="Styles/Modernimal%20Stylesheet.md">Open Modernimal</a>
   &nbsp;·&nbsp;
-  <a href="Styles/selfpagism.md">Open selfpagism</a>
+  <a href="Styles/Selfpagism.md">Open Selfpagism</a>
   &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
 </p>
@@ -47,7 +47,7 @@ A practical guide for building minimal, monochrome interfaces with clear hierarc
 
 ---
 
-### [selfpagism](Styles/selfpagism.md)
+### [Selfpagism](Styles/Selfpagism.md)
 
 A style prompt for expressive personal websites, diaries, blogs, digital scrapbooks, fan shrines, and handmade corners of the internet.
 
@@ -57,7 +57,7 @@ A style prompt for expressive personal websites, diaries, blogs, digital scrapbo
 - **Engineering:** responsive layouts, accessible motion, replaceable assets, and modern implementation without losing the old-web spirit.
 
 <p>
-  <a href="Styles/selfpagism.md"><strong>Read the stylesheet →</strong></a>
+  <a href="Styles/Selfpagism.md"><strong>Read the stylesheet →</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/aabhro/Stylesheets/tree/main/Styles">Browse the Styles folder</a>
 </p>
