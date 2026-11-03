@@ -18,13 +18,38 @@ When making design decisions, follow this order:
 6. **Prefer simplicity when uncertain.** Choose fewer visual elements, fewer dependencies, and less layout clutter.
 
 
+## Mandatory pre-build preference and approval checkpoint
+
+**Before writing code, changing files, or building the interface, have a short design conversation with the user.** The purpose is to learn their preferences, invite specific tweaks, and agree on a direction before implementation begins.
+
+First inspect the user's request and any existing project context. Then:
+
+1. Briefly restate what you understand the app is for, who it serves, and its main workflows.
+2. Suggest a concrete starting direction for the layout, navigation, visual treatment, and essential features. Do not make the user invent every detail from scratch.
+3. Ask a small number of relevant, conversational questions about preferences that are not already clear. Depending on the app, cover its must-have features, layout and navigation, information density, light/dark/system theme, typography, visual references, motion intensity, target devices, data storage/privacy, and integrations.
+4. **Ask the user to choose or approve an accent color.** They may provide a hex value, choose from a few suitable swatches, or ask you to recommend one. Explain that they will also be able to change it later inside the app.
+5. Explicitly invite corrections and customizations: ask what they would like changed in the proposed direction before you start.
+6. Wait for the user's response or approval before implementation. Do not begin building while the design direction is still awaiting feedback.
+
+Keep this exchange lightweight. Ask only questions that materially affect the result, combine closely related decisions naturally, and never ask for information the user has already supplied. Do not dump a long questionnaire or turn the conversation into a form. When a preference is unknown, offer a thoughtful default the user can accept or adjust. If the request already specifies most details, summarize those choices and ask only about the meaningful remaining decisions.
+
+After approval, preserve the agreed preferences throughout implementation. Do not silently replace the selected accent, theme, layout, feature scope, or motion intensity with your own preference. If a new technical constraint requires a change, explain it and agree on an alternative before making a consequential design change.
+
 ## Mandatory shared motion standard
 
-**Always follow the repository's [Motion Standard](Motion.md) when designing or changing UI motion.** It applies to Modernimal and every other style in the repository. Use the local [motion skill](../motion/SKILL.md) and [pattern catalog](../motion/catalog.md) as the primary implementation reference. Reuse [tokens](../motion/tokens.css), [CSS patterns](../motion/patterns.css), and [JS helpers](../motion/motion.js) where they fit.
+**The repository's `motion/` folder is a mandatory implementation reference for every app built with this stylesheet. It is not optional inspiration.** Start at the [motion folder](https://github.com/aabhro/Stylesheets/tree/main/motion) and read the local [README](../motion/README.md), [skill](../motion/SKILL.md), and [pattern catalog](../motion/catalog.md). Inspect [tokens.css](../motion/tokens.css), [patterns.css](../motion/patterns.css), and [motion.js](../motion/motion.js) before implementing motion. Use [demo.html](../motion/demo.html) when you need to verify how the bundled patterns behave.
 
-Before implementing component motion, inspect the actual component state and use the closest official recipe when one fits. Use the official semantic tokens, preserve documented state orchestration and reduced-motion guards, and verify enter, exit, repeat, keyboard, and reduced-motion behavior. The transitions.dev repository is an optional external reference for specialized transitions, not the default implementation source.
+The mandatory workflow is:
 
-Modernimal keeps the motion visually restrained. The shared standard governs transition selection, token consistency, complete state changes, accessibility, performance, and verification. This section does not replace Modernimal's visual direction or the canonical component specimen.
+1. Inspect the actual `motion/` folder before designing or implementing the app. Read `SKILL.md` and `catalog.md`, then inspect the relevant tokens, CSS patterns, and JavaScript helpers. Do this even when the app appears simple or needs only a small amount of motion.
+2. Choose patterns from the local catalog based on the real component states and interactions. Reuse the local tokens, classes, and helpers wherever they fit. Do not replace this system with generic transitions, an unrelated animation library, or vague instructions to "make it smooth".
+3. Integrate the implementation correctly. When the project is inside this repository, use the real local `motion/` files. When building a separate project, obtain the referenced files and include the required files in that project's own `motion/` directory or adapt them into its established asset pipeline. Resolve paths for the actual project structure; never assume a relative path from this Markdown file will work in the app.
+4. Use only the patterns the interface needs. The folder is mandatory to inspect and follow, not a requirement to animate every element or import unused code.
+5. Preserve the app's architecture and visual identity. Motion behavior is shared, but its intensity must suit Modernimal: restrained, purposeful, quick, and accessible.
+6. Implement complete state transitions, including exit/reversal and cleanup where applicable. Preserve keyboard and focus behavior, ARIA state, and reduced-motion support.
+7. Verify repeated interactions, desktop and mobile behavior, and `prefers-reduced-motion`. Do not claim a pattern works unless its behavior has been tested.
+
+The [transitions.dev skill](https://github.com/Jakubantalik/transitions.dev/tree/main/skills/transitions-dev) is an optional external reference for specialized transitions only. It does not replace the mandatory local `motion/` implementation.
 
 ## Mandatory component library reference
 
@@ -81,7 +106,38 @@ Use this exact neutral monochrome palette as the default UI color system. These 
 - `#f5f5f5`
 - `#fafafa`
 
-Do not introduce teal, blue, green, purple, or other tinted colors into UI surfaces, overlays, borders, or shadows. Build depth from approved neutral grays, transparency, subtle edges, and shadows. Use another accent color only when the feature itself clearly requires it or the user explicitly requests it.
+Do not introduce teal, blue, green, purple, or other tinted colors into UI surfaces, overlays, borders, or shadows. Build depth from approved neutral grays, transparency, subtle edges, and shadows. The single user-approved app accent is governed by the Required user-selected accent rules below. Do not introduce additional decorative accent colors.
+
+### Required user-selected accent
+
+**Every app must have one deliberate accent color, selected or approved by the user before implementation.** The neutral palette above remains the foundation. The accent is a controlled layer of personalization, not permission to turn the interface colorful.
+
+During the pre-build preference conversation, ask the user to provide a hex value, choose from a small set of suitable swatches, or approve your recommendation. Never silently decide the accent when the user has not been asked. Use the approved color consistently and sparingly for meaningful emphasis such as primary actions, active navigation, selected states, links, focus indicators, and key data highlights. Do not use it as a broad page background, recolor every icon, or add decorative color washes.
+
+The user must also be able to change the accent after the app is built:
+
+- Include an accessible accent control in the app's appearance or settings area. Provide a custom color picker or hex input and a small set of curated presets. Do not rely on a browser-default color input as the finished control.
+- Persist the selection using the app's existing preference store. For a self-contained browser app, use local storage unless the project already has a better persistence layer.
+- Apply the color through centralized CSS custom properties, not scattered hardcoded values. At minimum provide semantic tokens for the accent, hover/active states, subtle accent surface, border, focus ring, and readable foreground text.
+- Derive or calculate foreground contrast for text placed on the accent. Check contrast in both light and dark themes. Do not assume white text is readable on every accent.
+- Update every relevant component immediately when the user changes the accent. The setting must survive reloads and provide a reset-to-default action.
+- Keep semantic status colors separate when the product genuinely needs success, warning, or error states. Do not confuse status colors with the app's brand accent.
+
+Suggested token structure:
+
+```css
+:root {
+  --accent: #USER_SELECTED_VALUE;
+  --accent-hover: /* accessible derived hover value */;
+  --accent-active: /* accessible derived active value */;
+  --accent-soft: /* low-opacity accent surface */;
+  --accent-border: /* restrained accent edge */;
+  --accent-focus: /* visible focus ring */;
+  --accent-foreground: /* contrast-checked text/icon color */;
+}
+```
+
+The accent must not override the fixed neutral surface rules. In particular, floating menus and overlay panels must remain `#0a0a0a`, regardless of the selected accent. Do not use an accent tint for overlay backgrounds, neutral borders, or shadows.
 
 ### Palette hierarchy and restraint
 
@@ -155,7 +211,7 @@ Do not introduce teal, blue, green, purple, or other tinted colors into UI surfa
 - Use `#262626` for subtle borders and separators. Do not outline every element.
 - Use `#f5f5f5` for important dark-theme text and `#d4d4d4` for secondary content.
 - Muted text must remain readable. Never dim important labels, filenames, graph text, inputs, controls, or active items to the point they become hard to read.
-- Use accent colors only when the feature needs them, such as media artwork, status, or data visualization.
+- Use the user's selected accent consistently but sparingly for meaningful interface emphasis. Keep artwork and genuinely semantic status colors independent of the app accent.
 - Do not use gradients by default. Use them only when the current request explicitly asks for them or the existing project depends on a deliberate gradient effect.
 - Avoid colorful glows, neon borders, excessive blur, and decorative color washes.
 - **Every floating menu or overlay panel uses `#0a0a0a` as its actual background. Do not use `#171717` or `#262626` as the panel fill, even as an alternate.** This applies to dropdowns, context menus, popovers, command palettes, autocomplete, select menus, and dialogs. Keep the panel opaque near-black; keep backdrop dimming separate. Never use teal or blue-tinted colors.
@@ -559,27 +615,61 @@ Do not force every panel into the same component class. Keep the design system c
 
 ## 19. AI workflow for future tasks
 
-Before changing code:
+Follow this sequence for every new app, feature, or substantial redesign:
 
-1. Read the relevant source files and identify the existing architecture, features, dependencies, and constraints.
-2. Determine the exact changes requested. Keep unrelated features unchanged.
-3. Apply this guide only where it fits the project's actual purpose and current requirements.
-4. Prefer targeted patches when the project already works. Rewrite only when requested or when the current structure prevents a proper fix.
-5. Check desktop and mobile layouts, supported themes, and relevant empty, loading, and error states.
-6. Inspect overlays, right-click menus, keyboard behavior, custom controls, tooltips, grouped actions, overflow, focus states, motion timing, smooth scrolling, and reduced-motion behavior when affected. Verify the computed background of every floating menu and overlay panel is exactly `#0a0a0a`, with no component-level override. Check that standalone icons have no permanent border or boxed container, while preserving a clear keyboard focus indicator.
-7. Verify the output exists and is complete before sharing it. Do not link to an unverified path.
-8. State what changed and mention known limitations honestly. Do not claim tests were run if they were not.
-9. For a React or other multi-component UI page, first write a compact `<design_plan>` preflight describing the intended layout, visual hierarchy, palette, interaction patterns, and risks to verify. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
+### Phase 1: Inspect and understand
+
+1. Read the user's full request and relevant conversation context. Reuse preferences and constraints already provided; never ask the user to repeat them.
+2. Inspect the existing project, its files, architecture, dependencies, current features, and constraints before proposing changes.
+3. Inspect `Components/Modernimal.html` for reusable component patterns.
+4. **Inspect the mandatory `motion/` folder**: read `motion/SKILL.md` and `motion/catalog.md`, then inspect the relevant `tokens.css`, `patterns.css`, and `motion.js`. Use `motion/demo.html` when behavior needs confirmation.
+5. Identify what the app needs to accomplish and which details are genuinely undecided.
+
+### Phase 2: Ask, propose, and get approval
+
+1. Start a brief preference conversation before writing or changing code.
+2. Summarize the app's purpose and propose an initial product direction, key workflows, layout, navigation, and visual approach.
+3. Ask only the relevant unanswered questions. Invite the user to specify or tweak features, layout, density, theme, typography, accent color, motion intensity, platform, persistence, and visual references as appropriate.
+4. Make the accent decision explicit. Ask for a color or approval of a suggested option, and confirm that the finished app will let the user customize it later.
+5. Ask what they want changed in your proposal. Keep the discussion conversational and concise, not a long checklist or form.
+6. Do not start implementation until the user has had a chance to respond and approve the direction. Do not repeat questions already answered.
+
+### Phase 3: Plan and implement
+
+1. Convert the approved direction into a compact implementation plan: core screens or regions, primary workflows, data model and persistence, design decisions, and technical approach.
+2. Preserve the project's architecture, features, terminology, and conventions. Prefer targeted changes over rewrites.
+3. Use the canonical Modernimal component reference and the repository's mandatory `motion/` implementation. Never skip the motion references or replace them with an unrelated generic animation approach.
+4. Implement the approved accent as a real, editable app preference. Centralize its tokens, persist the selection, provide presets and custom input, and support a reset.
+5. Keep the neutral palette and fixed overlay rules intact. The accent must not recolor the near-black floating panels.
+6. Build responsive, accessible interactions with keyboard support, visible focus, semantic states, useful empty/loading/error states, and reduced-motion behavior.
+
+### Phase 4: Verify before delivery
+
+1. Test the app's main workflows, settings, persistence, accent changes, theme changes, and relevant edge cases.
+2. Check desktop and mobile layouts, overflow, keyboard navigation, focus management, menus, dialogs, tooltips, and grouped controls.
+3. Verify motion entry, exit, reversal, repeat use, and reduced-motion behavior against the local motion guidance.
+4. Confirm the selected accent updates the whole interface and remains after reload. Check contrast in both themes.
+5. Verify that all files and imports exist and that local motion paths resolve in the actual project.
+6. Be honest about what was and was not run or verified. Do not claim an issue is fixed or a test passed without evidence.
+7. For a React or other multi-component UI page, write a compact `<design_plan>` preflight describing layout, hierarchy, palette, interaction patterns, and risks before implementation. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
 
 ## 20. Reusable prompt for another AI
 
-**Component reuse is required:** inspect `../Components/Modernimal.html` first, reuse a matching component when one exists, and adapt it to the current context rather than copying blindly or inventing a duplicate pattern.
+Use this as the execution prompt when applying Modernimal to a project:
 
-Read `ui-design-style-guide.md` before designing or modifying the project. Treat it as the default visual and implementation standard, while following the current request over older preferences. Build a custom, minimal, near-black, neutral interface with restrained borders, readable typography, no gradients by default, and no unnecessary sections or decoration. Keep `#0a0a0a` as the dominant background and overlay-backdrop color. Use lighter shades rarely: `#171717` only for slight surface separation, and `#262626` mainly for small hover states and subtle edges. Do not use lighter grays as large background fills. Use only this palette unless the feature or current request clearly requires otherwise: `#0a0a0a`, `#171717`, `#262626`, `#404040`, `#525252`, `#737373`, `#a3a3a3`, `#d4d4d4`, `#e5e5e5`, `#f5f5f5`, and `#fafafa`. Never introduce teal or blue tints. Keep ordinary content directly on the page background instead of placing it in gray tabs or generic gray panels. Use a vertical list layout by default, with clear indentation, visual hierarchy, and small separators where useful.
-
-Treat motion as a first-class part of the UI. Make components feel smooth, responsive, and connected with brief, purposeful transitions for hover, focus, press, selection, menus, popovers, dialogs, tabs, expanding sections, and result changes. Use consistent easing, short durations, subtle fades, and small translations or scale changes. Keep interactions immediate and avoid bouncy, slow, or decorative animation. Use native smooth scrolling for anchor and programmatic navigation where appropriate, but never hijack wheel, touch, trackpad, or keyboard scrolling. Prefer `transform` and `opacity` for animated movement, keep the experience performant on low-end hardware, and respect `prefers-reduced-motion`.
-
-**Mandatory overlay color: every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and dialogs, MUST use `#0a0a0a` as its actual background. Do not use `#171717`, `#262626`, gray, gradients, or tinted/translucent colors as the panel fill. Keep the dimming backdrop separate from the panel.** Use subtle dark edges or soft shadows instead of sharp, contrasting borders. **Never put a visible border, outline, ring, or boxed background around a standalone icon or icon-only button.** Keep lone icons directly on the surrounding surface; use subtle brightness changes for hover and selection. Group related icon actions into a cohesive pill if needed, using one shared treatment rather than an individual border around each icon. Preserve a restrained keyboard focus indicator for accessibility. Keep scrollbars barely visible with a thin, low-opacity thumb and transparent track. Create custom-styled controls for color pickers, dropdowns, inputs, tooltips, and context menus rather than exposing browser-default widgets. Add right-click actions when useful, with keyboard and touch alternatives. Group related buttons into cohesive pill controls. Preserve existing features, file order, architecture, and terminology unless asked to change them. Prefer semantic HTML, modern CSS, minimal vanilla JavaScript, and a self-contained HTML file when practical. Inspect color balance, motion timing, scrolling, reduced-motion behavior, theme consistency, keyboard navigation, overlays, mobile overflow, and performance before calling the work complete.
+> Read and follow the Modernimal stylesheet at [Modernimal Stylesheet](https://github.com/aabhro/Stylesheets/blob/main/Styles/Modernimal%20Stylesheet.md). Treat the user's latest request as the highest priority, preserve the existing project and its features, and use this stylesheet as the default visual and implementation standard.
+>
+> **Do not start building immediately. First inspect the user's request and the existing project, then have a short, conversational preference discussion.** Summarize what you understand, propose a concrete direction for the app, and ask about relevant preferences or unresolved choices before writing code. Invite the user to tweak the features, workflows, layout, navigation, density, theme, typography, motion intensity, platform, data persistence, and visual references as appropriate. Do not ask questions whose answers are already in the request or project. Keep the discussion lightweight. Ask what they would change in your proposal and wait for their response or approval before implementation.
+>
+> **The app must have a user-approved accent color.** Ask the user for a hex value, let them choose from a few suitable presets, or propose a color for approval. Do not silently pick one. Keep the rest of the interface based on the approved Modernimal neutral palette. Add an Appearance or Settings control so the user can change the accent later using a custom color picker or hex input and curated presets. Persist the choice in the existing preference store, or local storage for a self-contained browser app. Centralize accent tokens for hover, active, soft surface, border, focus, and contrast-checked foreground text. Ensure the change updates the entire app immediately and survives reloads. Use the accent sparingly for primary actions, active/selected states, links, focus, and key highlights. It must not recolor the page background, neutral surfaces, or floating panels.
+>
+> **The repository's `motion/` folder is mandatory for every app.** Inspect [the folder](https://github.com/aabhro/Stylesheets/tree/main/motion), read [SKILL.md](https://github.com/aabhro/Stylesheets/blob/main/motion/SKILL.md) and [catalog.md](https://github.com/aabhro/Stylesheets/blob/main/motion/catalog.md), and inspect [tokens.css](https://github.com/aabhro/Stylesheets/blob/main/motion/tokens.css), [patterns.css](https://github.com/aabhro/Stylesheets/blob/main/motion/patterns.css), and [motion.js](https://github.com/aabhro/Stylesheets/blob/main/motion/motion.js) before implementation. Use [demo.html](https://github.com/aabhro/Stylesheets/blob/main/motion/demo.html) as the interactive reference when needed. Choose and implement suitable local patterns. If the app is outside this repository, include the required source files in its own `motion/` folder or adapt them into its asset pipeline. Resolve paths for the actual project. Do not skip this reference, merely mention it, or substitute generic transitions or another animation library. Do not animate everything; use only purposeful patterns and preserve reduced-motion support.
+>
+> Also inspect [Components/Modernimal.html](https://github.com/aabhro/Stylesheets/blob/main/Components/Modernimal.html) before creating UI components. Reuse and adapt its patterns rather than inventing duplicates. Use a minimal near-black, editorial interface with readable typography, restrained borders, subtle depth, no gradients by default, and no unnecessary sections or decoration. Keep `#0a0a0a` as the dominant dark background and the actual background of every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete lists, and dialogs. The selected accent never overrides this rule. Keep ordinary content directly on the page background instead of placing it in generic gray tabs or panels. Favor vertical lists, clear indentation, and deliberate spacing.
+>
+> Make interactions feel quick, smooth, and connected. Use the local motion tokens and patterns for hover, focus, press, selection, menus, dialogs, tabs, expanding sections, and meaningful content changes. Prefer `transform` and `opacity`, avoid `transition: all`, never delay user actions, and never hijack native scrolling. Respect `prefers-reduced-motion` in CSS and JavaScript.
+>
+> Use semantic HTML and the project's existing stack. Prefer modern CSS and minimal vanilla JavaScript or a self-contained HTML file when practical, but preserve the existing architecture when working in an established project. Keep dependencies light, controls custom-styled, related actions grouped into cohesive pills, and standalone icons unboxed. Verify desktop and mobile layouts, keyboard behavior, focus, theme consistency, accent persistence, overlays, motion states, reduced motion, and the main app workflows. Report accurately what was tested and what remains incomplete.
 
 ## One-line summary
 
