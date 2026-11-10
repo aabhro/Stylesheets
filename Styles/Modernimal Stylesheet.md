@@ -18,6 +18,28 @@ When making design decisions, follow this order:
 6. **Prefer simplicity when uncertain.** Choose fewer visual elements, fewer dependencies, and less layout clutter.
 
 
+### Subject-led art direction and distinctiveness
+
+Treat each project as a design commission with its own audience, subject, purpose, and visual character. Do not begin from a familiar SaaS template and change only its colors. First understand what the product is, who uses it, what they need to do, and what makes its subject matter distinctive.
+
+- Ground visual decisions in the product itself. Use its real content, terminology, audience, materials, and workflows to inform composition, typography, imagery, and interaction.
+- Choose a clear visual idea and one memorable focal point. Spend visual emphasis deliberately, then keep the surrounding interface disciplined.
+- Choose the form that best communicates the product. A first screen might need a headline, working interface, image, illustration, live data, or direct interaction. A hero section is optional, not a default.
+- Take considered creative risks when they improve the brief. Distinctiveness does not mean adding effects, unusual layouts, or decoration without purpose.
+- Keep Modernimal's near-black editorial identity, approved neutral palette, selected accent rules, component references, and motion system intact. Find originality inside that design language instead of replacing it with an unrelated visual trend.
+- Treat structural devices such as borders, numbering, dividers, labels, outlines, and columns as information architecture. Add them only when they clarify grouping, order, hierarchy, or navigation.
+
+### Design plan and originality check
+
+Before implementation, form a compact design plan based on the actual brief. Define:
+
+1. **Color:** Name four to six relevant base tokens from the approved Modernimal palette, then show the user's approved accent separately.
+2. **Typography:** Choose the type family or families, their roles, weights, and a deliberate type scale.
+3. **Layout:** Describe the key composition, content alignment, reading order, and responsive behavior. Sketch a short ASCII wireframe when it helps compare layouts.
+4. **Principles:** State the few decisions that give this project its own character and explain how they serve the product.
+
+Review the plan against the user's brief before writing code. Ask whether the same plan could be dropped into an unrelated product without meaningful changes. If it could, revise the generic choices and make the rationale specific. Do not spend the project's visual freedom on familiar generated-design defaults.
+
 ## Mandatory pre-build preference and approval checkpoint
 
 **Before writing code, changing files, or building the interface, have a short design conversation with the user.** The purpose is to learn their preferences, invite specific tweaks, and agree on a direction before implementation begins.
@@ -221,6 +243,15 @@ The accent must not override the fixed neutral surface rules. In particular, flo
 
 ## 4. Typography
 
+Typography carries much of the interface's personality. Choose typefaces for the product's subject and tone instead of reaching automatically for the same display/body pairing on every project.
+
+- Prefer a clean, modern sans-serif when it fits Modernimal. Geist Sans and Noto Sans are suitable options, not mandatory defaults.
+- Use one type family or two clearly differentiated families. Give each a defined role; avoid adding a third family for decoration.
+- Set a deliberate type scale with clear relationships between display, heading, body, supporting, and utility text. Tune weight, width, line height, and letter spacing together.
+- Treat display type as part of the composition. Choose its scale, line breaks, width, and alignment deliberately instead of using oversized text as a generic sign of polish.
+- Keep ordinary reading lines under roughly 80 characters where practical. Serif body copy often needs slightly more line height than sans-serif copy.
+- Do not emphasize one arbitrary word in a headline with a different color, weight, or italic treatment merely to create visual interest.
+- Avoid unnecessary all-caps labels, tracked-out eyebrow text, tiny metadata, and decorative monospace labels. Use monospace when the content itself benefits from it, such as code, identifiers, or technical values.
 - Prefer a clean, modern sans-serif. Geist Sans and Noto Sans are suitable when they match the project or its existing setup.
 - Use a restrained type scale. Establish hierarchy through size, weight, line height, and spacing instead of many competing styles.
 - Use regular or medium weights for most UI text. Reserve semibold or bold for titles, key values, and high-priority actions.
@@ -234,8 +265,10 @@ The accent must not override the fixed neutral surface rules. In particular, flo
 ## 5. Layout, hierarchy, and spacing
 
 - Use a clear grid, consistent alignment, and intentional placement.
-- **Always favor a vertical list layout** for primary content, navigation, files, settings, search results, tool directories, and repeated items. Keep content in a predictable order and make rows easy to scan.
-- Avoid tiled grids, bento layouts, and rows of cards unless the task inherently benefits from spatial placement, such as a canvas, visual gallery, or poster browser. Even then, use list layouts for surrounding navigation and controls where practical.
+- **Use vertical lists as the default for primary content** such as navigation, files, settings, search results, tool directories, and repeated records. Keep ordering predictable and rows easy to scan.
+- Choose a different structure when the content genuinely calls for it. Spatial canvases, galleries, timelines, comparisons, image collections, dashboards, and visual browsers may benefit from grids, columns, or other compositions. The layout must explain the content, not imitate a fashionable template.
+- Use bento layouts or grouped cards only when their varying sizes encode meaningful priority, relationships, or content types. Do not divide a simple list into decorative tiles.
+- For each important screen, decide its reading order, alignment, content width, focal point, and mobile transformation before implementation.
 - Create hierarchy with indentation, spacing, typography, alignment, and small dividers. Related controls should be grouped; subordinate settings or nested items should be indented consistently.
 - Give major sections generous separation, but keep dense lists, toolbars, and related controls compact.
 - Do not add a hero, quick-picks area, welcome panel, or feature cards to a tools index unless requested.
@@ -369,6 +402,15 @@ For music players, mixers, and streaming-style interfaces:
 
 Motion is a core part of the design system. Interfaces should feel smooth, responsive, and deliberately connected. Use motion to explain state changes and make components feel polished, not to decorate every pixel.
 
+### Ambient and entrance motion
+
+Keep motion that starts without a user action especially selective. A single coordinated introduction can establish a page's character; repeated fade-and-slide entrances on every section, card, or list row usually create noise and make the interface feel templated.
+
+- Prefer motion that responds to an action or communicates a real change, such as opening, expanding, selecting, saving, or confirming.
+- Use page-load choreography only when it adds orientation or establishes a clear focal point. Keep it brief and do not delay access to content or controls.
+- Do not animate every card on hover, reveal every section on scroll, or stagger long lists item by item by default.
+- Keep decorative motion rare, quiet, and easy to disable. Never let it compete with reading, data, or precision interactions.
+
 ### Motion principles
 
 - Give interactive components a considered transition for hover, focus, pressed, selected, opening, closing, loading, and completion states whenever movement improves clarity.
@@ -423,6 +465,13 @@ Motion is a core part of the design system. Interfaces should feel smooth, respo
 
 ## 15. Performance and implementation preferences
 
+### Design-to-code discipline
+
+- Keep the implementation faithful to the approved design plan. Do not let convenient CSS defaults quietly change the intended hierarchy or composition.
+- Organize selectors and component styles so specificity is predictable. Avoid broad type-based selectors or generic class names that accidentally override component spacing, typography, or state styles.
+- Define component boundaries and state styles deliberately. Prefer clear, composable selectors over escalating specificity or chains of overrides.
+- Review the rendered page at realistic content lengths. Placeholder copy should not hide wrapping, overflow, or alignment problems.
+
 ### Preferred stack
 
 - Default to one self-contained `index.html` using semantic HTML5, modern CSS, and minimal vanilla JavaScript when practical.
@@ -445,6 +494,15 @@ Motion is a core part of the design system. Interfaces should feel smooth, respo
 - Do not claim an integration works until the relevant code path and likely hosting constraints have been checked.
 
 ## 16. Content and writing style inside products
+
+Interface copy is part of the design. Write for the person using the product, not for the developer describing its internals.
+
+- Use plain, specific language and active voice. Name things by what a user understands and needs to do.
+- Keep labels short and useful. Prefer “Search notes” over abstract labels or implementation terms.
+- Make every button describe its actual result. Use the same action name throughout the flow, including its confirmation or success message.
+- Treat empty states as useful direction. Explain what is absent and give the user a relevant next action without inventing data or unnecessary onboarding.
+- Make error messages precise and actionable. State what failed and what the user can do next. Avoid vague errors, blame, or decorative apologies.
+- Write only what helps the user understand, decide, navigate, or act. Do not use copy as filler or decoration.
 
 - Use plain, specific language.
 - Keep labels short and useful. Prefer “Search notes” over abstract labels.
@@ -479,6 +537,11 @@ Avoid these unless explicitly requested:
 - Hijacking native scrolling, forced inertia, excessive parallax, or scroll effects that delay access to content.
 - Rewriting the entire project when a focused fix would solve the problem.
 - Declaring an issue fixed without checking the relevant layout and interaction states.
+- Reusing a generic art direction without grounding it in the product's audience, content, and purpose.
+- Defaulting to common generated-page formulas: cream-and-terracotta palettes, acid-green or vermilion accents, generic broadsheet layouts, identical rounded SaaS cards, repeated soft shadows, gradient washes, or oversized metric-led hero sections.
+- Adding all-caps eyebrows, arbitrary numbered markers, decorative metadata strings, isolated highlighted words in headlines, or monospace labels without an information-design reason.
+- Using arrows, badges, labels, dividers, borders, or cards as decoration when they do not clarify an action or relationship.
+- Applying the same layout, typography pairing, hero treatment, or motion sequence to every project.
 
 ## 18. Practical design tokens and component defaults
 
@@ -634,14 +697,16 @@ Follow this sequence for every new app, feature, or substantial redesign:
 5. Ask what they want changed in your proposal. Keep the discussion conversational and concise, not a long checklist or form.
 6. Do not start implementation until the user has had a chance to respond and approve the direction. Do not repeat questions already answered.
 
-### Phase 3: Plan and implement
+### Phase 3: Plan, critique, and implement
 
-1. Convert the approved direction into a compact implementation plan: core screens or regions, primary workflows, data model and persistence, design decisions, and technical approach.
-2. Preserve the project's architecture, features, terminology, and conventions. Prefer targeted changes over rewrites.
-3. Use the canonical Modernimal component reference and the repository's mandatory `motion/` implementation. Never skip the motion references or replace them with an unrelated generic animation approach.
-4. Implement the approved accent as a real, editable app preference. Centralize its tokens, persist the selection, provide presets and custom input, and support a reset.
-5. Keep the neutral palette and fixed overlay rules intact. The accent must not recolor the near-black floating panels.
-6. Build responsive, accessible interactions with keyboard support, visible focus, semantic states, useful empty/loading/error states, and reduced-motion behavior.
+1. Before coding, write the compact design plan described above: approved color tokens and accent, type choices and hierarchy, layout and alignment, a key-screen wireframe when useful, and the principles that make the project specific.
+2. Review the plan for generic visual defaults. Compare it with the actual audience, content, and workflows. Revise any choice that could be copied unchanged into an unrelated app.
+3. Translate the approved direction into an implementation plan: core screens or regions, primary workflows, data model and persistence, design decisions, and technical approach.
+4. Preserve the project's architecture, features, terminology, and conventions. Prefer targeted changes over rewrites.
+5. Use the canonical Modernimal component reference and the repository's mandatory `motion/` implementation. Never skip the motion references or replace them with an unrelated generic animation approach.
+6. Implement the approved accent as a real, editable app preference. Centralize its tokens, persist the selection, provide presets and custom input, and support a reset.
+7. Keep the neutral palette and fixed overlay rules intact. The accent must not recolor the near-black floating panels.
+8. Build responsive, accessible interactions with keyboard support, visible focus, semantic states, useful empty/loading/error states, and reduced-motion behavior.
 
 ### Phase 4: Verify before delivery
 
@@ -651,13 +716,16 @@ Follow this sequence for every new app, feature, or substantial redesign:
 4. Confirm the selected accent updates the whole interface and remains after reload. Check contrast in both themes.
 5. Verify that all files and imports exist and that local motion paths resolve in the actual project.
 6. Be honest about what was and was not run or verified. Do not claim an issue is fixed or a test passed without evidence.
-7. For a React or other multi-component UI page, write a compact `<design_plan>` preflight describing layout, hierarchy, palette, interaction patterns, and risks before implementation. For a simple vanilla HTML change, keep the plan internal unless asked to show it.
+7. For every project, prepare and critique the design plan before implementation. For a React or other multi-component UI page, show a compact `<design_plan>` preflight describing the product-specific concept, layout, hierarchy, palette, typography, interaction patterns, responsive behavior, and risks. For a simple vanilla HTML change, keep the plan concise and internal unless asked to show it.
+8. If the environment supports screenshots or browser previews, inspect the rendered result during development. Compare it with the approved plan, check realistic content and multiple viewport sizes, identify generic or inconsistent details, then make a deliberate refinement pass. Remove one unnecessary decoration or effect before delivery.
 
 ## 20. Reusable prompt for another AI
 
 Use this as the execution prompt when applying Modernimal to a project:
 
 > Read and follow the Modernimal stylesheet at [Modernimal Stylesheet](https://github.com/aabhro/Stylesheets/blob/main/Styles/Modernimal%20Stylesheet.md). Treat the user's latest request as the highest priority, preserve the existing project and its features, and use this stylesheet as the default visual and implementation standard.
+>
+> Apply the subject-led design process from [Anthropic's frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design) as incorporated into this stylesheet. Ground each visual decision in the product's audience, content, and purpose. Make deliberate choices about typography, composition, and hierarchy. Draft and critique a compact design plan before implementation, and avoid generic generated-page formulas. Modernimal's explicit palette, overlay, component, motion, accessibility, and user-approval requirements remain authoritative whenever a more general design suggestion conflicts with them.
 >
 > **Do not start building immediately. First inspect the user's request and the existing project, then have a short, conversational preference discussion.** Summarize what you understand, propose a concrete direction for the app, and ask about relevant preferences or unresolved choices before writing code. Invite the user to tweak the features, workflows, layout, navigation, density, theme, typography, motion intensity, platform, data persistence, and visual references as appropriate. Do not ask questions whose answers are already in the request or project. Keep the discussion lightweight. Ask what they would change in your proposal and wait for their response or approval before implementation.
 >
@@ -670,6 +738,10 @@ Use this as the execution prompt when applying Modernimal to a project:
 > Make interactions feel quick, smooth, and connected. Use the local motion tokens and patterns for hover, focus, press, selection, menus, dialogs, tabs, expanding sections, and meaningful content changes. Prefer `transform` and `opacity`, avoid `transition: all`, never delay user actions, and never hijack native scrolling. Respect `prefers-reduced-motion` in CSS and JavaScript.
 >
 > Use semantic HTML and the project's existing stack. Prefer modern CSS and minimal vanilla JavaScript or a self-contained HTML file when practical, but preserve the existing architecture when working in an established project. Keep dependencies light, controls custom-styled, related actions grouped into cohesive pills, and standalone icons unboxed. Verify desktop and mobile layouts, keyboard behavior, focus, theme consistency, accent persistence, overlays, motion states, reduced motion, and the main app workflows. Report accurately what was tested and what remains incomplete.
+
+### Design methodology reference
+
+The subject-led art direction, design-plan review, and critique process in this stylesheet are informed by [Anthropic's frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design), licensed under [Apache License 2.0](https://github.com/anthropics/skills/blob/main/skills/frontend-design/LICENSE.txt). The guidance here is adapted to Modernimal's own visual identity and project-specific requirements.
 
 ## One-line summary
 
