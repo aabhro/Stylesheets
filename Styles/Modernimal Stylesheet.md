@@ -106,7 +106,36 @@ Reference URL: https://github.com/aabhro/Stylesheets/blob/main/Components/Modern
 
 ### Desired impression
 
-The interface should feel calm, capable, and custom-built. Create polish through spacing, typography, alignment, subtle motion, and well-considered interactions rather than gradients, bright accents, glass effects everywhere, or piles of cards.
+The interface should feel calm, capable, and custom-built. Create polish through spacing, typography, alignment, subtle motion, and well-considered interactions. Gradients and blur are valid tools when they serve a clear visual or functional purpose. Avoid decorative effects that add noise without improving hierarchy, depth, readability, or transitions.
+
+### Gradients, fades, and blur
+
+**Do not treat gradients or blur as prohibited effects. Treat them as deliberate design tools.** The default is restraint, not a blanket ban.
+
+#### Appropriate gradient use
+
+- Fade page content gradually into the page background at the top or bottom edge. For example, the bottom of a long page may transition smoothly into `#0a0a0a` rather than ending with a hard visual cutoff.
+- Fade hero imagery, artwork, or background media into surrounding surfaces so the composition feels integrated.
+- Use directional fades to soften the edge of scrollable content, hint at more content, or transition between sections.
+- Use subtle tonal gradients to establish depth or separate overlapping layers when a flat color would feel abrupt.
+- Animate opacity or a gradient mask for considered fade-in and fade-out transitions. Keep motion short, smooth, and respectful of reduced-motion preferences.
+
+#### Appropriate blur use
+
+- Use subtle backdrop blur to distinguish a translucent navigation bar, floating control, or foreground layer from the content behind it.
+- Soften background imagery or ambient visual layers to create depth while keeping the foreground sharp.
+- Use blur selectively to establish distance between overlapping surfaces or to reduce visual competition behind a focused element.
+- Combine blur with restrained opacity and shadow only when each layer contributes to the separation.
+
+#### Limits and implementation
+
+- Gradients should blend naturally into the actual surrounding colors. For page-edge fades, use the real page background token rather than an approximate gray or unrelated tint.
+- Blur must not reduce the legibility of text, icons, controls, or important imagery. Keep the active content crisp.
+- Do not blur opaque overlay panels. Floating menus and overlay panels must retain their required solid `#0a0a0a` surface. A separate backdrop behind them may be dimmed or blurred.
+- Avoid loud multicolor gradients, obvious gradient bands, excessive glow, strong frosted-glass treatment, and blur on every surface.
+- Prefer CSS masks, opacity transitions, and lightweight gradients where they achieve the effect more efficiently than large filters.
+- Consider performance on lower-end devices. Avoid large, animated blur filters and expensive full-screen effects.
+- Every effect must have a clear purpose: fade, blend, depth, separation, readability, or transition. If it does not improve one of these, leave it out.
 
 ### Default visual intensity
 
@@ -234,8 +263,9 @@ The accent must not override the fixed neutral surface rules. In particular, flo
 - Use `#f5f5f5` for important dark-theme text and `#d4d4d4` for secondary content.
 - Muted text must remain readable. Never dim important labels, filenames, graph text, inputs, controls, or active items to the point they become hard to read.
 - Use the user's selected accent consistently but sparingly for meaningful interface emphasis. Keep artwork and genuinely semantic status colors independent of the app accent.
-- Do not use gradients by default. Use them only when the current request explicitly asks for them or the existing project depends on a deliberate gradient effect.
-- Avoid colorful glows, neon borders, excessive blur, and decorative color washes.
+- **Gradients are allowed when they serve a deliberate purpose.** Use them for gradual fades, edge transitions, content masking, image blending, depth, and smooth transitions between surfaces. Examples include a page-bottom fade that gradually darkens into `#0a0a0a`, a hero image fading into the page background, or content fading at a scroll boundary. Keep gradients restrained, tonal, and integrated with the composition.
+- **Blur is allowed when it creates useful depth or separation.** Use subtle backdrop blur behind translucent layers, soften background imagery behind foreground content, or create atmospheric depth where it improves hierarchy. Keep text and interactive controls crisp and readable.
+- Avoid purposeless gradient washes, colorful glows, neon borders, excessive blur, and effects added only for decoration. Do not apply gradients or blur uniformly to every section or component.
 - **Every floating menu or overlay panel uses `#0a0a0a` as its actual background. Do not use `#171717` or `#262626` as the panel fill, even as an alternate.** This applies to dropdowns, context menus, popovers, command palettes, autocomplete, select menus, and dialogs. Keep the panel opaque near-black; keep backdrop dimming separate. Never use teal or blue-tinted colors.
 - Keep scrollbars barely visible at rest. Use a thin, low-opacity thumb on a transparent track, with only a small visibility increase on hover. Scrollbars should not become prominent UI elements.
 - Theme changes must update every component, including menus, dialogs, tooltips, inputs, editor controls, and popovers. Do not leave components permanently dark or light by accident.
@@ -405,7 +435,7 @@ Do not copy selectors blindly when a component uses a different structure. Prese
 
 - **The menu/dialog panel itself must be `#0a0a0a`.** Apply this exact background to dropdowns, context menus, popovers, command palettes, autocomplete panels, select menus, and floating overlay surfaces. Do not use `#171717` or `#262626` for these panels. The backdrop behind the panel is a separate layer and should use translucent near-black.
 - Keep the backdrop dark and restrained. It should dim the page without creating a flat gray haze.
-- Never give overlays, menus, popovers, or command palettes a sharp, high-contrast outline. Prefer a subtle dark edge and soft drop shadow. A light backdrop blur is suitable for translucent surfaces when it improves separation, but avoid stacking heavy border, blur, and shadow effects.
+- Never give overlays, menus, popovers, or command palettes a sharp, high-contrast outline. Prefer a subtle dark edge and soft drop shadow. A light backdrop blur is suitable for translucent surfaces when it improves separation. Blur may also create depth between foreground content and background imagery. Keep it subtle, avoid blurring readable content, and do not stack heavy borders, blur, and shadows.
 - Keep overlay text readable, with a clear action hierarchy and enough contrast against the surface.
 - Confirmation dialogs should state the decision plainly, such as “Move this item to trash?” Make the title easy to scan and the actions unambiguous.
 - Use enough text size and spacing for dialogs to feel deliberate, not cramped or browser-default.
@@ -571,7 +601,7 @@ Interface copy is part of the design. Write for the person using the product, no
 
 Avoid these unless explicitly requested:
 
-- Gradients, neon accents, or colorful glows.
+- Unnecessary decorative gradients, neon accents, or colorful glows. Purposeful gradients for fades, masking, blending, and depth are encouraged when they improve the design.
 - Bright borders around every component.
 - Borders, outlined boxes, or individual containers around standalone icons or icon-only buttons.
 - Giving every icon button its own circular or square background when the icon can sit directly on the interface.
@@ -727,7 +757,7 @@ Use similarly restrained styling for floating surfaces and scrollbars:
 }
 ```
 
-Use backdrop blur only when a floating surface is translucent and benefits from it. Do not add a bright outline or stack heavy borders, blur, and shadows.
+Use backdrop blur when a translucent floating surface benefits from added separation. Blur may also be used selectively for background depth and atmospheric layering. Keep the effect subtle, preserve text clarity, and avoid stacking heavy borders, blur, and shadows.
 
 Do not force every panel into the same component class. Keep the design system cohesive without making every element look identical.
 
@@ -788,7 +818,7 @@ Use this as the execution prompt when applying Modernimal to a project:
 >
 > **The repository's `motion/` folder is mandatory for every app.** Inspect [the folder](https://github.com/aabhro/Stylesheets/tree/main/motion), read [SKILL.md](https://github.com/aabhro/Stylesheets/blob/main/motion/SKILL.md) and [catalog.md](https://github.com/aabhro/Stylesheets/blob/main/motion/catalog.md), and inspect [tokens.css](https://github.com/aabhro/Stylesheets/blob/main/motion/tokens.css), [patterns.css](https://github.com/aabhro/Stylesheets/blob/main/motion/patterns.css), and [motion.js](https://github.com/aabhro/Stylesheets/blob/main/motion/motion.js) before implementation. Use [demo.html](https://github.com/aabhro/Stylesheets/blob/main/motion/demo.html) as the interactive reference when needed. Choose and implement suitable local patterns. If the app is outside this repository, include the required source files in its own `motion/` folder or adapt them into its asset pipeline. Resolve paths for the actual project. Do not skip this reference, merely mention it, or substitute generic transitions or another animation library. Do not animate everything; use only purposeful patterns and preserve reduced-motion support.
 >
-> Also inspect [Components/Modernimal.html](https://github.com/aabhro/Stylesheets/blob/main/Components/Modernimal.html) before creating UI components. Reuse and adapt its patterns rather than inventing duplicates. Use a minimal near-black, editorial interface with readable typography, restrained borders, subtle depth, no gradients by default, and no unnecessary sections or decoration. Keep `#0a0a0a` as the dominant dark background and the actual background of every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete lists, and dialogs. The selected accent never overrides this rule. Keep ordinary content directly on the page background instead of placing it in generic gray tabs or panels. Favor vertical lists, clear indentation, and deliberate spacing.
+> Also inspect [Components/Modernimal.html](https://github.com/aabhro/Stylesheets/blob/main/Components/Modernimal.html) before creating UI components. Reuse and adapt its patterns rather than inventing duplicates. Use a minimal near-black, editorial interface with readable typography, restrained borders, and subtle depth. Use purposeful gradients for fades, edge transitions, blending, and depth when useful. Use blur selectively for layering and separation. Avoid gratuitous effects and unnecessary sections or decoration. Keep `#0a0a0a` as the dominant dark background and the actual background of every floating menu and overlay panel, including dropdowns, context menus, popovers, command palettes, autocomplete lists, and dialogs. The selected accent never overrides this rule. Keep ordinary content directly on the page background instead of placing it in generic gray tabs or panels. Favor vertical lists, clear indentation, and deliberate spacing.
 >
 > Make interactions feel quick, smooth, and connected. Use the local motion tokens and patterns for hover, focus, press, selection, menus, dialogs, tabs, expanding sections, and meaningful content changes. Prefer `transform` and `opacity`, avoid `transition: all`, never delay user actions, and never hijack native scrolling. Respect `prefers-reduced-motion` in CSS and JavaScript.
 >
