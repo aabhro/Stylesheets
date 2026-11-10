@@ -311,6 +311,48 @@ Build custom-styled controls for:
 
 Use semantic HTML and accessible underlying controls where practical, but style and compose them to match the interface. The requirement is a custom UI, not necessarily the Web Components API. Avoid exposing raw native dropdowns, default color inputs, browser tooltips, or generic unstyled blocks when a polished custom control is practical.
 
+### Input and control focus states
+
+**NON-NEGOTIABLE: NEVER SHOW A LARGE, THICK, OR DEFAULT BROWSER SELECTION OUTLINE AROUND A FOCUSED INPUT OR BUTTON.** This includes text fields, search fields, textareas, selects, custom dropdown triggers, segmented controls, and buttons used to activate or edit an input.
+
+- Remove the browser's default thick focus outline from custom-styled controls. Do not replace it with an equally large box-shadow, glow, double border, or oversized accent ring.
+- Focus must remain visible and accessible, but restrained: use a subtle 1px border-color change on field-like controls, or a small text/icon contrast change where a border would create an unwanted box.
+- Do not add a permanent outline or individual box around standalone icon buttons. Their keyboard focus treatment must remain subtle and must not change their dimensions.
+- Never use the accent as a large focus ring. If the accent appears in a focus state, keep it to a tiny indicator or restrained detail.
+- Keep the focused control's dimensions, layout, and position unchanged. No thickening borders, expanding rings, or shifting content.
+- Apply the same treatment to mouse, touch, and keyboard interaction states. Keyboard focus must still be perceivable; do not remove focus feedback without providing a quieter replacement.
+- Inspect every input and input-triggering button in focused, unfocused, hover, pressed, disabled, and keyboard-navigation states before delivery.
+
+Use a restrained pattern like this, adapting selectors to the project's actual custom controls:
+
+```css
+input:focus,
+textarea:focus,
+select:focus,
+.control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.control:focus-visible {
+  outline: none;
+  border-color: var(--text-muted);
+  box-shadow: none;
+}
+
+/* Icon-only controls stay visually unboxed. */
+.icon-button:focus-visible {
+  outline: none;
+  box-shadow: none;
+  color: var(--text);
+}
+```
+
+Do not copy selectors blindly when a component uses a different structure. Preserve an accessible, subtle keyboard-focus cue that fits that component.
+
 ### Buttons and grouped controls
 
 <escape>**NON-NEGOTIABLE BUTTON RULES: NEVER USE GRAY BUTTONS. NEVER USE THE ACCENT COLOR AS A SOLID BUTTON FILL.**</escape>
@@ -595,8 +637,8 @@ These values are starting points, not hard requirements. Match the existing app 
 }
 
 :focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
+  outline: 1px solid var(--text-muted);
+  outline-offset: 1px;
 }
 ```
 
