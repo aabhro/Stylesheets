@@ -313,6 +313,19 @@ Use semantic HTML and accessible underlying controls where practical, but style 
 
 ### Buttons and grouped controls
 
+<escape>**NON-NEGOTIABLE BUTTON RULES: NEVER USE GRAY BUTTONS. NEVER USE THE ACCENT COLOR AS A SOLID BUTTON FILL.**</escape>
+
+- **Do not use gray, charcoal, or neutral-gray filled backgrounds on buttons.** No gray primary buttons, gray secondary buttons, gray icon-button tiles, or gray button rows. A button must not look like a generic gray component-library control.
+- **Never fill an entire button with the accent color.** The accent is a restrained detail, not a button background. Do not use a solid accent fill, accent gradient, or large accent-colored button surface, including for primary actions.
+- **Use the accent sparingly:** a small icon, a short text detail, a tiny indicator, a subtle focus cue, or a restrained hover-state change is enough. Most button content and surfaces remain neutral.
+- **Textual buttons use a transparent or page-matching near-black surface with only a slight, low-contrast outline.** Keep the outline thin and subtle. Avoid bright borders, high-contrast rings, filled gray backgrounds, and filled accent backgrounds.
+- Establish action hierarchy through concise labels, typography, iconography, placement, and restrained contrast, not through large blocks of color. A primary action may use slightly stronger text or a subtly clearer outline, but it still must not become a solid gray or accent-filled button.
+- Hover, pressed, selected, and focus states must remain restrained. Slightly adjust text/icon brightness, outline visibility, or use a faint neutral surface change. Never turn the whole button into a bright accent fill or gray slab.
+- **Icon-only buttons follow the standalone-icon rule below:** no permanent individual border, outline, ring, boxed background, or card-like container. Do not interpret the low-contrast outline rule for textual buttons as permission to box every icon.
+- **Descriptions and tooltips must make sense in context.** Every tooltip must explain the actual action or state in plain, specific language. Use meaningful descriptions that answer what the control does or what will happen when activated. Avoid vague, redundant, generic, developer-facing, or placeholder text such as “Click here”, “Action”, “More options”, or repeating the button label without adding useful context. Do not add a tooltip when the control's visible label already explains it and extra text would add no value.
+- Give icon-only controls a useful, action-specific tooltip and accessible name. Keep tooltips concise, correctly positioned, readable, and visually consistent. Never rely on a tooltip as the only accessible name.
+- Before delivery, inspect every button in every state and viewport. Explicitly check that no button has a gray fill, no button uses the accent as a solid fill, and all tooltips/descriptions are accurate and useful. Correct every violation before considering the interface complete.
+
 - Group related adjacent buttons into one cohesive pill or segmented control. Do not scatter neighboring actions as unrelated buttons when they form one toolbar or action group.
 - Apply this to sidebars, editor toolbars, modal actions, search controls, media controls, and navigation utilities.
 - Make the primary action obvious through contrast. Keep secondary actions quiet but discoverable.
