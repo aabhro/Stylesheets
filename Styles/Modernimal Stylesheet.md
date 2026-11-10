@@ -273,24 +273,33 @@ The accent must not override the fixed neutral surface rules. In particular, flo
 
 ## 4. Typography
 
-Typography carries much of the interface's personality. Choose typefaces for the product's subject and tone instead of reaching automatically for the same display/body pairing on every project.
+Typography is a primary part of the visual identity, not a finishing detail. **Use polished, professional typefaces with excellent screen rendering. Do not settle for a generic browser-default font stack or choose a font only because it is familiar.** Select typography deliberately for the product's subject, audience, and tone.
 
-- Prefer a clean, modern sans-serif when it fits Modernimal. Geist Sans and Noto Sans are suitable options, not mandatory defaults.
-- Use one type family or two clearly differentiated families. Give each a defined role; avoid adding a third family for decoration.
-- Set a deliberate type scale with clear relationships between display, heading, body, supporting, and utility text. Tune weight, width, line height, and letter spacing together.
+### Font selection
+
+- On Apple platforms, prefer the native San Francisco family through the system font stack. Use SF Pro Display for display and larger heading roles, and SF Pro Text for body and interface roles when the fonts are available.
+- For cross-platform web interfaces, choose a high-quality family such as Geist, Inter, Manrope, IBM Plex Sans, Plus Jakarta Sans, DM Sans, or Source Sans 3. These are examples, not a mandatory fixed list. Compare actual letterforms and choose the one that best suits the product.
+- A suitable system-first stack is: `-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", "Geist", "Segoe UI", sans-serif`. Adjust the order and roles when the project loads a specific webfont.
+- SF Pro is an Apple system typeface and should not be assumed to exist on Windows or Linux. Do not depend on an unofficial download or remote copy of Apple's proprietary font. Provide a deliberate, visually compatible fallback such as Geist or Inter.
+- If the project already loads a good typeface, inspect and evaluate it before replacing it. Do not change fonts for the sake of change.
+- Avoid weak or dated-looking defaults such as unstyled Arial, generic Roboto-first stacks, or browser defaults when a better-supported professional option fits the project. Noto Sans is acceptable when it is the considered best fit, not an automatic choice.
+- Load webfonts reliably. Prefer the project's existing font pipeline or a reputable source such as Google Fonts or Fontsource. Include only the weights actually used, provide a sensible fallback, and avoid flash or layout shift where practical.
+- Use one strong family for most of the interface. Introduce a second family only when it adds a clear editorial or functional distinction, such as a serif for long-form reading or a monospace for code and technical values. Never add font families as decoration.
+
+### Typography system
+
+- Define a deliberate type scale with clear relationships between display, heading, body, supporting, and utility text. Tune weight, width, line height, and letter spacing together.
 - Treat display type as part of the composition. Choose its scale, line breaks, width, and alignment deliberately instead of using oversized text as a generic sign of polish.
+- Use regular or medium weights for most UI text. Reserve semibold or bold for titles, key values, and high-priority actions. Avoid using heavy bold weights everywhere.
+- Use optical sizing and variable font axes when the chosen typeface supports them. Apply font-feature settings only when they improve the actual text.
 - Keep ordinary reading lines under roughly 80 characters where practical. Serif body copy often needs slightly more line height than sans-serif copy.
 - Do not emphasize one arbitrary word in a headline with a different color, weight, or italic treatment merely to create visual interest.
 - Avoid unnecessary all-caps labels, tracked-out eyebrow text, tiny metadata, and decorative monospace labels. Use monospace when the content itself benefits from it, such as code, identifiers, or technical values.
-- Prefer a clean, modern sans-serif. Geist Sans and Noto Sans are suitable when they match the project or its existing setup.
-- Use a restrained type scale. Establish hierarchy through size, weight, line height, and spacing instead of many competing styles.
-- Use regular or medium weights for most UI text. Reserve semibold or bold for titles, key values, and high-priority actions.
 - Keep headings clear and compact. When a hero headline is actually needed, aim for two or three lines at most.
-- Avoid all-caps labels and tiny uppercase metadata unless the design specifically needs them.
 - Avoid generic marketing language and filler labels such as “The ultimate experience” or made-up status text.
-- Use tabular numerals for times, counters, and aligned numeric values when useful.
+- Use tabular numerals for times, counters, prices, and aligned numeric values when useful.
 - Keep line lengths comfortable in reading and writing views. A full-screen editor should use its available space without leaving a large, unexplained blank column.
-- Check typography at normal desktop and mobile sizes. Do not fix layout problems by shrinking everything.
+- Check typography at normal desktop and mobile sizes, at actual rendered sizes and weights. Inspect headings, body copy, numbers, labels, placeholders, and controls. Do not fix layout problems by shrinking everything.
 
 ## 5. Layout, hierarchy, and spacing
 
